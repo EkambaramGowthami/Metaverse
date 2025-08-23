@@ -3,7 +3,7 @@ import { Search } from "../../Icons/Search";
 import { Cancel } from "../../Icons/Cancel";
 import axios from "axios";
 import { io } from "socket.io-client";
-const socket = io("http://localhost:3000", { withCredentials: true ,transports : ["websocket"]});
+const socket = io("https://metaverse-3joe.onrender.com", { withCredentials: true ,transports : ["websocket"]});
 import { useNavigate } from "react-router-dom";
 
 export const MyGallery = () => {
@@ -77,7 +77,7 @@ export const MyGallery = () => {
     setSpaceMaps((prev) => {
       if ((prev).find((m) => m.id === map.id)) return prev;
       const updated = [...prev, map];
-      axios.post("http://localhost:3000/maps/update",{
+      axios.post("https://metaverse-3joe.onrender.com/maps/update",{
         userId:userId,
         maps:updated
       }).catch((e)=>console.log("failed to upload the data:",e));
@@ -93,7 +93,7 @@ export const MyGallery = () => {
   useEffect(() => {
     const fetchMaps = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/maps/${userId}`);
+        const res = await axios.get(`https://metaverse-3joe.onrender.com/maps/${userId}`);
         setSpaceMaps(res.data.maps || []);
       } catch (err) {
         console.log("fetching the maps failed:", err);
