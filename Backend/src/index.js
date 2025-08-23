@@ -6,6 +6,7 @@ import http from "http";
 import { Server } from "socket.io";
 const app = express();
 app.use(express.json());
+const PORT = process.env.PORT || 3000;
 app.use(cors({
   origin: [
     "https://axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
@@ -235,8 +236,9 @@ io.on("connection",(socket)=>{
    
 
 })
-httpServer.listen(3000,() => {
-    console.log("server running on 3000 port");
-});
+httpServer.listen(PORT, () => {
+    console.log(`server running on port ${PORT}`);
+  });
+  
 
 
