@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { DisplayMap } from './components/DisplayMap';
-import { Dashboard } from './components/Dashboard';
-import { MyGallery } from './components/Space/MyGallery';
+import  DisplayMap  from './components/DisplayMap';
+import  Dashboard  from './components/Dashboard';
+import  MyGallery  from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
 import Test  from './components/Test';
 
