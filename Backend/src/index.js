@@ -7,13 +7,13 @@ import { Server } from "socket.io";
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: "https://metaverse-frontend-o0bo.onrender.com",
+    origin: "axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
     credentials: true
 }));
 const httpServer = http.createServer(app);
 const io = new Server(httpServer,{
     cors: {
-        origin: "https://metaverse-frontend-o0bo.onrender.com",
+        origin: "axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
         credentials: true,
       },
 });
@@ -127,7 +127,7 @@ io.on("connection",(socket)=>{
         const players={players:[{userId:userId,username:username,socketId:socket.id,avatar:avatar,x:50,y:50}]};
         rooms[roomId] = players;
         socket.join(roomId);
-        const inviteLink = `https://metaverse-frontend-o0bo.onrender.com/space/room?roomId=${roomId}`;
+        const inviteLink = `axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
         // socket.emit("roomCreated",{roomId,players:rooms[roomId].players,inviteLink});
         io.to(socket.id).emit("roomCreated", { roomId, players });
         io.to(roomId).emit("message","hello guys");
