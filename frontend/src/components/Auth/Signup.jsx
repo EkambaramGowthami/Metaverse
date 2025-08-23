@@ -8,7 +8,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
-    const res = await axios.post("http://localhost:3000/signup", { email, password });
+    const res = await axios.post("https://metaverse-3joe.onrender.com/signup", { email, password });
     if(res){
       localStorage.setItem("username",res.data.username);
       localStorage.setItem("userId",res.data.userId);
