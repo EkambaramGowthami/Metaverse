@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const uri = process.env.MONGOO_URL as string; 
+const uri = process.env.MONGOO_URL; 
 mongoose.connect(uri)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
