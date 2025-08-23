@@ -106,7 +106,7 @@ import TileMap from "../maps/TileMap";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 
-const socket = io("http://localhost:3000", {
+const socket = io("https://metaverse-3joe.onrender.com", {
   withCredentials: true,
   transports: ["websocket"]
 });
