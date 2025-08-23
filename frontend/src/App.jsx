@@ -4,7 +4,7 @@ import { DisplayMap } from './components/DisplayMap';
 import { Dashboard } from './components/Dashboard';
 import { MyGallery } from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
-import { Test } from './components/Test';
+import Test  from './components/Test';
 
 
 
