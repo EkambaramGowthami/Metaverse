@@ -4,6 +4,7 @@ import { DisplayMap } from './components/DisplayMap';
 import { Dashboard } from './components/Dashboard';
 import { MyGallery } from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
+import { Test } from './components/Test';
 
 
 
@@ -15,6 +16,7 @@ export default function App() {
       <Route path="/space" element={<MyGallery />} />
       <Route path="/space/room/:roomId" element={<DisplayMap />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/test" element={<Test />} />
       
      
 
