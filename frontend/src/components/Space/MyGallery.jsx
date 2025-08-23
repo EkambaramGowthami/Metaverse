@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 const socket = io("https://metaverse-3joe.onrender.com", { withCredentials: true ,transports : ["websocket"]});
 import { useNavigate } from "react-router-dom";
 
-export const MyGallery = () => {
+export default function MyGallery() {
   const [createSpace, setCreateSpace] = useState(false);
   const selectedMapRef = useRef(null);
   const [players,setPlayers] = useState([]);

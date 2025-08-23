@@ -272,7 +272,7 @@ const isTileWalkable = (tileId, tilesets) => {
   return false;
 };
 
-const TileMap = ({
+export default function TileMap(
   mapUrl,
   tilesetImageUrl,
   tileWidth,
@@ -281,7 +281,7 @@ const TileMap = ({
   setPlayers,
   currentUserId,
   roomId
-}) => {
+){
   const canvasRef = useRef(null);
   const mapDataRef = useRef(null);
   const tilesetImageRef = useRef(null);
@@ -501,4 +501,4 @@ const TileMap = ({
   );
 };
 
-export default TileMap;
+

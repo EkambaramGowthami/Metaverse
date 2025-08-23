@@ -111,7 +111,7 @@ const socket = io("https://metaverse-3joe.onrender.com", {
   transports: ["websocket"]
 });
 
-export const DisplayMap = () => {
+export default function DisplayMap(){
   const [invite, setInvite] = useState(false);
   const { roomId } = useParams();
   const [players, setPlayers] = useState([]);
