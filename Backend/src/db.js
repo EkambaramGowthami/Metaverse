@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
-const uri = process.env.MONGOO_URL; 
-mongoose.connect(uri)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+import dotenv from "dotenv";
+dotenv.config({ path: "../.env" });
+const MONGO_URI = process.env.MONGO_URI;
+console.log(MONGO_URI);
+mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
 const avatarData = [
     {id:1,imageUrl:"/public/avatars/_ (1).jpeg",description:"hi there"},
