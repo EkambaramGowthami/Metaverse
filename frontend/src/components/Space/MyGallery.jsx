@@ -35,42 +35,66 @@ export default function MyGallery() {
   const handleRoomClick = (image)=>{
     const avatar = getRandomAvatar();
     selectedMapRef.current = image;
-    socket.emit("createRoom", { userId, avatar, username });
+    socket.emit("room:create", { userId, avatar, username });
   }
   useEffect(() => {
-    socket.on("roomCreated", ({ roomId, players, inviteLink }) => {
+    socket.on("room:created", ({ roomId, players, inviteLink }) => {
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       // localStorage.setItem("selectedAvatar", JSON.stringify(getRandomAvatar()));
       navigate(`/space/room/${roomId}`);
     });
 
-    socket.on("roomJoined", ({ players }) => {
-      const actualPlayers = Array.isArray(players) ? players : players?.players;
-      if (Array.isArray(actualPlayers)) {
-        setPlayers(actualPlayers);
-      } else {
-        console.warn("Invalid players format received:", players);
-      }
+    // socket.on("roomJoined", ({ players }) => {
+    //   const actualPlayers = Array.isArray(players) ? players : players?.players;
+    //   if (Array.isArray(actualPlayers)) {
+    //     setPlayers(actualPlayers);
+    //   } else {
+    //     console.warn("Invalid players format received:", players);
+    //   }
+    // });
+    socket.on("room:joined",({ roomId,players,history })=>{
+      setPlayers(players);
+      navigate(`/space/room/${roomId}`);
     });
-    
+    socket.on("room:error",({ message }) => {
+      alert(message);
+    });
+    socket.on("room:players",({ roomId,players}) =>{
+      setPlayers(players);
+    })
+    socket.on("chat:new", (msg) => {
+      console.log("New chat:", msg);
+    });
 
-    socket.on("updatedPositions", (updatedPlayers) => {
-      setPlayers(updatedPlayers);
-      console.log(updatedPlayers);
-    });
+    // socket.on("updatedPositions", (updatedPlayers) => {
+    //   setPlayers(updatedPlayers);
+    //   console.log(updatedPlayers);
+    // });
    
-    socket.on("startVideoCall", ({ roomName, participents }) => {
-      if (participents.includes(userId)) {
-        alert(`Video call started in ${roomName}`);
+    // socket.on("startVideoCall", ({ roomName, participents }) => {
+    //   if (participents.includes(userId)) {
+    //     alert(`Video call started in ${roomName}`);
+    //   }
+    // });
+    socket.on("call:start", ({ roomId, participants }) => {
+      if (participants.includes(userId)) {
+        alert(`Video call started in room ${roomId}`);
       }
+    });
+  
+    socket.on("call:end", ({ roomId }) => {
+      alert(`Video call ended in ${roomId}`);
     });
 
     return () => {
-      socket.off("roomJoined");
-      socket.off("updatedPositions");
-      socket.off("startVideoCall");
-      socket.off("roomCreated");
+      socket.off("room:created");
+      socket.off("room:joined");
+      socket.off("room:error");
+      socket.off("room:players");
+      socket.off("chat:new");
+      socket.off("call:start");
+      socket.off("call:end");
     };
   }, [navigate,userId]);
  const handleMapClick = (map) => {
@@ -87,7 +111,7 @@ export default function MyGallery() {
   const handleJoinRoom = () =>{
     const roomid=roomIdRef.current.value;
     const avatar = getRandomAvatar();
-    socket.emit("joinRoom", { userId, roomid, avatar, username });
+    socket.emit("room:join", { userId, roomId:roomid, avatar, username });
     navigate(`/space/room/${roomid}`);
     }
   useEffect(() => {

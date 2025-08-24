@@ -121,26 +121,39 @@ export default function DisplayMap(){
   const avatar = JSON.parse(localStorage.getItem("selectedAvatar")) || defaultAvatar;
 
   useEffect(() => {
-    socket.emit("joinRoom", { userId, roomId, avatar, username });
+    socket.emit("room:join", { userId, roomId, avatar, username });
 
-    socket.on("roomJoined", ({ players }) => {
+    socket.on("room:joined", ({ players }) => {
       setPlayers(Array.isArray(players) ? players : []);
     });
 
-    socket.on("updatedPositions", (updatedPlayers) => {
-      setPlayers(Array.isArray(updatedPlayers) ? updatedPlayers : []);
+    // socket.on("updatedPositions", (updatedPlayers) => {
+    //   setPlayers(Array.isArray(updatedPlayers) ? updatedPlayers : []);
+    // });
+    socket.on("room:players", ({ players }) => {
+      setPlayers(Array.isArray(players) ? players : []);
     });
 
-    socket.on("startVideoCall", ({ roomName, participents }) => {
-      if (participents.includes(userId)) {
-        alert(`Video call started in ${roomName}`);
+    // socket.on("startVideoCall", ({ roomName, participents }) => {
+    //   if (participents.includes(userId)) {
+    //     alert(`Video call started in ${roomName}`);
+    //   }
+    // });
+    socket.on("call:start", ({ roomId: callRoomId, participants }) => {
+      if (participants.includes(userId)) {
+        alert(`Video call started in room ${callRoomId}`);
       }
     });
 
+    socket.on("call:end", ({ roomId: callRoomId }) => {
+      alert(`Video call ended in room ${callRoomId}`);
+    });
+
     return () => {
-      socket.off("roomJoined");
-      socket.off("updatedPositions");
-      socket.off("startVideoCall");
+      socket.off("room:joined");
+      socket.off("room:players");
+      socket.off("call:start");
+      socket.off("call:end");
     };
   }, [roomId, userId, username, avatar]);
 
