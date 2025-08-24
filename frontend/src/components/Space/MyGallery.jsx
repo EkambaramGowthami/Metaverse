@@ -38,7 +38,7 @@ export default function MyGallery() {
     socket.emit("room:create", { userId, avatar, username });
   }
   useEffect(() => {
-    socket.on("room:created", ({ roomId, players, inviteLink }) => {
+    socket.on("room:created", ({ roomId, inviteLink , players }) => {
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       // localStorage.setItem("selectedAvatar", JSON.stringify(getRandomAvatar()));
