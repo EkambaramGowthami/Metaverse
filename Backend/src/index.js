@@ -8,22 +8,15 @@ const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: [
-      "metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
-      "http://localhost:5173"
-    ],
+    origin: true,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
   }));
-
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
     cors: {
-      origin: [
-        "metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
-        "http://localhost:5173"
-      ],
+      origin: true,
       credentials: true
     },
   });
@@ -153,7 +146,7 @@ io.on("connection",(socket)=>{
         const players={players:[{userId:userId,username:username,socketId:socket.id,avatar:avatar,x:50,y:50}]};
         rooms[roomId] = players;
         socket.join(roomId);
-        const inviteLink = `https://axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
+        const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
         // socket.emit("roomCreated",{roomId,players:rooms[roomId].players,inviteLink});
         io.to(socket.id).emit("roomCreated", { roomId, players });
         io.to(roomId).emit("message","hello guys");
