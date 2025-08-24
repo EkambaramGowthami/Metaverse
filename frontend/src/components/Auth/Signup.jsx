@@ -12,12 +12,24 @@ export default function Signup() {
   const handleSignup = async () => {
     const email = emailRef.current.value;
     const password = password.current.value;
-    const res = await axios.post("https://metaverse-3joe.onrender.com/signup", { email, password },{ withCredentials: true });
-    if(res){
-      localStorage.setItem("username",res.data.username);
-      localStorage.setItem("userId",res.data.userId);
-      navigate("/space");
+    try {
+      const res = await axios.post(
+        "https://metaverse-3joe.onrender.com/signup",
+        { email, password }, 
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, 
+        }
+      );
 
+      if (res.data) {
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("userId", res.data.userId);
+        navigate("/space");
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Signup failed");
     }
   };
 
