@@ -10,7 +10,7 @@ app.use(express.json());
 const ROOM_LIMIT = 5;
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: true,
+    origin: "https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -18,7 +18,7 @@ app.use(cors({
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
     cors: {
-      origin: true,
+      origin: "https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
       credentials: true
     },
   });
@@ -107,11 +107,11 @@ function addPlayerToRoom(roomId,player) {
     return {ok:true,room};
 }
 function removeSocketIdFromAllRooms(socketId){
-    for(const roomId of object.keys(rooms)){
+    for(const roomId of Object.keys(rooms)){
         const room = rooms[roomId];
         const before = room.players.length;
         room.players = room.players.filter((p) => p.socketId !== socketId);
-        if(room.player.length !== before){
+        if(room.players.length !== before){
             io.to(roomId).emit("room:players",{roomId,players:room.players});
         }
     }
@@ -121,7 +121,7 @@ function checkProximityAndTriggerVideoCall(roomId){
     if(!room || room.layers.length < 2) return;
     const threshold = 50;
     const clusters = [];
-    const visited = new set();
+    const visited = new Set();
     for(let i=0;i<room.players.length;i++){
         const p1 = room.players[i];
         if(visited.has(p1.userId)) continue;
