@@ -8,23 +8,25 @@ const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-  origin: [
-    "https://axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
-    "http://localhost:5173"
-  ],
-  credentials: true
-}));
-
-const httpServer = http.createServer(app);
-const io = new Server(httpServer, {
-  cors: {
     origin: [
       "https://axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
       "http://localhost:5173"
     ],
-    credentials: true
-  },
-});
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  }));
+
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+      origin: [
+        "https://axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
+        "http://localhost:5173"
+      ],
+      credentials: true
+    },
+  });
 
 const rooms = {};
 app.post("/signup",async (req,res)=>{
