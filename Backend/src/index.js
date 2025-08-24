@@ -7,23 +7,37 @@ import { Server } from "socket.io";
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 3000;
+const allowedOrigin = [
+    "https://axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
+    "http://localhost:5173"
+
+];
 app.use(cors({
-    origin: [
-      "https://axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
-      "http://localhost:5173"
-    ],
+    origin: (origin,callback)=>{
+        if(!origin || allowedOrigin.includes(origin)){
+            callback(null,true);
+        }
+        else{
+            callback(new Error("Not allowed by cors"));
+        }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
   }));
+  app.options("*", cors());
 
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
     cors: {
-      origin: [
-        "https://axiona-git-main-gowthamis-projects-b7f16ceb.vercel.app",
-        "http://localhost:5173"
-      ],
+        origin: (origin,callback)=>{
+            if(!origin || allowedOrigin.includes(origin)){
+                callback(null,true);
+            }
+            else{
+                callback(new Error("Not allowed by cors"));
+            }
+        },
       credentials: true
     },
   });
