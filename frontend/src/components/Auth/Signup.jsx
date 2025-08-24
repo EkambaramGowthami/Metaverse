@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const handleSignup = async () => {
+    const email = emailRef.current.value;
+    const password = password.current.value;
     const res = await axios.post("https://metaverse-3joe.onrender.com/signup", { email, password },{ withCredentials: true });
     if(res){
       localStorage.setItem("username",res.data.username);
@@ -20,8 +24,8 @@ export default function Signup() {
   return (
     <div>
       <h2>Signup</h2>
-      <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
-      <input placeholder="Password" type="password" onChange={e => setPassword(e.target.value)} />
+      <input placeholder="Email" ref={emailRef} />
+      <input placeholder="Password" type="password" ref={passwordRef} />
       <button onClick={handleSignup}>Signup</button>
     </div>
   );

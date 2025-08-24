@@ -50,6 +50,21 @@ app.post("/signup",async (req,res)=>{
         })
     }
 });
+app.post("/signup", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const username = email.split("@")[0];
+      const existingUser = await userModel.findOne({ email });
+      if (existingUser) return res.status(409).send({ message: "User already exists" });
+  
+      const user = await userModel.create({ email, password, username, selectedSpaceMaps: [] });
+      res.send({ message: "signup successful", userId: user._id, username });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: "signup failed" });
+    }
+  });
+  
 app.post("/maps/update",async (req,res) => {
     const { userId,maps } = req.body;
     await userModel.findByIdAndUpdate(userId, { selectedSpaceMaps : maps});
