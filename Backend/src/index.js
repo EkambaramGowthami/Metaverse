@@ -118,7 +118,7 @@ function removeSocketIdFromAllRooms(socketId){
 }
 function checkProximityAndTriggerVideoCall(roomId){
     const room = getRoom(roomId);
-    if(!room || room.layers.length < 2) return;
+    if(!room || room.players.length < 2) return;
     const threshold = 50;
     const clusters = [];
     const visited = new Set();
@@ -216,13 +216,13 @@ io.on("connection",(socket)=>{
     // }
     socket.on("room:create",({ userId,avatar,username } )=>{
         const roomId = Math.random().toString(36).substring(2,6);
-        const players={players:[{userId:userId,username:username,socketId:socket.id,avatar:avatar,x:50,y:50}]};
-        rooms[roomId] = players;
+        rooms[roomId] = { players: [ { userId, username, socketId: socket.id, avatar, x: 50, y: 50 } ] };
         socket.join(roomId);
         const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
         // socket.emit("roomCreated",{roomId,players:rooms[roomId].players,inviteLink});
-        io.to(socket.id).emit("roomCreated", { roomId, players });
-        io.to(roomId).emit("message","hello guys");
+        io.to(socket.id).emit("room:created", { roomId, players:rooms[roomId].players });
+         io.to(roomId).emit("room:players",{ roomId,players:rooms[roomId].players});
+        // io.to(roomId).emit("message","hello guys");
         console.log("created a room");
 
         // const roomId = createRoomId();
@@ -288,7 +288,7 @@ io.on("connection",(socket)=>{
             y:0
         });
         if(!res.ok){
-            io.to(socket.io).emit("room:error",{roomId,message:res.reason || "join room failed"});
+            io.to(socket.id).emit("room:error",{roomId,message:res.reason || "join room failed"});
             return;
         }
         socket.join(roomId);

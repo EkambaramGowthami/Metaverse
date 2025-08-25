@@ -113,7 +113,7 @@ export default function MyGallery() {
     const roomid=roomIdRef.current.value;
     const avatar = getRandomAvatar();
     socket.emit("room:join", { userId, roomId:roomid, avatar, username });
-    navigate(`/space/room/${roomid}`);
+    // navigate(`/space/room/${roomid}`);
     }
   useEffect(() => {
     const fetchMaps = async () => {
