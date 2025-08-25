@@ -36,49 +36,32 @@ export default function MyGallery() {
     const avatar = getRandomAvatar();
     selectedMapRef.current = image;
     console.log("Emitting room:create", { userId, avatar, username });
-    socket.emit("room:create", { userId, avatar, username });
-    console.log("userId,username:",userId,username);
+    socket.emit("createRoom", { userId, avatar, username });
+    
   }
   useEffect(() => {
-    socket.on("room:created", ({ roomId, inviteLink, players }) => {
+    socket.on("updatedPositions", (players) => {
+      setPlayers(players); 
+    });
+    return () => socket.off("updatedPositions");
+  }, []);
+  useEffect(() => {
+    socket.on("roomCreated", ({ roomId, inviteLink, players }) => {
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
     });
 
-    socket.on("room:joined", ({ roomId, players }) => {
+    socket.on("roomJoined", ({ roomId, players }) => {
       setPlayers(players);
       navigate(`/space/room/${roomId}`);
     });
 
-    socket.on("room:players", ({ players }) => {
-      setPlayers(players);
-    });
-
-    socket.on("room:error", ({ message }) => {
-      alert(message);
-    });
-
-    socket.on("chat:new", (msg) => console.log("New chat:", msg));
-
-    socket.on("call:start", ({ roomId, participants }) => {
-      if (participants.includes(userId)) {
-        alert(`Video call started in room ${roomId}`);
-      }
-    });
-
-    socket.on("call:end", ({ roomId }) => {
-      alert(`Video call ended in room ${roomId}`);
-    });
-
-    return () => {
-      socket.off("room:created");
-      socket.off("room:joined");
-      socket.off("room:players");
-      socket.off("room:error");
-      socket.off("chat:new");
-      socket.off("call:start");
-      socket.off("call:end");
+   
+     return () => {
+      socket.off("roomCreated");
+      socket.off("roomJoined");
+    
     };
   }, [navigate, userId]);
  const handleMapClick = (map) => {
@@ -95,7 +78,7 @@ export default function MyGallery() {
 const handleJoinRoom = () => {
   const roomid = roomIdRef.current.value;
   const avatar = getRandomAvatar();
-  socket.emit("room:join", { userId, roomId: roomid, avatar, username });
+  socket.emit("joinRoom", { userId, roomId: roomid, avatar, username });
 };
   useEffect(() => {
     const fetchMaps = async () => {
