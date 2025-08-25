@@ -172,48 +172,7 @@ function checkProximityAndTriggerVideoCall(roomId){
 // })
 io.on("connection",(socket)=>{
     console.log("socket id:",socket.id);
-    // function checkProximityAndTriggerVideoCall(roomId){
-    //     const room = rooms[roomId];
-    //     if(!room || room.players.length < 2) return;
-    //     const threshold = 50;
-    //     let clusters = [];
-    //     let visited = new Set();
-    //     for(let i=0;i<room.players.length;i++){
-    //         const p1 = room.players[i];
-    //         if(visited.has(p1.userId)) continue;
-    //         const cluster = [p1];
-    //         visited.add(p1.userId);
-    //         for(let j=0;j<room.players.length;j++){
-    //             if(i==j) continue;
-    //             const p2 = room.players[j];
-    //             if(visited.has(p2.userId)) continue;
-    //             const dx = p1.x-p2.x;
-    //             const dy = p1.y-p2.y;
-    //             const distance = Math.sqrt(dx*dx + dy*dy);
-    //             if(distance < 50){
-    //                 cluster.push(p2);
-    //                 visited.add(p2.userId);
-    //             }
-    //         }
-    //         if(cluster.length > 1){
-    //             clusters.push(cluster);
-    //         }
-    //     }
-    //     clusters.forEach((group,Index)=>{
-    //         const alreadyInCall = group.some(p => p.isInCall);
-    //         if(alreadyInCall) return;
-    //         const roomName = `groupcall-${roomId}-${Date.now()}-${Index}`;
-    //         group.forEach(p =>{
-    //             p.isInCall = true;
-    //             io.to(p.socketId).emit("startVideoCall",{
-    //                 roomName,
-    //                 participents:group.map(u=>u.userId)
-    //             })
-
-    //         })
-    //         console.log(`Started group video call in ${roomName} for users:`, group.map(p => p.userId));
-    //     })
-    // }
+    
     socket.on("room:create",({ userId,avatar,username } )=>{
         const roomId = Math.random().toString(36).substring(2,6);
         rooms[roomId] = { players: [ { userId, username, socketId: socket.id, avatar, x: 50, y: 50 } ] };
@@ -222,84 +181,71 @@ io.on("connection",(socket)=>{
         // socket.emit("roomCreated",{roomId,players:rooms[roomId].players,inviteLink});
         io.to(socket.id).emit("room:created", { roomId,inviteLink, players:rooms[roomId].players });
          io.to(roomId).emit("room:players",{ roomId,players:rooms[roomId].players});
-        // io.to(roomId).emit("message","hello guys");
+        io.to(roomId).emit("message","hello guys");
         console.log("created a room");
 
-        // const roomId = createRoomId();
-        // const room = ensureRoom(roomId);
-        // const player = { userId, username, socketId: socket.id, avatar, x: 50, y: 50 };
-        // room.players=[player];
-        // socket.join(roomId);
-        // const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
-        // io.to(socket.id).emit("room:created",{
-        //     roomId,
-        //     inviteLink,
-        //     players:room.players
-        // });
-        // io.to(roomId).emit("room:players",{ roomId,players:room.players});
-        // console.log("room created:",roomId);
-        
+       
 
     });
     
     
-    // socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
-    //     const room = rooms[roomId];
-    //     if (!room) {
-    //       socket.emit("error", "room not found");
-    //       console.log("room not found");
-    //       return;
-    //     }
+    socket.on("room:join", async ({ userId, roomId, avatar, username }) => {
+        const room = rooms[roomId];
+        if (!room) {
+          socket.emit("error", "room not found");
+          console.log("room not found");
+          return;
+        }
       
-    //     if (room.players.length >= 5) {
-    //       socket.emit("error", "room full");
-    //       console.log("room is full");
-    //       return;
-    //     }
+        if (room.players.length >= 5) {
+          socket.emit("error", "room full");
+          console.log("room is full");
+          return;
+        }
       
-    //     const alreadyJoined = room.players.some(p => p.userId === userId || p.socketId === socket.id);
-    //     if (alreadyJoined) {
-    //       socket.emit("roomJoined", { players: room.players });
-    //       return;
-    //     }
+        const alreadyJoined = room.players.some(p => p.userId === userId || p.socketId === socket.id);
+        if (alreadyJoined) {
+          socket.emit("room:joined", { players: room.players });
+          return;
+        }
       
-    //     const newPlayer = { userId, username, socketId: socket.id, avatar, x: 0, y: 0 };
-    //     room.players.push(newPlayer);
-    //     socket.join(roomId);
+        const newPlayer = { userId, username, socketId: socket.id, avatar, x: 0, y: 0 };
+        room.players.push(newPlayer);
+        socket.join(roomId);
       
         
-    //     io.to(roomId).emit("roomJoined", { players: room.players });
-    //     io.to(roomId).emit("updatedPositions", room.players);
-    //   });
+        io.to(roomId).emit("room:joined", { players: room.players });
+        io.to(roomId).emit("players", room.players);
+      });
       
    
-    socket.on("room:join",async ({ userId,roomId,avatar,username })=>{
-        const room = getRoom(roomId);
-        if(!room){
-            io.to(socket.id).emit("room:error",{roomId,message:"room not found"});
-            return;
-        }
-        const res = addPlayerToRoom(roomId,{
-            userId,
-            username,
-            socketId:socket.id,
-            avatar,
-            x:0,
-            y:0
-        });
-        if(!res.ok){
-            io.to(socket.id).emit("room:error",{roomId,message:res.reason || "join room failed"});
-            return;
-        }
-        socket.join(roomId);
-        let history=[];
-        try {
-            history = await messageModel.find({ roomId }).sort({ timestamp: -1 }).limit(20).lean();
-            history.reverse();
-        } catch {}
-        io.to(socket.id).emit("room:joined",{roomId,players:res.room.players,history});
-        socket.to(roomId).emit("room:players",{roomId,players:res.room.players});
-    })
+    // socket.on("room:join",async ({ userId,roomId,avatar,username })=>{
+    //     const room = getRoom(roomId);
+    //     if(!room){
+    //         io.to(socket.id).emit("room:error",{roomId,message:"room not found"});
+    //         return;
+    //     }
+    //     const res = addPlayerToRoom(roomId,{
+    //         userId,
+    //         username,
+    //         socketId:socket.id,
+    //         avatar,
+    //         x:0,
+    //         y:0
+    //     });
+    //     if(!res.ok){
+    //         io.to(socket.id).emit("room:error",{roomId,message:res.reason || "join room failed"});
+    //         return;
+    //     }
+    //     socket.join(roomId);
+    //     let history=[];
+    //     try {
+    //         history = await messageModel.find({ roomId }).sort({ timestamp: -1 }).limit(20).lean();
+    //         history.reverse();
+    //     } catch {}
+    //     io.to(socket.id).emit("room:joined",{roomId,players:res.room.players,history});
+    //     socket.to(roomId).emit("room:players",{roomId,players:res.room.players});
+    // })
     // socket.on("move", ({ roomId,userId,x,y}) => {
     //     const room = rooms[roomId];
     //     if (!room) return;
@@ -326,36 +272,36 @@ io.on("connection",(socket)=>{
 
     })
       
-    // socket.on("chat",async (roomId,userId,message)=>{
-    //     const newMsg = await messageModel.create({roomId:roomId,userId:userId,message:message});
-    //     io.to(roomId).emit("newMessage",{
-    //         userId,
-    //         message,
-    //         timeStamp:newMsg.timestamp
-    //     })
-    // });
-    socket.on("chat:send", async ({ roomId, userId, message }) => {
-        if (!roomId || !userId || !message) return;
-        const newMsg = await messageModel.create({ roomId, userId, message });
-        io.to(roomId).emit("chat:new", { userId, message, timestamp: newMsg.timestamp });
-        });
-    // socket.on("endVideoCall",(roomId)=>{
-    //     const room = rooms[roomId];
-    //     if(!room) return;
-    //     room.players.forEach(p => p.isInCall=false);
-    // })
-    socket.on("call:end", ({ roomId }) => {
-        const room = getRoom(roomId);
-        if (!room) return;
-        room.players.forEach((p) => (p.isInCall = false));
-        });
-    // socket.on("disconnect", () => {
-    //     for (const roomId in rooms) {
-    //       const room = rooms[roomId];
-    //       room.players = room.players.filter(p => p.socketId !== socket.id);
-    //       io.to(roomId).emit("updatedPositions", room.players);
-    //     }
-    //   });
+    socket.on("chat",async (roomId,userId,message)=>{
+        const newMsg = await messageModel.create({roomId:roomId,userId:userId,message:message});
+        io.to(roomId).emit("newMessage",{
+            userId,
+            message,
+            timeStamp:newMsg.timestamp
+        })
+    });
+    // socket.on("chat:send", async ({ roomId, userId, message }) => {
+    //     if (!roomId || !userId || !message) return;
+    //     const newMsg = await messageModel.create({ roomId, userId, message });
+    //     io.to(roomId).emit("chat:new", { userId, message, timestamp: newMsg.timestamp });
+    //     });
+    socket.on("endVideoCall",(roomId)=>{
+        const room = rooms[roomId];
+        if(!room) return;
+        room.players.forEach(p => p.isInCall=false);
+    })
+    // socket.on("call:end", ({ roomId }) => {
+    //     const room = getRoom(roomId);
+    //     if (!room) return;
+    //     room.players.forEach((p) => (p.isInCall = false));
+    //     });
+    socket.on("disconnect", () => {
+        for (const roomId in rooms) {
+          const room = rooms[roomId];
+          room.players = room.players.filter(p => p.socketId !== socket.id);
+          io.to(roomId).emit("updatedPositions", room.players);
+        }
+      });
       socket.on("disconnect", () => {
         removeSocketIdFromAllRooms(socket.id);
     });

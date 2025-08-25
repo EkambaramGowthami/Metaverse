@@ -37,67 +37,50 @@ export default function MyGallery() {
     selectedMapRef.current = image;
     console.log("Emitting room:create", { userId, avatar, username });
     socket.emit("room:create", { userId, avatar, username });
+    console.log("userId,username:",userId,username);
   }
   useEffect(() => {
-    socket.on("room:created", ({ roomId, inviteLink , players }) => {
+    socket.on("room:created", ({ roomId, inviteLink, players }) => {
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
-      // localStorage.setItem("selectedAvatar", JSON.stringify(getRandomAvatar()));
       navigate(`/space/room/${roomId}`);
     });
 
-    // socket.on("roomJoined", ({ players }) => {
-    //   const actualPlayers = Array.isArray(players) ? players : players?.players;
-    //   if (Array.isArray(actualPlayers)) {
-    //     setPlayers(actualPlayers);
-    //   } else {
-    //     console.warn("Invalid players format received:", players);
-    //   }
-    // });
-    socket.on("room:joined",({ roomId,players,history })=>{
+    socket.on("room:joined", ({ roomId, players }) => {
       setPlayers(players);
       navigate(`/space/room/${roomId}`);
     });
-    socket.on("room:error",({ message }) => {
+
+    socket.on("room:players", ({ players }) => {
+      setPlayers(players);
+    });
+
+    socket.on("room:error", ({ message }) => {
       alert(message);
     });
-    socket.on("room:players",({ roomId,players}) =>{
-      setPlayers(players);
-    })
-    socket.on("chat:new", (msg) => {
-      console.log("New chat:", msg);
-    });
 
-    // socket.on("updatedPositions", (updatedPlayers) => {
-    //   setPlayers(updatedPlayers);
-    //   console.log(updatedPlayers);
-    // });
-   
-    // socket.on("startVideoCall", ({ roomName, participents }) => {
-    //   if (participents.includes(userId)) {
-    //     alert(`Video call started in ${roomName}`);
-    //   }
-    // });
+    socket.on("chat:new", (msg) => console.log("New chat:", msg));
+
     socket.on("call:start", ({ roomId, participants }) => {
       if (participants.includes(userId)) {
         alert(`Video call started in room ${roomId}`);
       }
     });
-  
+
     socket.on("call:end", ({ roomId }) => {
-      alert(`Video call ended in ${roomId}`);
+      alert(`Video call ended in room ${roomId}`);
     });
 
     return () => {
       socket.off("room:created");
       socket.off("room:joined");
-      socket.off("room:error");
       socket.off("room:players");
+      socket.off("room:error");
       socket.off("chat:new");
       socket.off("call:start");
       socket.off("call:end");
     };
-  }, [navigate,userId]);
+  }, [navigate, userId]);
  const handleMapClick = (map) => {
     setSpaceMaps((prev) => {
       if ((prev).find((m) => m.id === map.id)) return prev;
@@ -109,12 +92,11 @@ export default function MyGallery() {
       return updated;
     });
 }
-  const handleJoinRoom = () =>{
-    const roomid=roomIdRef.current.value;
-    const avatar = getRandomAvatar();
-    socket.emit("room:join", { userId, roomId:roomid, avatar, username });
-    // navigate(`/space/room/${roomid}`);
-    }
+const handleJoinRoom = () => {
+  const roomid = roomIdRef.current.value;
+  const avatar = getRandomAvatar();
+  socket.emit("room:join", { userId, roomId: roomid, avatar, username });
+};
   useEffect(() => {
     const fetchMaps = async () => {
       try {
