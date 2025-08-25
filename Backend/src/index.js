@@ -335,22 +335,27 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use(cors({
-  origin: true,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
-app.options("*", cors());
+    origin: [
+      "metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
+      "http://localhost:5173"
+    ],
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  }));
 
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
-  cors: {
-    origin: true,
-    credentials: true
-  }
-});
-
+    cors: {
+      origin: [
+        "metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
+        "http://localhost:5173"
+      ],
+      origin: true,
+      credentials: true
+    },
+  });
 const rooms = {};
 
 
