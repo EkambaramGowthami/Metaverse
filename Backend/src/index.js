@@ -214,65 +214,34 @@ io.on("connection",(socket)=>{
     //         console.log(`Started group video call in ${roomName} for users:`, group.map(p => p.userId));
     //     })
     // }
-    // socket.on("room:create",({ userId,avatar,username } )=>{
-    //     // const roomId = Math.random().toString(36).substring(2,6);
-    //     // const players={players:[{userId:userId,username:username,socketId:socket.id,avatar:avatar,x:50,y:50}]};
-    //     // rooms[roomId] = players;
-    //     // socket.join(roomId);
-    //     // const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
-    //     // // socket.emit("roomCreated",{roomId,players:rooms[roomId].players,inviteLink});
-    //     // io.to(socket.id).emit("roomCreated", { roomId, players });
-    //     // io.to(roomId).emit("message","hello guys");
-    //     // console.log("created a room");
-    //     const roomId = createRoomId();
-    //     const room = ensureRoom(roomId);
-    //     const player = { userId, username, socketId: socket.id, avatar, x: 50, y: 50 };
-    //     room.players=[player];
-    //     socket.join(roomId);
-    //     const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
-    //     io.to(socket.id).emit("room:created",{
-    //         roomId,
-    //         inviteLink,
-    //         players:room.players
-    //     });
-    //     io.to(roomId).emit("room:players",{ roomId,players:room.players});
-    //     console.log("room created:",roomId);
+    socket.on("room:create",({ userId,avatar,username } )=>{
+        const roomId = Math.random().toString(36).substring(2,6);
+        const players={players:[{userId:userId,username:username,socketId:socket.id,avatar:avatar,x:50,y:50}]};
+        rooms[roomId] = players;
+        socket.join(roomId);
+        const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
+        // socket.emit("roomCreated",{roomId,players:rooms[roomId].players,inviteLink});
+        io.to(socket.id).emit("roomCreated", { roomId, players });
+        io.to(roomId).emit("message","hello guys");
+        console.log("created a room");
+
+        // const roomId = createRoomId();
+        // const room = ensureRoom(roomId);
+        // const player = { userId, username, socketId: socket.id, avatar, x: 50, y: 50 };
+        // room.players=[player];
+        // socket.join(roomId);
+        // const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
+        // io.to(socket.id).emit("room:created",{
+        //     roomId,
+        //     inviteLink,
+        //     players:room.players
+        // });
+        // io.to(roomId).emit("room:players",{ roomId,players:room.players});
+        // console.log("room created:",roomId);
         
 
-    // });
-    socket.on("room:create", ({ userId, avatar, username }) => {
-        const roomId = createRoomId();
-        const room = ensureRoom(roomId);
-    
-        const player = {
-            userId,
-            username,
-            socketId: socket.id,
-            avatar,
-            x: 50,
-            y: 50
-        };
-    
-        room.players = [player];
-        socket.join(roomId);
-    
-        const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
-    
-        
-        io.to(socket.id).emit("room:created", {
-            roomId,
-            inviteLink,
-            players: room.players
-        });
-    
-        
-        io.to(roomId).emit("room:players", {
-            roomId,
-            players: room.players
-        });
-    
-        console.log("room created:", roomId);
     });
+    
     
     // socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
     //     const room = rooms[roomId];
