@@ -220,7 +220,7 @@ io.on("connection",(socket)=>{
         socket.join(roomId);
         const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
         // socket.emit("roomCreated",{roomId,players:rooms[roomId].players,inviteLink});
-        io.to(socket.id).emit("room:created", { roomId, players:rooms[roomId].players });
+        io.to(socket.id).emit("room:created", { roomId,inviteLink, players:rooms[roomId].players });
          io.to(roomId).emit("room:players",{ roomId,players:rooms[roomId].players});
         // io.to(roomId).emit("message","hello guys");
         console.log("created a room");
