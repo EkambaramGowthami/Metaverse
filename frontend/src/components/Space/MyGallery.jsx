@@ -3,7 +3,7 @@ import  Search  from "../../Icons/Search";
 import  Cancel  from "../../Icons/Cancel";
 import axios from "axios";
 import { io } from "socket.io-client";
-const socket = io("wss://metaverse-3joe.onrender.com", { withCredentials: true ,transports : ["websocket"]});
+const socket = io("https://metaverse-3joe.onrender.com", { withCredentials: true ,transports : ["websocket"]});
 import { useNavigate } from "react-router-dom";
 
 export default function MyGallery() {
@@ -35,6 +35,7 @@ export default function MyGallery() {
   const handleRoomClick = (image)=>{
     const avatar = getRandomAvatar();
     selectedMapRef.current = image;
+    console.log("Emitting room:create", { userId, avatar, username });
     socket.emit("room:create", { userId, avatar, username });
   }
   useEffect(() => {

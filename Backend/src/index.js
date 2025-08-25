@@ -23,7 +23,7 @@ const io = new Server(httpServer, {
     },
   });
 
-const rooms = ({});
+const rooms = {};
 app.post("/signup",async (req,res)=>{
     const email = req.body.email;
     const password = req.body.password;
