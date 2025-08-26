@@ -1,6 +1,5 @@
 import express from "express";
 import { RoomModel, avatarModel, messageModel, userModel } from "./db.js";
-import { ZegoTokenBuilder } from "zego-express-engine-node.js";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
