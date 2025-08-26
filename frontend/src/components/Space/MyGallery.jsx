@@ -7,6 +7,7 @@ const socket = io("https://metaverse-3joe.onrender.com", { withCredentials: true
 import { useNavigate } from "react-router-dom";
 
 export default function MyGallery() {
+  const [roomCreating,setRoomCreating] = useState(false);
   const [createSpace, setCreateSpace] = useState(false);
   const selectedMapRef = useRef(null);
   const [players,setPlayers] = useState([]);
@@ -33,6 +34,8 @@ export default function MyGallery() {
     return avatarsImages[randomIndex];
   }
   const handleRoomClick = (image)=>{
+    if(roomCreating) return;
+    setRoomCreating(true);
     const avatar = getRandomAvatar();
     selectedMapRef.current = image;
     console.log("Emitting room:create", { userId, avatar, username });
@@ -47,6 +50,7 @@ export default function MyGallery() {
   }, []);
   useEffect(() => {
     socket.on("roomCreated", ({ roomId, inviteLink, players }) => {
+      setRoomCreating(false);
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
