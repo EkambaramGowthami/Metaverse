@@ -61,7 +61,7 @@ export default function MyGallery() {
      return () => {
       socket.off("roomCreated");
       socket.off("roomJoined");
-    
+      socket.off("updatedPositions");
     };
   }, [navigate, userId]);
  const handleMapClick = (map) => {

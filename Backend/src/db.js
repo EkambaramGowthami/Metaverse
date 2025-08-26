@@ -8,6 +8,21 @@ mongoose.connect(MONGO_URI)
   .catch(err => console.error("MongoDB error", err));
 
 
+const playerSchema = new mongoose.Schema({
+    userId:mongoose.Types.ObjectId,
+    username:String,
+    socketId:String,
+    avatar: Object,
+    x : {type:Number,default:0},
+    y : {type:Number,default:0},
+    isInCall : {type:Boolean,default:false} 
+});
+
+const roomSchema = new mongoose.Schema({
+    roomId:{type:String,unique:true},
+    players:[playerSchema],
+    createdAt:{type:Date,default:Date.now()}
+})
 const avatarData = [
     {id:1,imageUrl:"/public/avatars/_ (1).jpeg",description:"hi there"},
     {id:2,imageUrl:"/public/avatars/Diego.jpeg",description:"hello"},
@@ -34,6 +49,7 @@ const messageSchema = new mongoose.Schema({
 export const messageModel = mongoose.model("message",messageSchema);
 export const avatarModel = mongoose.model("avatar",avatarSchema);
 export const userModel = mongoose.model("user",userSchema);
+export const RoomModel = mongoose.model("room",roomSchema);
 // async function sendAvatar(){
 //     try{
 //         await avatarModel.deleteMany();

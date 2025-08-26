@@ -500,8 +500,10 @@
 //     />
 //   );
 // };
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { io } from "socket.io-client";
+import VideoCallPage from '../components/video/VideoCallPage';
+
 
 const socket = io("https://metaverse-3joe.onrender.com", {
   withCredentials: true,
@@ -536,6 +538,7 @@ export default function TileMap({
   const tilesetImageRef = useRef(null);
   const avatarCacheRef = useRef({});
   const pendingPlayersRef = useRef([]);
+  const [isInCall, setIsInCall] = useState(false);
 
   // Load map + tileset
   useEffect(() => {
@@ -586,8 +589,8 @@ export default function TileMap({
       applyPlayers(updatedPlayers);
     };
 
-    socket.on("room:players", handlePlayers);
-    return () => socket.off("room:players", handlePlayers);
+    socket.on("updatedPositions", handlePlayers);
+    return () => socket.off("updatedPositions", handlePlayers);
   }, [tileWidth, tileHeight]);
 
   const applyPlayers = (incomingPlayers) => {
@@ -654,7 +657,23 @@ export default function TileMap({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [players, currentUserId, roomId, tileWidth, tileHeight]);
+  useEffect(() => {
+    socket.on("startVideoCall", ({ roomName, participants }) => {
+      if (participants.includes(currentUserId)) {
+        setIsInCall(true);
+        console.log("started videocall for:", roomName);
 
+      }
+
+    });
+    return () => socket.off("startVideoCall");
+
+  }, [currentUserId]);
+  const handleMeetingLeave = () =>{
+    socket.emit("endVideoCall",({ roomId }));
+    setIsInCall(false);
+    console.log("call ended");
+  }
   // Draw map + players
   const draw = () => {
     const canvas = canvasRef.current;
@@ -724,15 +743,30 @@ export default function TileMap({
   };
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        border: "2px solid #ccc",
-        backgroundColor: "#f0f0f0",
-        imageRendering: "pixelated",
-        cursor: "crosshair"
-      }}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        style={{
+          border: "2px solid #ccc",
+          backgroundColor: "#f0f0f0",
+          imageRendering: "pixelated",
+          cursor: "crosshair"
+        }}
+      />{
+        isInCall && (<div className='absolute inset-0 z-50 bg-white'>
+        <VideoCallPage userId={currentUserId} roomId={roomId} />
+        <button
+          className='absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded'
+          onClick={handleMeetingLeave}
+        >
+          Leave Meeting
+        </button>
+      </div>
+      )
+      }
+    </>
+    
+
   );
 }
 
