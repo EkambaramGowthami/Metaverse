@@ -5,7 +5,7 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
+import { generateToken04 } from "./utils/token04.js";
 
 dotenv.config();
 
@@ -235,7 +235,7 @@ app.post("/api/token",(req,res)=>{
         const { userId,roomId } = req.body;
         const effectiveTimeInSeconds = 3600;
         const payload = "";
-        const token = ZegoTokenBuilder.buildToken04(appId,serverSecret,roomId,userId,effectiveTimeInSeconds,payload);
+        const token = generateToken04(appId,userId,serverSecret,effectiveTimeInSeconds,roomId);
         res.send({token,appId});
 
     }
