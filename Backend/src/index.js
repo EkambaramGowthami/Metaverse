@@ -183,15 +183,9 @@ io.on("connection", (socket) => {
     });
 
     socket.on("move", async ({ roomId, userId, x, y }) => {
-        const room = await RoomModel.findOne({ roomId });
+        const room = await RoomModel.findOneAndUpdate({roomId,"players.userId":userId},{ $set : {"players.$.x":x,"players.$.y":y}},{new : true})
         if (!room) return;
-
-        const player = room.players.find(p => p.userId === userId);
-        if (!player) return;
-
-        player.x = x;
-        player.y = y;
-        await room.save();
+       
 
         io.to(roomId).emit("updatedPositions", room.players);
         checkProximityAndTriggerVideoCall(roomId);
@@ -214,16 +208,20 @@ io.on("connection", (socket) => {
 
     socket.on("endVideoCall",async (roomId) =>{
         const room = await RoomModel.findOne({ roomId });
-        if(!room) return;
+        if (!room) return;
+        
         room.players.forEach(p => p.isInCall = false);
         await room.save();
+       
         io.to(roomId).emit("callEnded");
     })
     socket.on("disconnect", async () => {
         const userRooms = await RoomModel.find({ "players.socketId": socket.id });
         for (const room of userRooms) {
-            room.players = room.players.filter(p => p.socketId !== socket.id);
-            await room.save();
+            await RoomModel.updateOne(
+                { roomId: room.roomId },
+                { $pull: { players: { socketId: socket.id } } }
+              );
             io.to(room.roomId).emit("updatedPositions", room.players);
         }
     });
