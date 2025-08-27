@@ -263,30 +263,29 @@ export default function MyGallery() {
   };
 
   useEffect(() => {
-    const handleRoomCreated = ({ roomId, inviteLink, players }) => {
+    socket.on("updatedPositions", (players) => {
+      setPlayers(players); 
+    });
+    return () => socket.off("updatedPositions");
+  }, []);
+  useEffect(() => {
+    socket.on("roomCreated", ({ roomId, inviteLink, players }) => {
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
-      setRoomId(roomId);
       navigate(`/space/room/${roomId}`);
-    };
-
-    const handleRoomJoined = ({ players }) => {
-      setPlayers(players);
-      navigate(`/space/room/${roomIdRef.current.value}`);
-    };
-
-    socket.on("roomCreated", handleRoomCreated);
-    socket.on("roomJoined", handleRoomJoined);
-    socket.on("updatedPositions", (players) => {
-      setPlayers(players);
     });
 
-    return () => {
-      socket.off("roomCreated", handleRoomCreated);
-      socket.off("roomJoined", handleRoomJoined);
-      socket.off("updatedPositions");
+    socket.on("roomJoined", ({ roomId, players }) => {
+      setPlayers(players);
+      navigate(`/space/room/${roomId}`);
+    });
+
+
+     return () => {
+      socket.off("roomCreated");
+      socket.off("roomJoined");
     };
-  }, []);
+  }, [navigate, userId]);
 
   const handleMapClick = (map) => {
     setSpaceMaps((prev) => {
