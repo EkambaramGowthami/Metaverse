@@ -48,25 +48,25 @@ export default function MyGallery() {
     return () => socket.off("updatedPositions");
   }, []);
   useEffect(() => {
-    socket.on("roomCreated", ({ roomId, inviteLink, players }) => {
+    const handleRoomCreated = ({ roomId,inviteLink,players }) => {
       setRoomCreating(false);
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
-    });
 
-    socket.on("roomJoined", ({ roomId, players }) => {
+    }
+    const handleRoomJoined = ({ roomId,inviteLink,players }) => {
       setPlayers(players);
       navigate(`/space/room/${roomId}`);
-    });
-
-   
-     return () => {
+    }
+    socket.on("roomCreated", handleRoomCreated);
+    socket.on("roomJoined", handleRoomJoined);
+    return () => {
       socket.off("roomCreated");
       socket.off("roomJoined");
       socket.off("updatedPositions");
     };
-  }, [navigate, userId]);
+  }, []);
  const handleMapClick = (map) => {
     setSpaceMaps((prev) => {
       if ((prev).find((m) => m.id === map.id)) return prev;
