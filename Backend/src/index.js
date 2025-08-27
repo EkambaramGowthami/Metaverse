@@ -29,17 +29,7 @@ app.use(cors({
 }));
 
 const httpServer = http.createServer(app);
-const io = new Server(httpServer, {
-    cors: {
-        origin: [
-            "metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
-            "http://localhost:5173"
-        ],
-        credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"]
-    },
-});
+const io = new Server(httpServer, { cors: { origin: [ "metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app", "http://localhost:5173" ], origin: true, credentials: true }, });
 app.post("/signup", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -228,16 +218,15 @@ io.on("connection", (socket) => {
     //     room.players.forEach(p => p.isInCall = false);
     //   });
 
-    socket.on("endVideoCall", async ({ roomId }) => {
+    socket.on("endVideoCall",async (roomId) =>{
         const room = await RoomModel.findOne({ roomId });
         if (!room) return;
         
         room.players.forEach(p => p.isInCall = false);
         await room.save();
-        
+       
         io.to(roomId).emit("callEnded");
-    });
-    
+    })
     socket.on("disconnect", async () => {
         const userRooms = await RoomModel.find({ "players.socketId": socket.id });
         for (const room of userRooms) {
