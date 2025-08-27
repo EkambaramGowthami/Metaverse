@@ -188,14 +188,14 @@ io.on("connection", (socket) => {
                     { new: true }
                 );
             }
-            // } else {
+            } else {
 
-            //     updatedRoom = await RoomModel.findOneAndUpdate(
-            //         { roomId, "players.userId": userId },
-            //         { $set: { "players.$.socketId": socket.id } },
-            //         { new: true }
-            //     );
-            // }
+                updatedRoom = await RoomModel.findOneAndUpdate(
+                    { roomId, "players.userId": userId },
+                    { $set: { "players.$.socketId": socket.id } },
+                    { new: true }
+                );
+            }
 
             socket.join(roomId);
             console.log("roomjoined:",socket.id);
