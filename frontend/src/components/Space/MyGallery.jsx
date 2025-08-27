@@ -33,11 +33,9 @@ export default function MyGallery() {
     return avatarsImages[randomIndex];
   }
   const handleRoomClick = (image) => {
-    
     if (roomCreating) {
       return;
     }
-
     setRoomCreating(true); 
     const avatar = getRandomAvatar();
     selectedMapRef.current = image;
@@ -51,8 +49,7 @@ export default function MyGallery() {
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
     };
-
-    const handleRoomJoined = ({ roomId, inviteLink, players }) => {
+    const handleRoomJoined = ({ players }) => {
       setPlayers(players);
       navigate(`/space/room/${roomId}`);
     };

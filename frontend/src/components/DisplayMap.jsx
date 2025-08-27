@@ -116,42 +116,7 @@ export default function DisplayMap(){
   const defaultAvatar = { imageUrl: "/Characters.jpeg" };
   const avatar = JSON.parse(localStorage.getItem("selectedAvatar")) || defaultAvatar;
 
-  useEffect(() => {
-    socket.emit("joinRoom", { userId, roomId, avatar, username });
-
-    socket.on("roomJoined", ({ players }) => {
-      setPlayers(Array.isArray(players) ? players : []);
-    });
-
-    // socket.on("updatedPositions", (updatedPlayers) => {
-    //   setPlayers(Array.isArray(updatedPlayers) ? updatedPlayers : []);
-    // });
-    socket.on("updatedPositions", ({ players }) => {
-      setPlayers(Array.isArray(players) ? players : []);
-    });
-
-    // socket.on("startVideoCall", ({ roomName, participents }) => {
-    //   if (participents.includes(userId)) {
-    //     alert(`Video call started in ${roomName}`);
-    //   }
-    // });
-    // socket.on("startVideoCall", ({ roomId: callRoomId, participants }) => {
-    //   if (participants.includes(userId)) {
-    //     alert(`Video call started in room ${callRoomId}`);
-    //   }
-    // });
-
-    // socket.on("call:end", ({ roomId: callRoomId }) => {
-    //   alert(`Video call ended in room ${callRoomId}`);
-    // });
-
-    return () => {
-      socket.off("roomJoined");
-      socket.off("updatedPositions");
-      
-    };
-  }, [roomId, userId, username, avatar]);
-
+  
   return (
     <div className="flex flex-col md:flex-row w-full h-screen overflow-hidden">
       <div className="flex-1 overflow-auto">

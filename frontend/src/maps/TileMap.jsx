@@ -532,7 +532,12 @@ export default function TileMap({
   const tilesetImageRef = useRef(null);
   const avatarCacheRef = useRef({});
   const pendingPlayersRef = useRef([]);
+  const playersRef = useRef(players); // ✅ Ref for players
   const [isInCall, setIsInCall] = useState(false);
+
+  useEffect(() => {
+    playersRef.current = players; // ✅ Keep ref updated
+  }, [players]);
 
   useEffect(() => {
     const loadMap = async () => {
@@ -602,6 +607,7 @@ export default function TileMap({
       const tileX = Math.floor(p.x / tileWidth);
       const tileY = Math.floor(p.y / tileHeight);
       const tileIndex = tileY * mapData.width + tileX;
+      if (tileIndex < 0 || tileIndex >= layer.data.length) return false;
       const tileId = layer.data[tileIndex];
       return isTileWalkable(tileId, mapData.tilesets);
     });
@@ -617,7 +623,7 @@ export default function TileMap({
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      const currentPlayer = players.find(p => p.userId === currentUserId);
+      const currentPlayer = playersRef.current.find(p => p.userId === currentUserId);
       if (!currentPlayer || !mapDataRef.current) return;
 
       let newX = currentPlayer.x;
@@ -632,6 +638,7 @@ export default function TileMap({
       const tileY = Math.floor(newY / tileHeight);
       const layer = mapDataRef.current.layers.find(l => l.type === 'tilelayer');
       const tileIndex = tileY * mapDataRef.current.width + tileX;
+      if (tileIndex < 0 || tileIndex >= layer.data.length) return;
       const tileId = layer.data[tileIndex];
 
       if (!isTileWalkable(tileId, mapDataRef.current.tilesets)) return;
@@ -647,23 +654,7 @@ export default function TileMap({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [players, currentUserId, roomId, tileWidth, tileHeight]);
-
-  // useEffect(() => {
-  //   socket.on("startVideoCall", ({ roomId: callRoomId, participants }) => {
-  //     if (callRoomId === roomId && participants.includes(currentUserId)) {
-  //       setIsInCall(true);
-  //       console.log("started videocall for:", callRoomId);
-  //     }
-  //   });
-  //   return () => socket.off("startVideoCall");
-  // }, [currentUserId]);
-
-  // const handleMeetingLeave = () => {
-  //   socket.emit("endVideoCall", roomId);
-  //   setIsInCall(false);
-  //   console.log("call ended");
-  // };
+  }, [currentUserId, roomId, tileWidth, tileHeight]);
 
   const draw = () => {
     const canvas = canvasRef.current;
@@ -741,22 +732,7 @@ export default function TileMap({
           cursor: "crosshair"
         }}
       />
-      {/* {isInCall && (
-        <div className='absolute inset-0 z-50 bg-white'>
-          <VideoCallPage userId={currentUserId} roomId={roomId} />
-          <button
-            className='absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded'
-            onClick={handleMeetingLeave}
-          >
-            Leave
-        </button>
-      </div>
-      )
-      } */}
+      
     </>
-    
-
   );
 }
-
-
