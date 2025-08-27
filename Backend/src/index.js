@@ -188,7 +188,7 @@ io.on("connection", (socket) => {
                     { new: true }
                 );
             }
-            } else {
+             else {
 
                 updatedRoom = await RoomModel.findOneAndUpdate(
                     { roomId, "players.userId": userId },
@@ -208,6 +208,7 @@ io.on("connection", (socket) => {
             socket.emit("error", "Server error while joining room");
         }
     });
+    
 
 
     socket.on("move", async ({ roomId, userId, x, y }) => {
