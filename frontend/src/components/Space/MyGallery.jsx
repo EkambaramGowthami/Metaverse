@@ -32,38 +32,42 @@ export default function MyGallery() {
     const randomIndex = Math.floor(Math.random() * avatarsImages.length);
     return avatarsImages[randomIndex];
   }
-  const handleRoomClick = (image)=>{
-    if(roomCreating) return;
-    setRoomCreating(true);
+  const handleRoomClick = (image) => {
+    
+    if (roomCreating) {
+      return;
+    }
+
+    setRoomCreating(true); 
     const avatar = getRandomAvatar();
     selectedMapRef.current = image;
     console.log("Emitting room:create", { userId, avatar, username });
     socket.emit("createRoom", { userId, avatar, username });
-    
-  }
+  };
+ 
   useEffect(() => {
-    socket.on("updatedPositions", (players) => {
-      setPlayers(players); 
-    });
-    return () => socket.off("updatedPositions");
-  }, []);
-  useEffect(() => {
-    const handleRoomCreated = ({ roomId,inviteLink,players }) => {
-      setRoomCreating(false);
+    const handleRoomCreated = ({ roomId, inviteLink, players }) => {
+      // No need to set roomCreating to false here.
+      // The button should remain disabled until the user navigates back to this page.
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
+    };
 
-    }
-    const handleRoomJoined = ({ roomId,inviteLink,players }) => {
+    const handleRoomJoined = ({ roomId, inviteLink, players }) => {
       setPlayers(players);
       navigate(`/space/room/${roomId}`);
-    }
+    };
+
     socket.on("roomCreated", handleRoomCreated);
     socket.on("roomJoined", handleRoomJoined);
+    socket.on("updatedPositions", (players) => {
+      setPlayers(players);
+    });
+
     return () => {
-      socket.off("roomCreated");
-      socket.off("roomJoined");
+      socket.off("roomCreated", handleRoomCreated);
+      socket.off("roomJoined", handleRoomJoined);
       socket.off("updatedPositions");
     };
   }, []);
