@@ -128,28 +128,35 @@ io.on("connection", (socket) => {
     }
 
     socket.on("createRoom", async ({ userId, avatar, username }) => {
-        const roomId = Math.random().toString(36).substring(2, 6);
         const existingRoom = await RoomModel.findOne({ "players.userId": userId });
+      
         if (existingRoom) {
-            const inviteLink = `https://metaverse.../space/room?roomId=${existingRoom.roomId}`;
-            return io.to(socket.id).emit("roomCreated", {
-                roomId: existingRoom.roomId,
-                players: existingRoom.players,
-                inviteLink
-            });
+          const alreadyExists = existingRoom.players.some(p => p.userId === userId);
+          if (!alreadyExists) {
+            existingRoom.players.push({ userId, username, socketId: socket.id, avatar, x: 50, y: 50 });
+            await existingRoom.save();
+          }
+          const inviteLink = `https://metaverse.../space/room?roomId=${existingRoom.roomId}`;
+          return io.to(socket.id).emit("roomCreated", {
+            roomId: existingRoom.roomId,
+            players: existingRoom.players,
+            inviteLink
+          });
         }
+      
+        const roomId = Math.random().toString(36).substring(2, 6);
         const newRoom = await RoomModel.create({
-            roomId,
-            players: [{ userId, username, socketId: socket.id, avatar, x: 50, y: 50 }]
-
-        })
+          roomId,
+          players: [{ userId, username, socketId: socket.id, avatar, x: 50, y: 50 }]
+        });
+      
         socket.join(roomId);
-        const inviteLink = `https://metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app/space/room?roomId=${roomId}`;
-        io.to(socket.id).emit("roomCreated", { roomId, players: newRoom.players, inviteLink });
+        const inviteLink = `https://metaverse.../space/room?roomId=${roomId}`;
+        io.to(socket.id).emit("roomCreated", { roomId, inviteLink,players: newRoom.players});
         io.to(roomId).emit("message", "hello guys");
         console.log("Room created:", roomId);
-    });
-
+      });
+      
     socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
         try {
             const room = await RoomModel.findOne({ roomId });

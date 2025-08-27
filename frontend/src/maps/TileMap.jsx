@@ -504,9 +504,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { socket } from '../components/utils/socket';
 import VideoCallPage from '../components/video/VideoCallPage';
 
-
-
-
 const isTileWalkable = (tileId, tilesets) => {
   for (const tileset of tilesets) {
     const firstGid = tileset.firstgid;
@@ -537,7 +534,6 @@ export default function TileMap({
   const pendingPlayersRef = useRef([]);
   const [isInCall, setIsInCall] = useState(false);
 
-  // Load map + tileset
   useEffect(() => {
     const loadMap = async () => {
       try {
@@ -575,12 +571,10 @@ export default function TileMap({
     loadMap();
   }, [mapUrl, tilesetImageUrl]);
 
-  // Redraw when players update
   useEffect(() => {
     draw();
   }, [players]);
 
-  // Listen for players updates from backend
   useEffect(() => {
     const handlePlayers = ({ players: updatedPlayers }) => {
       applyPlayers(updatedPlayers);
@@ -596,8 +590,6 @@ export default function TileMap({
     const uniquePlayers = incomingPlayers.filter(
       (p, i, self) => i === self.findIndex(u => u.userId === p.userId)
     );
-  
-    setPlayers(uniquePlayers);
 
     const mapData = mapDataRef.current;
     const layer = mapData?.layers.find(l => l.type === 'tilelayer');
@@ -606,7 +598,7 @@ export default function TileMap({
       return;
     }
 
-    const validPlayers = incomingPlayers.filter(p => {
+    const validPlayers = uniquePlayers.filter(p => {
       const tileX = Math.floor(p.x / tileWidth);
       const tileY = Math.floor(p.y / tileHeight);
       const tileIndex = tileY * mapData.width + tileX;
@@ -623,7 +615,6 @@ export default function TileMap({
     pendingPlayersRef.current = [];
   };
 
-  // Movement handler
   useEffect(() => {
     const handleKeyDown = (e) => {
       const currentPlayer = players.find(p => p.userId === currentUserId);
@@ -657,6 +648,7 @@ export default function TileMap({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [players, currentUserId, roomId, tileWidth, tileHeight]);
+
   useEffect(() => {
     socket.on("startVideoCall", ({ roomId: callRoomId, participants }) => {
       if (callRoomId === roomId && participants.includes(currentUserId)) {
@@ -665,14 +657,14 @@ export default function TileMap({
       }
     });
     return () => socket.off("startVideoCall");
-
   }, [currentUserId]);
-  const handleMeetingLeave = () =>{
-    socket.emit("endVideoCall",({ roomId }));
+
+  const handleMeetingLeave = () => {
+    socket.emit("endVideoCall", roomId);
     setIsInCall(false);
     console.log("call ended");
-  }
-  // Draw map + players
+  };
+
   const draw = () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -685,7 +677,6 @@ export default function TileMap({
     canvas.height = mapData.height * tileHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // draw tiles
     mapData.layers.forEach(layer => {
       if (layer.type !== 'tilelayer') return;
 
@@ -708,7 +699,6 @@ export default function TileMap({
       });
     });
 
-    // draw players
     players.forEach(p => {
       const avatarUrl = p.avatar?.imageUrl;
       if (!avatarUrl) return;
@@ -750,14 +740,15 @@ export default function TileMap({
           imageRendering: "pixelated",
           cursor: "crosshair"
         }}
-      />{
-        isInCall && (<div className='absolute inset-0 z-50 bg-white'>
-        <VideoCallPage userId={currentUserId} roomId={roomId} />
-        <button
-          className='absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded'
-          onClick={handleMeetingLeave}
-        >
-          Leave Meeting
+      />
+      {isInCall && (
+        <div className='absolute inset-0 z-50 bg-white'>
+          <VideoCallPage userId={currentUserId} roomId={roomId} />
+          <button
+            className='absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded'
+            onClick={handleMeetingLeave}
+          >
+            Leave
         </button>
       </div>
       )
