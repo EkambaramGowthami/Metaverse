@@ -220,7 +220,7 @@ export default function MyGallery() {
   const [players, setPlayers] = useState([]);
   const [roomId, setRoomId] = useState("");
   const roomIdRef = useRef(null);
-  const hasJoinedRef = useRef(false); // ✅ Prevent duplicate joins
+  const hasJoinedRef = useRef(false); 
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
   const username = localStorage.getItem("username");
@@ -245,23 +245,13 @@ export default function MyGallery() {
     return avatarsImages[randomIndex];
   }
 
-  const handleRoomClick = (image) => {
-    if (roomCreating) return;
-    setRoomCreating(true);
+  const handleRoomClick = (image)=>{
     const avatar = getRandomAvatar();
     selectedMapRef.current = image;
+    console.log("Emitting room:create", { userId, avatar, username });
     socket.emit("createRoom", { userId, avatar, username });
-  };
 
-  const handleJoinRoom = () => {
-    if (hasJoinedRef.current) return;
-    const roomid = roomIdRef.current.value;
-    if (!roomid) return;
-    const avatar = getRandomAvatar();
-    socket.emit("joinRoom", { userId, roomId: roomid, avatar, username });
-    hasJoinedRef.current = true;
-  };
-
+  }
   useEffect(() => {
     socket.on("updatedPositions", (players) => {
       setPlayers(players); 
@@ -286,18 +276,24 @@ export default function MyGallery() {
       socket.off("roomJoined");
     };
   }, [navigate, userId]);
-
-  const handleMapClick = (map) => {
+ const handleMapClick = (map) => {
     setSpaceMaps((prev) => {
-      if (prev.find((m) => m.id === map.id)) return prev;
+      if ((prev).find((m) => m.id === map.id)) return prev;
       const updated = [...prev, map];
-      axios.post("https://metaverse-3joe.onrender.com/maps/update", {
-        userId,
-        maps: updated
-      }).catch((e) => console.log("failed to upload the data:", e));
+      axios.post("https://metaverse-3joe.onrender.com/maps/update",{
+        userId:userId,
+        maps:updated
+      }).catch((e)=>console.log("failed to upload the data:",e));
       return updated;
     });
-  };
+}
+const handleJoinRoom = () => {
+  const roomid = roomIdRef.current.value;
+  const avatar = getRandomAvatar();
+  socket.emit("joinRoom", { userId, roomId: roomid, avatar, username });
+};
+
+ 
 
   useEffect(() => {
     const fetchMaps = async () => {
