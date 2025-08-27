@@ -47,8 +47,6 @@ export default function MyGallery() {
  
   useEffect(() => {
     const handleRoomCreated = ({ roomId, inviteLink, players }) => {
-      // No need to set roomCreating to false here.
-      // The button should remain disabled until the user navigates back to this page.
       setPlayers(Array.isArray(players) ? players : players.players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);

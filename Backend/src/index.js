@@ -200,6 +200,7 @@ io.on("connection", (socket) => {
             }
 
             socket.join(roomId);
+            console.log("roomjoined:",socket.id);
 
             io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
             io.to(roomId).emit("updatedPositions", updatedRoom.players);
