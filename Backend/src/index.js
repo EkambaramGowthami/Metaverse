@@ -23,7 +23,6 @@ app.use(cors({
         "metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
         "http://localhost:5173"
     ],
-    origin: true,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -36,8 +35,9 @@ const io = new Server(httpServer, {
             "metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app",
             "http://localhost:5173"
         ],
-        origin: true,
-        credentials: true
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"]
     },
 });
 app.post("/signup", async (req, res) => {
@@ -163,24 +163,46 @@ io.on("connection", (socket) => {
     });
 
     socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
-        const room = await RoomModel.findOne({ roomId });
-        if (!room) return socket.emit("error", "room not found");
-        if (room.players.length >= 5) return socket.emit("error", "room full");
-
-        if (!room.players.some((p) => p.userId === userId)) {
-            room.players.push({ userId, username, socketId: socket.id, avatar, x: 0, y: 0 });
-            await room.save();
+        try {
+          const room = await RoomModel.findOne({ roomId });
+          if (!room) {
+            return socket.emit("error", "room not found");
+          }
+      
+          if (room.players.length >= 5) {
+            return socket.emit("error", "room full");
+          }
+      
+          const existingPlayerIndex = room.players.findIndex(p => p.userId === userId);
+      
+          if (existingPlayerIndex === -1) {
+     
+            room.players.push({
+              userId,
+              username,
+              socketId: socket.id,
+              avatar,
+              x: 0,
+              y: 0
+            });
+          } else {
+        
+            room.players[existingPlayerIndex].socketId = socket.id;
+          }
+      
+          await room.save();
+      
+          socket.join(roomId);
+      
+          io.to(roomId).emit("roomJoined", { players: room.players });
+          io.to(roomId).emit("updatedPositions", room.players);
+      
+        } catch (err) {
+          console.error("Error in joinRoom:", err);
+          socket.emit("error", "Server error while joining room");
         }
-        else {
-            room.players = room.players.map(p => p.userId === userId ? { ...p.toObject(), socketId: socket.id } : p);
-            await room.save();
-        }
-
-        socket.join(roomId);
-
-        io.to(roomId).emit("roomJoined", { players: room.players });
-        io.to(roomId).emit("updatedPositions", room.players);
-    });
+      });
+      
 
     socket.on("move", async ({ roomId, userId, x, y }) => {
         const room = await RoomModel.findOneAndUpdate({roomId,"players.userId":userId},{ $set : {"players.$.x":x,"players.$.y":y}},{new : true})
@@ -206,15 +228,16 @@ io.on("connection", (socket) => {
     //     room.players.forEach(p => p.isInCall = false);
     //   });
 
-    socket.on("endVideoCall",async (roomId) =>{
+    socket.on("endVideoCall", async ({ roomId }) => {
         const room = await RoomModel.findOne({ roomId });
         if (!room) return;
         
         room.players.forEach(p => p.isInCall = false);
         await room.save();
-       
+        
         io.to(roomId).emit("callEnded");
-    })
+    });
+    
     socket.on("disconnect", async () => {
         const userRooms = await RoomModel.find({ "players.socketId": socket.id });
         for (const room of userRooms) {

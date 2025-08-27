@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import  Search  from "../../Icons/Search";
 import  Cancel  from "../../Icons/Cancel";
 import axios from "axios";
-import { io } from "socket.io-client";
-const socket = io("https://metaverse-3joe.onrender.com", { withCredentials: true ,transports : ["websocket"]});
+import { socket } from "../utils/socket";
 import { useNavigate } from "react-router-dom";
 
 export default function MyGallery() {

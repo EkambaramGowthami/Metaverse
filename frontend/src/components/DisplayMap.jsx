@@ -103,13 +103,9 @@
 
 import { useEffect, useState } from "react";
 import TileMap from "../maps/TileMap";
-import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 
-const socket = io("https://metaverse-3joe.onrender.com", {
-  withCredentials: true,
-  transports: ["websocket"]
-});
+import { socket } from "./utils/socket";
 
 export default function DisplayMap(){
   const [invite, setInvite] = useState(false);

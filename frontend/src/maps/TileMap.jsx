@@ -501,14 +501,11 @@
 //   );
 // };
 import React, { useEffect, useRef, useState } from 'react';
-import { io } from "socket.io-client";
+import { socket } from '../components/utils/socket';
 import VideoCallPage from '../components/video/VideoCallPage';
 
 
-const socket = io("https://metaverse-3joe.onrender.com", {
-  withCredentials: true,
-  transports: ["websocket"]
-});
+
 
 const isTileWalkable = (tileId, tilesets) => {
   for (const tileset of tilesets) {
@@ -594,10 +591,13 @@ export default function TileMap({
   }, [tileWidth, tileHeight]);
 
   const applyPlayers = (incomingPlayers) => {
-    if (!Array.isArray(incomingPlayers)) {
-      console.warn("Invalid players data:", incomingPlayers);
-      return;
-    }
+    if (!Array.isArray(incomingPlayers)) return;
+
+    const uniquePlayers = incomingPlayers.filter(
+      (p, i, self) => i === self.findIndex(u => u.userId === p.userId)
+    );
+  
+    setPlayers(uniquePlayers);
 
     const mapData = mapDataRef.current;
     const layer = mapData?.layers.find(l => l.type === 'tilelayer');
@@ -658,13 +658,11 @@ export default function TileMap({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [players, currentUserId, roomId, tileWidth, tileHeight]);
   useEffect(() => {
-    socket.on("startVideoCall", ({ roomName, participants }) => {
-      if (participants.includes(currentUserId)) {
+    socket.on("startVideoCall", ({ roomId: callRoomId, participants }) => {
+      if (callRoomId === roomId && participants.includes(currentUserId)) {
         setIsInCall(true);
-        console.log("started videocall for:", roomName);
-
+        console.log("started videocall for:", callRoomId);
       }
-
     });
     return () => socket.off("startVideoCall");
 
