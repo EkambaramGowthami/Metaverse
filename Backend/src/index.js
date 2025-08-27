@@ -167,10 +167,7 @@ io.on("connection", (socket) => {
             if (room.players.length >= 5) {
                 return socket.emit("error", "room full");
             }
-
-
             const existingPlayer = room.players.find(p => p.userId === userId);
-
             let updatedRoom;
             if (!existingPlayer) {
 
@@ -190,14 +187,15 @@ io.on("connection", (socket) => {
                     },
                     { new: true }
                 );
-            } else {
-
-                updatedRoom = await RoomModel.findOneAndUpdate(
-                    { roomId, "players.userId": userId },
-                    { $set: { "players.$.socketId": socket.id } },
-                    { new: true }
-                );
             }
+            // } else {
+
+            //     updatedRoom = await RoomModel.findOneAndUpdate(
+            //         { roomId, "players.userId": userId },
+            //         { $set: { "players.$.socketId": socket.id } },
+            //         { new: true }
+            //     );
+            // }
 
             socket.join(roomId);
             console.log("roomjoined:",socket.id);
