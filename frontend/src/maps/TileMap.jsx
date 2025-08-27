@@ -649,21 +649,21 @@ export default function TileMap({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [players, currentUserId, roomId, tileWidth, tileHeight]);
 
-  useEffect(() => {
-    socket.on("startVideoCall", ({ roomId: callRoomId, participants }) => {
-      if (callRoomId === roomId && participants.includes(currentUserId)) {
-        setIsInCall(true);
-        console.log("started videocall for:", callRoomId);
-      }
-    });
-    return () => socket.off("startVideoCall");
-  }, [currentUserId]);
+  // useEffect(() => {
+  //   socket.on("startVideoCall", ({ roomId: callRoomId, participants }) => {
+  //     if (callRoomId === roomId && participants.includes(currentUserId)) {
+  //       setIsInCall(true);
+  //       console.log("started videocall for:", callRoomId);
+  //     }
+  //   });
+  //   return () => socket.off("startVideoCall");
+  // }, [currentUserId]);
 
-  const handleMeetingLeave = () => {
-    socket.emit("endVideoCall", roomId);
-    setIsInCall(false);
-    console.log("call ended");
-  };
+  // const handleMeetingLeave = () => {
+  //   socket.emit("endVideoCall", roomId);
+  //   setIsInCall(false);
+  //   console.log("call ended");
+  // };
 
   const draw = () => {
     const canvas = canvasRef.current;
@@ -741,7 +741,7 @@ export default function TileMap({
           cursor: "crosshair"
         }}
       />
-      {isInCall && (
+      {/* {isInCall && (
         <div className='absolute inset-0 z-50 bg-white'>
           <VideoCallPage userId={currentUserId} roomId={roomId} />
           <button
@@ -752,7 +752,7 @@ export default function TileMap({
         </button>
       </div>
       )
-      }
+      } */}
     </>
     
 
