@@ -148,9 +148,9 @@ io.on("connection", (socket) => {
             return socket.emit("error", "room not found");
           }
       
-          if (room.players.length >= 5) {
-            return socket.emit("error", "room full");
-          }
+        //   if (room.players.length >= 5) {
+        //     return socket.emit("error", "room full");
+        //   }
       
           const existingPlayerIndex = room.players.findIndex(p => p.userId === userId);
       
