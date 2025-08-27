@@ -128,18 +128,19 @@ io.on("connection", (socket) => {
     }
 
     socket.on("createRoom", async ({ userId, avatar, username }) => {
-        const existingRoom = await RoomModel.findOne({ "players.userId": userId });
+        let room = await RoomModel.findOne({ "players.userId": userId });
       
-        if (existingRoom) {
-          const alreadyExists = existingRoom.players.some(p => p.userId === userId);
-          if (!alreadyExists) {
-            existingRoom.players.push({ userId, username, socketId: socket.id, avatar, x: 50, y: 50 });
-            await existingRoom.save();
-          }
-          const inviteLink = `https://metaverse.../space/room?roomId=${existingRoom.roomId}`;
+        if (room) {
+          room = await RoomModel.findOneAndUpdate(
+            { roomId: room.roomId, "players.userId": userId },
+            { $set: { "players.$.socketId": socket.id } },
+            { new: true }
+          );
+      
+          const inviteLink = `https://metaverse.../space/room?roomId=${room.roomId}`;
           return io.to(socket.id).emit("roomCreated", {
-            roomId: existingRoom.roomId,
-            players: existingRoom.players,
+            roomId: room.roomId,
+            players: room.players,
             inviteLink
           });
         }
@@ -152,12 +153,11 @@ io.on("connection", (socket) => {
       
         socket.join(roomId);
         const inviteLink = `https://metaverse.../space/room?roomId=${roomId}`;
-        io.to(socket.id).emit("roomCreated", { roomId, inviteLink,players: newRoom.players});
+        io.to(socket.id).emit("roomCreated", { roomId, inviteLink, players: newRoom.players });
         io.to(roomId).emit("message", "hello guys");
         console.log("Room created:", roomId);
-      });
-      
-    socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
+      });      
+      socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
         try {
             const room = await RoomModel.findOne({ roomId });
             if (!room) {
@@ -201,7 +201,7 @@ io.on("connection", (socket) => {
 
             socket.join(roomId);
             console.log("roomjoined:",socket.id);
-
+            console.log("Room state after join:", updatedRoom.players.map(p => p.userId));
             io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
             io.to(roomId).emit("updatedPositions", updatedRoom.players);
 

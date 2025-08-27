@@ -532,11 +532,12 @@ export default function TileMap({
   const tilesetImageRef = useRef(null);
   const avatarCacheRef = useRef({});
   const pendingPlayersRef = useRef([]);
-  const playersRef = useRef(players); // ✅ Ref for players
+  const playersRef = useRef(players);
+  const hasJoinedRef = useRef(false); // ✅ Prevent duplicate joins
   const [isInCall, setIsInCall] = useState(false);
 
   useEffect(() => {
-    playersRef.current = players; // ✅ Keep ref updated
+    playersRef.current = players;
   }, [players]);
 
   useEffect(() => {
@@ -588,6 +589,17 @@ export default function TileMap({
     socket.on("updatedPositions", handlePlayers);
     return () => socket.off("updatedPositions", handlePlayers);
   }, [tileWidth, tileHeight]);
+
+  useEffect(() => {
+    // ✅ Emit joinRoom only once
+    if (!hasJoinedRef.current) {
+      const alreadyInRoom = players.some(p => p.userId === currentUserId);
+      if (!alreadyInRoom) {
+        socket.emit("joinRoom", { roomId, userId: currentUserId });
+        hasJoinedRef.current = true;
+      }
+    }
+  }, [roomId, currentUserId, players]);
 
   const applyPlayers = (incomingPlayers) => {
     if (!Array.isArray(incomingPlayers)) return;
@@ -732,7 +744,7 @@ export default function TileMap({
           cursor: "crosshair"
         }}
       />
-      
+      {/* Video call UI can be re-enabled here if needed */}
     </>
   );
 }
