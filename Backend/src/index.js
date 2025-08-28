@@ -128,34 +128,17 @@ io.on("connection", (socket) => {
     }
 
     socket.on("createRoom", async ({ userId, avatar, username }) => {
-        let room = await RoomModel.findOne({ "players.userId": userId });
-      
-        if (room) {
-          room = await RoomModel.findOneAndUpdate(
-            { roomId: room.roomId, "players.userId": userId },
-            { $set: { "players.$.socketId": socket.id } },
-            { new: true }
-          );
-      
-          const inviteLink = `https://metaverse.../space/room?roomId=${room.roomId}`;
-          return io.to(socket.id).emit("roomCreated", {
-            roomId: room.roomId,
-            players: room.players,
-            inviteLink
-          });
-        }
-      
-        const roomId = Math.random().toString(36).substring(2, 6);
+        const roomId = Math.random().toString(36).substring(2,6);
         const newRoom = await RoomModel.create({
-          roomId,
-          players: [{ userId, username, socketId: socket.id, avatar, x: 50, y: 50 }]
+            roomId,
+            players:[{ userId,username,socketId:socket.id, avatar, x:50,y:50}]
         });
-      
         socket.join(roomId);
         const inviteLink = `https://metaverse.../space/room?roomId=${roomId}`;
         io.to(socket.id).emit("roomCreated", { roomId, inviteLink, players: newRoom.players });
         io.to(roomId).emit("message", "hello guys");
         console.log("Room created:", roomId);
+
       });      
       socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
         try {
@@ -167,10 +150,9 @@ io.on("connection", (socket) => {
             if (room.players.length >= 5) {
                 return socket.emit("error", "room full");
             }
-            const existingPlayer = room.players.find(p => p.userId === userId);
+            const existingPlayer = room.players.find(p => (p.userId === userId || p.socketId == socketId));
             let updatedRoom;
             if (!existingPlayer) {
-
                 updatedRoom = await RoomModel.findOneAndUpdate(
                     { roomId },
                     {
@@ -189,7 +171,6 @@ io.on("connection", (socket) => {
                 );
             }
              else {
-
                 updatedRoom = await RoomModel.findOneAndUpdate(
                     { roomId, "players.userId": userId },
                     { $set: { "players.$.socketId": socket.id } },
@@ -220,20 +201,6 @@ io.on("connection", (socket) => {
         checkProximityAndTriggerVideoCall(roomId);
     });
 
-    //   socket.on("chat", async (roomId, userId, message) => {
-    //     const newMsg = await messageModel.create({ roomId, userId, message });
-    //     io.to(roomId).emit("newMessage", {
-    //       userId,
-    //       message,
-    //       timeStamp: newMsg.timestamp
-    //     });
-    //   });
-
-    //   socket.on("endVideoCall", (roomId) => {
-    //     const room = rooms[roomId];
-    //     if (!room) return;
-    //     room.players.forEach(p => p.isInCall = false);
-    //   });
 
     socket.on("endVideoCall", async (roomId) => {
         const room = await RoomModel.findOne({ roomId });
