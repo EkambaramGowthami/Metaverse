@@ -150,7 +150,7 @@ io.on("connection", (socket) => {
             if (room.players.length >= 5) {
                 return socket.emit("error", "room full");
             }
-            const existingPlayer = room.players.find(p => (p.userId === userId || p.socketId == socketId));
+            const existingPlayer = room.players.find(p => (p.userId === userId));
             let updatedRoom;
             if (!existingPlayer) {
                 updatedRoom = await RoomModel.findOneAndUpdate(
