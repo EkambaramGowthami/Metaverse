@@ -265,15 +265,15 @@ export default function MyGallery() {
       navigate(`/space/room/${roomId}`);
     });
 
-    socket.on("roomJoined", ({ roomId, players }) => {
-      setPlayers(players);
-      navigate(`/space/room/${roomId}`);
-    });
+    // socket.on("roomJoined", ({ roomId, players }) => {
+    //   setPlayers(players);
+    //   navigate(`/space/room/${roomId}`);
+    // });
 
 
      return () => {
       socket.off("roomCreated");
-      socket.off("roomJoined");
+      // socket.off("roomJoined");
     };
   }, [navigate, userId]);
  const handleMapClick = (map) => {
@@ -290,7 +290,7 @@ export default function MyGallery() {
 const handleJoinRoom = () => {
   const roomid = roomIdRef.current.value;
   const avatar = getRandomAvatar();
-  socket.emit("joinRoom", { userId, roomId: roomid, avatar, username });
+  // socket.emit("joinRoom", { userId, roomId: roomid, avatar, username });
 };
 
  
