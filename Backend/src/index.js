@@ -204,21 +204,33 @@ io.on("connection", (socket) => {
     // });
     socket.on("move", async ({ roomId, userId, x, y }) => {
         try {
-           if (!roomId || !userId || typeof x !== "number" || typeof y !== "number") {
+            if (!roomId || !userId || typeof x !== "number" || typeof y !== "number") {
                 console.warn("Invalid move payload:", { roomId, userId, x, y });
                 return;
             }
+    
             const room = await RoomModel.findOne({ roomId });
-            if (!room) return;
-            const playerIndex = room.players.findIndex(p => p.userId === userId);
-            if (playerIndex === -1) return;
+            if (!room) {
+                console.warn(`Room ${roomId} not found`);
+                return;
+            }
+    
+            const playerIndex = room.players.findIndex(p => p.userId === userId );
+            if (playerIndex === -1) {
+                console.warn(`Player ${userId} not found in room ${roomId}`);
+                return;
+            }
     
             room.players[playerIndex].x = x;
             room.players[playerIndex].y = y;
+    
             if (typeof room.players[playerIndex].isInCall !== "boolean") {
                 room.players[playerIndex].isInCall = false;
             }
+    
             await room.save();
+            console.log(`Updated position for ${userId} in room ${roomId}: (${x}, ${y})`);
+    
             io.to(roomId).emit("updatedPositions", room.players);
             checkProximityAndTriggerVideoCall(roomId);
         } catch (err) {
