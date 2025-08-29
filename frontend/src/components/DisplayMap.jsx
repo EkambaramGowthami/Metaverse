@@ -12,6 +12,7 @@ export default function DisplayMap(){
   const username = localStorage.getItem("username");
   const defaultAvatar = { imageUrl: "/Characters.jpeg" };
   const avatar = JSON.parse(localStorage.getItem("selectedAvatar")) || defaultAvatar;
+  const [videoCall,setVideoCall] = useState(false);
 
   
   return (
@@ -26,8 +27,10 @@ export default function DisplayMap(){
           setPlayers={setPlayers}
           currentUserId={userId}
           roomId={roomId}
+          setVideoCall={setVideoCall}
         />
       </div>
+
       <div>
         <button
           className="flex text-xl items-start bg-green-500 rounded px-12 py-4"
@@ -52,7 +55,40 @@ export default function DisplayMap(){
               <span>{p.username || p.userId}</span>
             </div>
           ))}
-        </div> 
+        </div>
+        <div>
+        {videoCall ? (
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        left: '20px',
+        zIndex: 999,
+        backgroundColor: 'black',
+        color: 'white',
+        padding: '10px',
+        borderRadius: '8px',
+        fontSize: '14px',
+        boxShadow: '0 0 10px rgba(0,0,0,0.5)'
+      }}>
+        Video is here
+      </div>
+    ) : (
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        left: '20px',
+        zIndex: 999,
+        backgroundColor: '#eee',
+        color: '#333',
+        padding: '10px',
+        borderRadius: '8px',
+        fontSize: '14px',
+        boxShadow: '0 0 10px rgba(0,0,0,0.2)'
+      }}>
+        Video not there
+      </div>
+    )}
+        </div>
       </div>
       
     </div>

@@ -14,14 +14,15 @@ export default function TileMap({
   players,
   setPlayers,
   currentUserId,
-  roomId
+  roomId,
+  setVideoCall
 }) {
   const canvasRef = useRef(null);
   const mapDataRef = useRef(null);
   const tilesetImageRef = useRef(null);
   const avatarCacheRef = useRef({});
   const pendingPlayersRef = useRef([]);
-  const [videoCall, setVideoCall] = useState(false);
+  
 
   useEffect(() => {
     const loadMap = async () => {
@@ -224,37 +225,7 @@ export default function TileMap({
       }}
     />
 
-    {videoCall ? (
-      <div style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        zIndex: 999,
-        backgroundColor: 'black',
-        color: 'white',
-        padding: '10px',
-        borderRadius: '8px',
-        fontSize: '14px',
-        boxShadow: '0 0 10px rgba(0,0,0,0.5)'
-      }}>
-        Video is here
-      </div>
-    ) : (
-      <div style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        zIndex: 999,
-        backgroundColor: '#eee',
-        color: '#333',
-        padding: '10px',
-        borderRadius: '8px',
-        fontSize: '14px',
-        boxShadow: '0 0 10px rgba(0,0,0,0.2)'
-      }}>
-        Video not there
-      </div>
-    )}
+    
   </div>
   );
 }
