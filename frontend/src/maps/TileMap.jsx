@@ -87,7 +87,7 @@ export default function TileMap(
     socket.on("roomJoined", ({ players }) => applyPlayers(players));
     socket.on("startVideoCall", ({ roomName,participants }) => {
       setVideoCall(true);
-      console.log("started the video call");
+      alert("started the video call");
      
     });    
     socket.on("endVideoCall", ({ roomId }) => {
