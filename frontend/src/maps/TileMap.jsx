@@ -209,50 +209,52 @@ export default function TileMap({
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <canvas
-        ref={canvasRef}
-        style={{
-          border: "2px solid #ccc",
-          backgroundColor: "#f0f0f0",
-          imageRendering: "pixelated",
-          cursor: "crosshair",
-          width: "100%",
-          height: "100%",
-          display: "block",
-          zIndex: 1
-        }}
-      />
+    <canvas
+      ref={canvasRef}
+      style={{
+        border: "2px solid #ccc",
+        backgroundColor: "#f0f0f0",
+        imageRendering: "pixelated",
+        cursor: "crosshair",
+        width: "100%",
+        height: "100%",
+        display: "block",
+        position: "relative",
+        zIndex: 1
+      }}
+    />
 
-      {videoCall ? (
-        <div style={{
-          position: 'absolute',
-          top: '20px',
-          left: '20px',
-          zIndex: 999,
-          backgroundColor: 'black',
-          color: 'white',
-          padding: '10px',
-          borderRadius: '8px',
-          fontSize: '14px'
-        }}>
-          Video is here
-        </div>
-      ) : (
-        <div style={{
-          position: 'absolute',
-          top: '20px',
-          left: '20px',
-          zIndex: 999,
-          backgroundColor: '#eee',
-          color: '#333',
-          padding: '10px',
-          borderRadius: '8px',
-          fontSize: '14px'
-        }}>
-          Video not there
-        </div>
-      )}
-
-    </div>
+    {videoCall ? (
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        left: '20px',
+        zIndex: 999,
+        backgroundColor: 'black',
+        color: 'white',
+        padding: '10px',
+        borderRadius: '8px',
+        fontSize: '14px',
+        boxShadow: '0 0 10px rgba(0,0,0,0.5)'
+      }}>
+        Video is here
+      </div>
+    ) : (
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        left: '20px',
+        zIndex: 999,
+        backgroundColor: '#eee',
+        color: '#333',
+        padding: '10px',
+        borderRadius: '8px',
+        fontSize: '14px',
+        boxShadow: '0 0 10px rgba(0,0,0,0.2)'
+      }}>
+        Video not there
+      </div>
+    )}
+  </div>
   );
 }
