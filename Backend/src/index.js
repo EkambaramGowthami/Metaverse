@@ -144,54 +144,60 @@ io.on("connection", (socket) => {
       });      
       socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
         try {
-            const room = await RoomModel.findOne({ roomId });
-            if (!room) {
-                return socket.emit("error", "room not found");
-            }
-
-            if (room.players.length >= 5) {
-                return socket.emit("error", "room full");
-            }
-            const existingPlayer = room.players.find(p => (p.userId === userId && p.socketId === socket.id));
-            let updatedRoom;
-            if (!existingPlayer) {
-                updatedRoom = await RoomModel.findOneAndUpdate(
-                    { roomId },
-                    {
-                        $push: {
-                            players: {
-                                userId,
-                                username,
-                                socketId: socket.id,
-                                avatar,
-                                x: 0,
-                                y: 0
-                            }
-                        }
-                    },
-                    { new: true }
-                );
-            }
-             else {
-                updatedRoom = await RoomModel.findOneAndUpdate(
-                    { roomId, "players.userId": userId },
-                    { $set: { "players.$.socketId": socket.id } },
-                    { new: true }
-                );
-            }
-
+          const room = await RoomModel.findOne({ roomId });
+          if (!room) {
+            return socket.emit("error", "room not found");
+          }
+      
+          if (room.players.length >= 5) {
+            return socket.emit("error", "room full");
+          }
+      
+         
+          const alreadyInRoom = room.players.some(p => p.userId === userId);
+          if (alreadyInRoom) {
+            console.log(`User ${userId} already in room ${roomId}, skipping re-join`);
+          
+            await RoomModel.updateOne(
+              { roomId, "players.userId": userId },
+              { $set: { "players.$.socketId": socket.id } }
+            );
             socket.join(roomId);
-            console.log("roomjoined:",socket.id);
-            console.log("Room state after join:", updatedRoom.players.map(p => p.userId));
+            const updatedRoom = await RoomModel.findOne({ roomId });
             io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
             io.to(roomId).emit("updatedPositions", updatedRoom.players);
-
+            return;
+          }
+      
+          
+          const updatedRoom = await RoomModel.findOneAndUpdate(
+            { roomId },
+            {
+              $push: {
+                players: {
+                  userId,
+                  username,
+                  socketId: socket.id,
+                  avatar,
+                  x: 0,
+                  y: 0,
+                  isInCall: false
+                }
+              }
+            },
+            { new: true }
+          );
+      
+          socket.join(roomId);
+          console.log("Room joined:", socket.id);
+          io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
+          io.to(roomId).emit("updatedPositions", updatedRoom.players);
         } catch (err) {
-            console.error("Error in joinRoom:", err);
-            socket.emit("error", "Server error while joining room");
+          console.error("Error in joinRoom:", err);
+          socket.emit("error", "Server error while joining room");
         }
-    });
-    
+      });
+      
 
 
     // socket.on("move", async ({ roomId, userId, x, y }) => {
