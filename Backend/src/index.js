@@ -204,7 +204,7 @@ io.on("connection", (socket) => {
         const room = await RoomModel.findOne({ roomId });
         if (!room) return socket.emit("error", "room not found");
         if (room.players.length >= 5) return socket.emit("error", "room is filled");
-        const existingPlayer = room.players.find(p => p.userId === userId);
+        const existingPlayer = room.players.find(p => (p.userId === userId || p.socketId === socket.id));
         if (existingPlayer) {
             return socket.emit("error", "player already present");
         }
