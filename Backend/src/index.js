@@ -156,22 +156,25 @@ io.on("connection", (socket) => {
           const existingPlayer = room.players.find(p => p.userId === userId);
       
           if (existingPlayer) {
+            console.log(`User ${userId} already in room ${roomId}, skipping re-join`);
+            
+            // Optional: update socketId if changed
             if (existingPlayer.socketId !== socket.id) {
               await RoomModel.updateOne(
                 { roomId, "players.userId": userId },
                 { $set: { "players.$.socketId": socket.id } }
               );
-              console.log(`Updated socketId for ${userId} in room ${roomId}`);
-            } else {
-              console.log(`User ${userId} already in room ${roomId} with same socket`);
+              console.log(`Updated socketId for ${userId}`);
             }
       
             socket.join(roomId);
             const updatedRoom = await RoomModel.findOne({ roomId });
             io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
             io.to(roomId).emit("updatedPositions", updatedRoom.players);
-            return;
+            return; // ✅ STOP HERE
           }
+      
+          // ✅ Only push if user is truly new
           const updatedRoom = await RoomModel.findOneAndUpdate(
             { roomId },
             {
@@ -199,6 +202,7 @@ io.on("connection", (socket) => {
           socket.emit("error", "Server error while joining room");
         }
       });
+      
       
       
 
