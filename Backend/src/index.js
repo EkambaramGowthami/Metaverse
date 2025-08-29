@@ -123,6 +123,7 @@ io.on("connection", (socket) => {
                     participants: group.map(u => u.userId)
                 });
             });
+            console.log("Checking proximity for room:", roomId);
             console.log(`Started group call in ${roomName} for users:`, group.map(p => p.userId));
         }
     }
