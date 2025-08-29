@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { io } from "socket.io-client";
 
@@ -6,19 +5,6 @@ const socket = io("https://metaverse-3joe.onrender.com", {
   withCredentials: true,
   transports: ["websocket"]
 });
-
-const isTileWalkable = (tileId, tilesets) => {
-  for (const tileset of tilesets) {
-    const firstGid = tileset.firstgid;
-    const lastGid = firstGid + tileset.tilecount - 1;
-    if (tileId >= firstGid && tileId <= lastGid) {
-      const localId = tileId - firstGid;
-      const tile = tileset.tiles?.find(t => t.id === localId);
-      return tile?.properties?.some(p => p.name === 'walkable' && p.value === true) ?? false;
-    }
-  }
-  return false;
-};
 
 export default function TileMap({
   mapUrl,
@@ -115,15 +101,8 @@ export default function TileMap({
       }
     }
 
-    const validPlayers = uniquePlayers.filter(p => {
-      const tileX = Math.floor(p.x / tileWidth);
-      const tileY = Math.floor(p.y / tileHeight);
-      const tileIndex = tileY * mapData.width + tileX;
-      const tileId = layer.data[tileIndex];
-      return isTileWalkable(tileId, mapData.tilesets);
-    });
-
-    setPlayers(validPlayers);
+    // ✅ Removed walkability filtering
+    setPlayers(uniquePlayers);
   };
 
   const applyPendingPlayers = () => {
@@ -144,14 +123,6 @@ export default function TileMap({
       if (e.key === 'ArrowDown') newY += tileHeight;
       if (e.key === 'ArrowLeft') newX -= tileWidth;
       if (e.key === 'ArrowRight') newX += tileWidth;
-
-      const tileX = Math.floor(newX / tileWidth);
-      const tileY = Math.floor(newY / tileHeight);
-      const layer = mapDataRef.current.layers.find(l => l.type === 'tilelayer');
-      const tileIndex = tileY * mapDataRef.current.width + tileX;
-      const tileId = layer.data[tileIndex];
-
-      if (!isTileWalkable(tileId, mapDataRef.current.tilesets)) return;
 
       setPlayers(prev =>
         prev.map(p =>
@@ -204,15 +175,6 @@ export default function TileMap({
       const avatarUrl = p.avatar?.imageUrl;
       if (!avatarUrl) return;
 
-      const tileX = Math.floor(p.x / tileWidth);
-      const tileY = Math.floor(p.y / tileHeight);
-      const layer = mapData.layers.find(l => l.type === 'tilelayer');
-      if (!layer) return;
-      const tileIndex = tileY * mapData.width + tileX;
-      const tileId = layer.data[tileIndex];
-
-      if (!isTileWalkable(tileId, mapData.tilesets)) return;
-
       if (!avatarCacheRef.current[avatarUrl]) {
         const img = new Image();
         img.src = avatarUrl;
@@ -241,7 +203,7 @@ export default function TileMap({
         ctx.fillText(p.username || p.userId, p.x, p.y - 5);
       }
     });
-  
+  };
 
   return (
     <>
@@ -254,20 +216,17 @@ export default function TileMap({
           cursor: "crosshair"
         }}
       />
-       <div className="w-full h-full">
-      {!videoCall? (
-        <div>
-         
-          <p>TileMap content here...</p>
-        </div>
-      ) : (
-        <div className='w-32 h-32 bg-black rounded text-white'>
-          video is here
-        </div>
-      )}
-    </div>
+      <div className="w-full h-full">
+        {!videoCall ? (
+          <div>
+            <p>TileMap content here...</p>
+          </div>
+        ) : (
+          <div className='w-32 h-32 bg-black rounded text-white'>
+            video is here
+          </div>
+        )}
+      </div>
     </>
-
   );
-}
 }
