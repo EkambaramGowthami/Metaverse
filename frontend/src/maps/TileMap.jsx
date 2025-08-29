@@ -258,7 +258,10 @@ export default function TileMap(
           <p>TileMap content here...</p>
         </div>
       ) : (
-        <VideoCallPage userId={currentUserId} roomId={roomId} />
+        // <VideoCallPage userId={currentUserId} roomId={roomId} />
+        <div className='w-32 h-32 bg-black rounded text-white'>
+          video is here
+        </div>
       )}
     </div>
     </>
