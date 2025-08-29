@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { io } from "socket.io-client";
+import VideoCallPage from '../components/video/VideoCallPage';
 
 // Connect to backend
 const socket = io("https://metaverse-3joe.onrender.com", {
@@ -36,6 +37,7 @@ export default function TileMap(
   const tilesetImageRef = useRef(null);
   const avatarCacheRef = useRef({});
   const pendingPlayersRef = useRef([]);
+  const [videoCall, setVideoCall] = useState(false);
 
   // Load map and tileset
   useEffect(() => {
@@ -85,18 +87,22 @@ export default function TileMap(
     socket.on("roomJoined", ({ players }) => applyPlayers(players));
     socket.on("startVideoCall", ({ roomName, participants }) => {
       console.log("Start video call:", roomName, participants);
-      // TODO: Launch video UI
+      if (participants.includes(currentUserId)) {
+        setVideoCall(true);
+      }
+
+
     });
-    socket.on("callEnded", () => {
+    socket.on("endVideoCall", () => {
       console.log("Video call ended");
-      // TODO: Tear down video UI
+      setVideoCall(false);
     });
 
     return () => {
       socket.off("updatedPositions");
       socket.off("roomJoined");
       socket.off("startVideoCall");
-      socket.off("callEnded");
+      socket.off("endVideoCall");
     };
   }, []);
 
@@ -239,14 +245,27 @@ export default function TileMap(
   };
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        border: "2px solid #ccc",
-        backgroundColor: "#f0f0f0",
-        imageRendering: "pixelated",
-        cursor: "crosshair"
-      }}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        style={{
+          border: "2px solid #ccc",
+          backgroundColor: "#f0f0f0",
+          imageRendering: "pixelated",
+          cursor: "crosshair"
+        }}
+      />
+       <div className="w-full h-full">
+      {!videoCall? (
+        <div>
+         
+          <p>TileMap content here...</p>
+        </div>
+      ) : (
+        <VideoCallPage userId={currentUserId} roomId={roomId} />
+      )}
+    </div>
+    </>
+
   );
 }
