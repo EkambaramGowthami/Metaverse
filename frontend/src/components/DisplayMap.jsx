@@ -12,6 +12,16 @@ export default function DisplayMap(){
   const username = localStorage.getItem("username");
   const defaultAvatar = { imageUrl: "/Characters.jpeg" };
   const avatar = JSON.parse(localStorage.getItem("selectedAvatar")) || defaultAvatar;
+  useEffect(() => {
+    if (roomId && userId) {
+      socket.emit("joinRoom", {
+        roomId,
+        userId,
+        username,
+        avatar
+      });
+    }
+  }, [roomId, userId]);
 
   
   return (
