@@ -266,7 +266,7 @@ io.on("connection", (socket) => {
             await room.save();
             console.log(`Updated position for ${userId} in room ${roomId}: (${x}, ${y})`);
 
-            io.to(roomId).emit("updatedPositions", room.players);
+            io.in(roomId).emit("updatedPositions", room.players);
             checkProximityAndTriggerVideoCall(roomId);
         } catch (err) {
             console.error("Error in move handler:", err);
