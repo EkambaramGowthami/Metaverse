@@ -143,82 +143,27 @@ io.on("connection", (socket) => {
 
     });
     socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
-        // try {
-        //   const room = await RoomModel.findOne({ roomId });
-        //   if (!room) {
-        //     return socket.emit("error", "room not found");
-        //   }
+        let room = await RoomModel.findOne({ roomId });
 
-        //   if (room.players.length >= 5) {
-        //     return socket.emit("error", "room full");
-        //   }
-
-        //   const existingPlayer = room.players.find(p => p.userId === userId);
-
-        //   if (existingPlayer) {
-        //     console.log(`User ${userId} already in room ${roomId}, skipping re-join`);
-
-        //     // Optional: update socketId if changed
-        //     if (existingPlayer.socketId !== socket.id) {
-        //       await RoomModel.updateOne(
-        //         { roomId, "players.userId": userId },
-        //         { $set: { "players.$.socketId": socket.id } }
-        //       );
-        //       console.log(`Updated socketId for ${userId}`);
-        //     }
-
-        //     socket.join(roomId);
-        //     const updatedRoom = await RoomModel.findOne({ roomId });
-        //     io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
-        //     io.to(roomId).emit("updatedPositions", updatedRoom.players);
-        //     return; // ✅ STOP HERE
-        //   }
-
-        //   // ✅ Only push if user is truly new
-        //   const updatedRoom = await RoomModel.findOneAndUpdate(
-        //     { roomId },
-        //     {
-        //       $push: {
-        //         players: {
-        //           userId,
-        //           username,
-        //           socketId: socket.id,
-        //           avatar,
-        //           x: 0,
-        //           y: 0,
-        //           isInCall: false
-        //         }
-        //       }
-        //     },
-        //     { new: true }
-        //   );
-
-        //   socket.join(roomId);
-        //   console.log("Room joined:", socket.id);
-        //   io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
-        //   io.to(roomId).emit("updatedPositions", updatedRoom.players);
-        // } catch (err) {
-        //   console.error("Error in joinRoom:", err);
-        //   socket.emit("error", "Server error while joining room");
-        // }
-        const room = await RoomModel.findOne({ roomId });
-        if (!room) return socket.emit("error", "room not found");
-        if (room.players.length >= 5) return socket.emit("error", "room is filled");
-        const existingPlayer = room.players.find(p => (p.userId === userId || p.socketId === socket.id));
-        if (existingPlayer) {
-            return socket.emit("error", "player already present");
+        if (!room) {
+            room = new RoomModel({ roomId, players: [] });
+            await room.save();
+            console.log("Room created:", roomId);
         }
-        const newPlayer = {
-            userId,
-            username,
-            socketId: socket.id,
-            avatar,
-            x: 50,
-            y: 50
-        };
-        room.players.push(newPlayer);
-        await room.save();
-        socket.join(roomId);
+
+        const alreadyInRoom = room.players.some(p => p.userId === userId);
+        if (!alreadyInRoom) {
+            room.players.push({
+                userId,
+                socketId: socket.id,
+                x: 100, 
+                y: 100,
+                username,
+                avatar
+            });
+            await room.save();
+            console.log("Player added:", userId);
+        }
         console.log("Room joined:", socket.id);
         io.to(roomId).emit("roomJoined", { players: room.players });
         io.to(roomId).emit("updatedPositions", room.players);
@@ -228,7 +173,7 @@ io.on("connection", (socket) => {
     socket.on("move", async ({ roomId, userId, x, y }) => {
         const room = await RoomModel.findOne({ roomId });
         if (!room) return socket.emit("error", "room not found");
-        const player = room.players.find(p => p.userId === userId);
+        const player = room.players.find(p => (p.userId === userId || p.socketId === socket.id));
         if (!player) {
             console.warn(`Player ${userId} not found in room ${roomId}`);
             return;
@@ -244,9 +189,9 @@ io.on("connection", (socket) => {
         //     { $set: { "players.$.x": x, "players.$.y": y } },
         //     { new: true }
         //   );
-        
+
         //   if (!room) return socket.emit("error", "room or player not found");
-        
+
         //   io.to(roomId).emit("updatedPositions", room.players);
         //   checkProximityAndTriggerVideoCall(roomId);
 
