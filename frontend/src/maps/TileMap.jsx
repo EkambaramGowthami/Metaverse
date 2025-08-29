@@ -1,14 +1,12 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { io } from "socket.io-client";
-import VideoCallPage from '../components/video/VideoCallPage';
 
-// Connect to backend
 const socket = io("https://metaverse-3joe.onrender.com", {
   withCredentials: true,
   transports: ["websocket"]
 });
 
-// Utility to check if a tile is walkable
 const isTileWalkable = (tileId, tilesets) => {
   for (const tileset of tilesets) {
     const firstGid = tileset.firstgid;
@@ -22,7 +20,7 @@ const isTileWalkable = (tileId, tilesets) => {
   return false;
 };
 
-export default function TileMap(
+export default function TileMap({
   mapUrl,
   tilesetImageUrl,
   tileWidth,
@@ -31,7 +29,7 @@ export default function TileMap(
   setPlayers,
   currentUserId,
   roomId
-) {
+}) {
   const canvasRef = useRef(null);
   const mapDataRef = useRef(null);
   const tilesetImageRef = useRef(null);
@@ -39,7 +37,6 @@ export default function TileMap(
   const pendingPlayersRef = useRef([]);
   const [videoCall, setVideoCall] = useState(false);
 
-  // Load map and tileset
   useEffect(() => {
     const loadMap = async () => {
       try {
@@ -81,17 +78,14 @@ export default function TileMap(
     draw();
   }, [players]);
 
-  // Socket listeners
   useEffect(() => {
     socket.on("updatedPositions", applyPlayers);
     socket.on("roomJoined", ({ players }) => applyPlayers(players));
-    socket.on("startVideoCall", ({ roomName,participants }) => {
+    socket.on("startVideoCall", ({ roomName, participants }) => {
       setVideoCall(true);
-      alert("started the video call");
-     
-    });    
-    socket.on("endVideoCall", ({ roomId }) => {
-      console.log("Video call ended");
+      alert("Started video call with: " + participants.join(", "));
+    });
+    socket.on("endVideoCall", () => {
       setVideoCall(false);
     });
 
@@ -111,7 +105,17 @@ export default function TileMap(
       return;
     }
 
-    const validPlayers = incomingPlayers.filter(p => {
+    const uniquePlayers = [];
+    const seen = new Set();
+
+    for (const p of incomingPlayers) {
+      if (!seen.has(p.userId)) {
+        uniquePlayers.push(p);
+        seen.add(p.userId);
+      }
+    }
+
+    const validPlayers = uniquePlayers.filter(p => {
       const tileX = Math.floor(p.x / tileWidth);
       const tileY = Math.floor(p.y / tileHeight);
       const tileIndex = tileY * mapData.width + tileX;
@@ -128,7 +132,6 @@ export default function TileMap(
     pendingPlayersRef.current = [];
   };
 
-  // Handle movement
   useEffect(() => {
     const handleKeyDown = (e) => {
       const currentPlayer = players.find(p => p.userId === currentUserId);
@@ -163,7 +166,6 @@ export default function TileMap(
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [players, currentUserId, roomId, tileWidth, tileHeight]);
 
-  // Draw map and avatars
   const draw = () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
@@ -239,7 +241,7 @@ export default function TileMap(
         ctx.fillText(p.username || p.userId, p.x, p.y - 5);
       }
     });
-  };
+  
 
   return (
     <>
@@ -267,4 +269,5 @@ export default function TileMap(
     </>
 
   );
+}
 }
