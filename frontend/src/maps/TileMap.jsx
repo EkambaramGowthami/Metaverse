@@ -67,10 +67,12 @@ export default function TileMap({
   useEffect(() => {
     socket.on("updatedPositions", applyPlayers);
     socket.on("roomJoined", ({ players }) => applyPlayers(players));
-    socket.on("startVideoCall", ({ roomName, participants }) => {
+    const handleStartCall = ({ roomName, participants }) => {
       setVideoCall(true);
       alert("Started video call with: " + participants.join(", "));
-    });
+    };
+
+    socket.on("startVideoCall", handleStartCall);
     socket.on("endVideoCall", () => {
       setVideoCall(false);
     });
@@ -101,7 +103,7 @@ export default function TileMap({
       }
     }
 
-    // ✅ Removed walkability filtering
+
     setPlayers(uniquePlayers);
   };
 
@@ -206,27 +208,36 @@ export default function TileMap({
   };
 
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        style={{
-          border: "2px solid #ccc",
-          backgroundColor: "#f0f0f0",
-          imageRendering: "pixelated",
-          cursor: "crosshair"
-        }}
-      />
-      <div className="w-full h-full">
-        {!videoCall ? (
-          <div>
-            <p>TileMap content here...</p>
-          </div>
-        ) : (
-          <div className='w-32 h-32 bg-black rounded text-white'>
-            video is here
-          </div>
-        )}
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <canvas
+      ref={canvasRef}
+      style={{
+        border: "2px solid #ccc",
+        backgroundColor: "#f0f0f0",
+        imageRendering: "pixelated",
+        cursor: "crosshair",
+        width: "100%",
+        height: "100%",
+        display: "block",
+        zIndex: 1
+      }}
+    />
+
+    {videoCall && (
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        left: '20px',
+        zIndex: 999,
+        backgroundColor: 'black',
+        color: 'white',
+        padding: '10px',
+        borderRadius: '8px',
+        fontSize: '14px'
+      }}>
+        Video is here
       </div>
-    </>
+    )}
+  </div>
   );
 }
