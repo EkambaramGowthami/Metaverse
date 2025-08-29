@@ -225,53 +225,23 @@ io.on("connection", (socket) => {
 
     });
 
-
-
-
-
     socket.on("move", async ({ roomId, userId, x, y }) => {
-        const room = await RoomModel.findOneAndUpdate({ roomId, "players.userId": userId }, { $set: { "players.$.x": x, "players.$.y": y } }, { new: true })
-        if (!room) return;
+        const room = await RoomModel.findOne({ roomId });
+        if (!room) return socket.emit("error", "room not found");
+        const player = room.players.find(p => p.userId === userId);
+        if (!player) {
+            console.warn(`Player ${userId} not found in room ${roomId}`);
+            return;
+        }
 
-
+        player.x = x;
+        player.y = y;
+        await room.save();
         io.to(roomId).emit("updatedPositions", room.players);
         checkProximityAndTriggerVideoCall(roomId);
+
+
     });
-    // socket.on("move", async ({ roomId, userId, x, y }) => {
-    //     try {
-    //         if (!roomId || !userId || typeof x !== "number" || typeof y !== "number") {
-    //             console.warn("Invalid move payload:", { roomId, userId, x, y });
-    //             return;
-    //         }
-
-    //         const room = await RoomModel.findOne({ roomId });
-    //         if (!room) {
-    //             console.warn(`Room ${roomId} not found`);
-    //             return;
-    //         }
-
-    //         const playerIndex = room.players.findIndex(p => p.userId === userId);
-    //         if (playerIndex === -1) {
-    //             console.warn(`Player ${userId} not found in room ${roomId}`);
-    //             return;
-    //         }
-
-    //         room.players[playerIndex].x = x;
-    //         room.players[playerIndex].y = y;
-
-    //         if (typeof room.players[playerIndex].isInCall !== "boolean") {
-    //             room.players[playerIndex].isInCall = false;
-    //         }
-
-    //         await room.save();
-    //         console.log(`Updated position for ${userId} in room ${roomId}: (${x}, ${y})`);
-
-    //         io.in(roomId).emit("updatedPositions", room.players);
-    //         checkProximityAndTriggerVideoCall(roomId);
-    //     } catch (err) {
-    //         console.error("Error in move handler:", err);
-    //     }
-    // });
 
 
 
