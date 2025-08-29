@@ -81,6 +81,7 @@ io.on("connection", (socket) => {
     console.log("Socket connected:", socket.id);
 
     async function checkProximityAndTriggerVideoCall(roomId) {
+        console.log("checking the Triggercall");
         const room = await RoomModel.findOne({ roomId });
         if (!room || room.players.length < 2) return;
 

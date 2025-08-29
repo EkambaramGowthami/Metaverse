@@ -85,19 +85,12 @@ export default function TileMap(
   useEffect(() => {
     socket.on("updatedPositions", applyPlayers);
     socket.on("roomJoined", ({ players }) => applyPlayers(players));
-    socket.on("startVideoCall", (payload) => {
-      if (
-        payload &&
-        typeof payload.roomName === "string" &&
-        Array.isArray(payload.participants)
-      ) {
-        console.log("Start video call:", payload.roomName, payload.participants);
-        setVideoCall(true);
-      } else {
-        console.warn("Malformed startVideoCall payload:", payload);
-      }
+    socket.on("startVideoCall", ({ roomName,participants }) => {
+      setVideoCall(true);
+      console.log("started the video call");
+     
     });    
-    socket.on("endVideoCall", () => {
+    socket.on("endVideoCall", ({ roomId }) => {
       console.log("Video call ended");
       setVideoCall(false);
     });
@@ -266,7 +259,6 @@ export default function TileMap(
           <p>TileMap content here...</p>
         </div>
       ) : (
-        // <VideoCallPage userId={currentUserId} roomId={roomId} />
         <div className='w-32 h-32 bg-black rounded text-white'>
           video is here
         </div>
