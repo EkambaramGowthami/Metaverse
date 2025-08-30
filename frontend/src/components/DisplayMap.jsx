@@ -55,40 +55,19 @@ export default function DisplayMap(){
               <span>{p.username || p.userId}</span>
             </div>
           ))}
-        </div>
-        <div>
+           <div>
         {videoCall ? (
-      <div style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        zIndex: 999,
-        backgroundColor: 'black',
-        color: 'white',
-        padding: '10px',
-        borderRadius: '8px',
-        fontSize: '14px',
-        boxShadow: '0 0 10px rgba(0,0,0,0.5)'
-      }}>
+      <div className="bg-green-500 text-white text-2xl rounded w-full h-24">
         Video is here
       </div>
     ) : (
-      <div style={{
-        position: 'absolute',
-        top: '20px',
-        left: '20px',
-        zIndex: 999,
-        backgroundColor: '#eee',
-        color: '#333',
-        padding: '10px',
-        borderRadius: '8px',
-        fontSize: '14px',
-        boxShadow: '0 0 10px rgba(0,0,0,0.2)'
-      }}>
+      <div className="bg-red-500 text-white text-2xl rounded w-full h-24">
         Video not there
       </div>
     )}
         </div>
+        </div>
+       
       </div>
       
     </div>
