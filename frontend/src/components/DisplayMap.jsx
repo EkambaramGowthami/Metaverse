@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { socket } from "./utils/socket";
 
-export default function DisplayMap(){
+export default function DisplayMap() {
   const [invite, setInvite] = useState(false);
   const { roomId } = useParams();
   const [players, setPlayers] = useState([]);
@@ -12,9 +12,9 @@ export default function DisplayMap(){
   const username = localStorage.getItem("username");
   const defaultAvatar = { imageUrl: "/Characters.jpeg" };
   const avatar = JSON.parse(localStorage.getItem("selectedAvatar")) || defaultAvatar;
-  const [videoCall,setVideoCall] = useState(false);
+  const [videoCall, setVideoCall] = useState(false);
 
-  
+
   return (
     <div className="flex flex-col md:flex-row w-full h-screen overflow-hidden">
       <div className="flex-1 overflow-auto">
@@ -43,27 +43,29 @@ export default function DisplayMap(){
             {window.location.href}
           </div>
         )}
-        <div className="absolute top-56 right-4 bg-white p-2 rounded shadow">
-          <h3 className="font-bold mb-2">Players</h3>
-          {players.map((p) => (
-            <div key={p.socketId} className="flex items-center space-x-2 mb-1">
-              <img
-                src={p.avatar?.imageUrl}
-                alt="avatar"
-                className="w-6 h-6 rounded-full"
-              />
-              <span>{p.username || p.userId}</span>
-            </div>
-          ))}
-          <div className="bg-green-500 text-white w-full h-24">hi there</div>
-           <div>
-       
-      
+        <div className="relative">
+          <div className="absolute top-56 right-4 bg-white p-2 rounded shadow z-10">
+            <h3 className="font-bold mb-2">Players</h3>
+            {players.map((p) => (
+              <div key={p.socketId} className="flex items-center space-x-2 mb-1">
+                <img
+                  src={p.avatar?.imageUrl}
+                  alt="avatar"
+                  className="w-6 h-6 rounded-full"
+                />
+                <span>{p.username || p.userId}</span>
+              </div>
+            ))}
+            <div className="bg-green-500 text-white w-full h-24">hi there</div>
+          </div>
+
+
+
         </div>
-        </div>
-       
       </div>
-      
+
     </div>
+      
+   
   );
 };
