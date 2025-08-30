@@ -79,16 +79,15 @@ import TileMap from "../maps/TileMap";
 import { useParams } from "react-router-dom";
 import { socket } from "./utils/socket";
 
-export default function DisplayMap() {
+export default function DisplayMap({ players, setPlayers }) {
   const [invite, setInvite] = useState(false);
   const { roomId } = useParams();
-  const [players, setPlayers] = useState([]);
+  
   const userId = localStorage.getItem("userId");
   const username = localStorage.getItem("username");
   const defaultAvatar = { imageUrl: "/Characters.jpeg" };
-  const avatar =
-    JSON.parse(localStorage.getItem("selectedAvatar")) || defaultAvatar;
-  const [videoCall, setVideoCall] = useState(false);
+  const avatar = JSON.parse(localStorage.getItem("selectedAvatar")) || defaultAvatar;
+ 
 
   return (
     <div className="flex flex-col md:flex-row w-full h-screen overflow-auto">
@@ -103,7 +102,6 @@ export default function DisplayMap() {
           setPlayers={setPlayers}
           currentUserId={userId}
           roomId={roomId}
-          setVideoCall={setVideoCall}
         />
       </div>
 
@@ -138,12 +136,13 @@ export default function DisplayMap() {
             </div>
           ))}
         </div>
-      </div>
-
-
-      <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded shadow z-50">
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded shadow z-50">
         hi there
       </div>
+      </div>
+
+
+      
     </div>
   );
 }

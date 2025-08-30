@@ -8,13 +8,15 @@ export default function Signup() {
   // const [password, setPassword] = useState("");
   const emailRef = useRef();
   const passwordRef = useRef();
-
+  const BackendUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log("BackendUrl", BackendUrl);
   const handleSignup = async () => {
     const email = emailRef.current.value;
-    const password = password.current.value;
+    const password = passwordRef.current.value;
     try {
       const res = await axios.post(
-        "https://metaverse-3joe.onrender.com/signup",
+        "https://metaverse-3joe.onrender.com/signup"
+        ,
         { email, password }, 
         {
           headers: { "Content-Type": "application/json" },

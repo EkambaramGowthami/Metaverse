@@ -5,17 +5,18 @@ import axios from "axios";
 import { socket } from "../utils/socket";
 import { useNavigate } from "react-router-dom";
 
-export default function MyGallery() {
+export default function MyGallery({ players,setPlayers }) {
   const [roomCreating,setRoomCreating] = useState(false);
   const [createSpace, setCreateSpace] = useState(false);
   const selectedMapRef = useRef(null);
-  const [players,setPlayers] = useState([]);
   const [roomId,setRoomId] = useState("");
   const roomIdRef = useRef(null);
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
   const username = localStorage.getItem("username");
   const [spaceMaps, setSpaceMaps] = useState([]);
+  const BackendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const maps = [
     { id: 1, imageUrl: "/spaceImages/gardenOffice.webp",mapUrl:"/maps/CreatedOfficeMap.json",tilesetImageUrl:"/maps/officeMap.jpeg"},
     { id: 2, imageUrl: "/spaceImages/smallOffice.png",mapUrl:"/maps/CreatedOfficeMap.json",tilesetImageUrl:"/maps/officeMap.jpeg" },
@@ -46,6 +47,7 @@ export default function MyGallery() {
   useEffect(() => {
     const handleRoomCreated = ({ roomId, inviteLink, players }) => {
       setPlayers(Array.isArray(players) ? players : players.players);
+      // setPlayers(players);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
     };

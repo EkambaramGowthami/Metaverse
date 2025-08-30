@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { io } from "socket.io-client";
-
-const socket = io("https://metaverse-3joe.onrender.com", {
+import VideoCallPage from '../components/video/VideoCallPage';
+const BackendUrl = import.meta.env.VITE_BACKEND_URL;
+const socket = io(`${BackendUrl}`, {
   withCredentials: true,
   transports: ["websocket"]
 });
@@ -15,13 +16,15 @@ export default function TileMap({
   setPlayers,
   currentUserId,
   roomId,
-  setVideoCall
+  
 }) {
   const canvasRef = useRef(null);
   const mapDataRef = useRef(null);
   const tilesetImageRef = useRef(null);
   const avatarCacheRef = useRef({});
   const pendingPlayersRef = useRef([]);
+  const [videoCall,setVideoCall] = useState(false);
+  const [callRoom,setCallRoom] = useState(null);
   
 
   useEffect(() => {
@@ -69,12 +72,14 @@ export default function TileMap({
     socket.on("updatedPositions", applyPlayers);
     socket.on("roomJoined", ({ players }) => applyPlayers(players));
     const handleStartCall = ({ roomName, participants }) => {
+      setCallRoom(roomName);
       setVideoCall(true);
       alert("Started video call with: " + participants.join(", "));
     };
 
     socket.on("startVideoCall", handleStartCall);
     socket.on("endVideoCall", () => {
+      setCallRoom(null);
       setVideoCall(false);
     });
 
@@ -224,6 +229,13 @@ export default function TileMap({
         zIndex: 1
       }}
     />
+    {videoCall && (
+        <VideoCallPage
+          roomId={callRoom || props.roomId}
+          userId={props.currentUserId}
+          onLeave={() => setVideoCall(false)}
+        />
+      )}
 
     
   </div>

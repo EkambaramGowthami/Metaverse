@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import  DisplayMap  from './components/DisplayMap';
 import  Dashboard  from './components/Dashboard';
@@ -9,12 +9,13 @@ import Test  from './components/Test';
 
 
 export default function App() {
-  return (
+  const [players, setPlayers] = useState([]);
+    return (
     <BrowserRouter>
     <Routes>
       {/* <Route path="/displaymap" element={<DisplayMap />} /> */}
-      <Route path="/space" element={<MyGallery />} />
-      <Route path="/space/room/:roomId" element={<DisplayMap />} />
+      <Route path="/space" element={<MyGallery players={players} setPlayers={setPlayers} />} />
+      <Route path="/space/room/:roomId" element={<DisplayMap  players={players} setPlayers={setPlayers}/>} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/test" element={<Test />} />
       

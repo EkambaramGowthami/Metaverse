@@ -16,25 +16,28 @@ const appId = process.env.APPID;
 const serverSecret = process.env.SERVER_SECRET;
 
 
+app.use(cors({ origin: ["metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app", "http://localhost:5173"], origin: true, credentials: true, methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], allowedHeaders: ["Content-Type", "Authorization"] })); const httpServer = http.createServer(app); 
 
 
-app.use(cors({ origin: ["metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app", "http://localhost:5173"], origin: true, credentials: true, methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], allowedHeaders: ["Content-Type", "Authorization"] })); const httpServer = http.createServer(app); const io = new Server(httpServer, { cors: { origin: ["metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app", "http://localhost:5173"], origin: true, credentials: true }, });
+const io = new Server(httpServer, { cors: { origin: ["metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app", "http://localhost:5173"], origin: true, credentials: true }, });
+
 app.post("/signup", async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log("email", email);
         const username = email.split("@")[0];
         const selectedSpaceMaps = [];
 
         const user = await userModel.create({ email, password, username, selectedSpaceMaps });
 
-        res.send({
+        res.json({
             message: "signup successful",
             userId: user._id,
             username
         });
     } catch (err) {
         console.error(err);
-        res.status(500).send({ message: "signup failed" });
+        res.status(500).json({ message: "signup failed" });
     }
 });
 
@@ -143,64 +146,7 @@ io.on("connection", (socket) => {
 
     });
     socket.on("joinRoom", async ({ userId, roomId, avatar, username }) => {
-        // try {
-        //   const room = await RoomModel.findOne({ roomId });
-        //   if (!room) {
-        //     return socket.emit("error", "room not found");
-        //   }
-
-        //   if (room.players.length >= 5) {
-        //     return socket.emit("error", "room full");
-        //   }
-
-        //   const existingPlayer = room.players.find(p => p.userId === userId);
-
-        //   if (existingPlayer) {
-        //     console.log(`User ${userId} already in room ${roomId}, skipping re-join`);
-
-        //     // Optional: update socketId if changed
-        //     if (existingPlayer.socketId !== socket.id) {
-        //       await RoomModel.updateOne(
-        //         { roomId, "players.userId": userId },
-        //         { $set: { "players.$.socketId": socket.id } }
-        //       );
-        //       console.log(`Updated socketId for ${userId}`);
-        //     }
-
-        //     socket.join(roomId);
-        //     const updatedRoom = await RoomModel.findOne({ roomId });
-        //     io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
-        //     io.to(roomId).emit("updatedPositions", updatedRoom.players);
-        //     return; // ✅ STOP HERE
-        //   }
-
-        //   // ✅ Only push if user is truly new
-        //   const updatedRoom = await RoomModel.findOneAndUpdate(
-        //     { roomId },
-        //     {
-        //       $push: {
-        //         players: {
-        //           userId,
-        //           username,
-        //           socketId: socket.id,
-        //           avatar,
-        //           x: 0,
-        //           y: 0,
-        //           isInCall: false
-        //         }
-        //       }
-        //     },
-        //     { new: true }
-        //   );
-
-        //   socket.join(roomId);
-        //   console.log("Room joined:", socket.id);
-        //   io.to(roomId).emit("roomJoined", { players: updatedRoom.players });
-        //   io.to(roomId).emit("updatedPositions", updatedRoom.players);
-        // } catch (err) {
-        //   console.error("Error in joinRoom:", err);
-        //   socket.emit("error", "Server error while joining room");
-        // }
+        
         const room = await RoomModel.findOne({ roomId });
         if (!room) return socket.emit("error", "room not found");
         if (room.players.length >= 5) return socket.emit("error", "room is filled");
@@ -264,7 +210,7 @@ io.on("connection", (socket) => {
     });
 });
 
-app.post("/api/token", (req, res) => {
+app.get("/api/token", (req, res) => {
     try {
         const { userId, roomId } = req.body;
         const effectiveTimeInSeconds = 3600;
