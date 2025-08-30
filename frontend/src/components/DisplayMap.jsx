@@ -56,7 +56,7 @@ export default function DisplayMap(){
             </div>
           ))}
            <div>
-        {videoCall ? (
+        {/* {videoCall ? (
       <div className="bg-green-500 text-white text-2xl rounded w-full h-24">
         Video is here
       </div>
@@ -64,7 +64,8 @@ export default function DisplayMap(){
       <div className="bg-red-500 text-white text-2xl rounded w-full h-24">
         Video not there
       </div>
-    )}
+    )} */}
+      <div className="bg-green-500 text-white w-full h-24">hi there</div>
         </div>
         </div>
        
