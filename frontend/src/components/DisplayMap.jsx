@@ -46,7 +46,7 @@ export default function DisplayMap() {
         <div className="relative">
           <div className="absolute top-56 right-4 bg-white p-2 rounded shadow z-10">
             <h3 className="font-bold mb-2">Players</h3>
-            <div className="bg-green-500 text-white w-full h-24">hi there</div>
+            <h3 className="bg-green-500 text-black w-full h-24">hi there</h3>
             {players.map((p) => (
               <div key={p.socketId} className="flex items-center space-x-2 mb-1">
                 <img
