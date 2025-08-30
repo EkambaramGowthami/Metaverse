@@ -88,7 +88,7 @@ io.on("connection", (socket) => {
         const room = await RoomModel.findOne({ roomId });
         if (!room || room.players.length < 2) return;
 
-        const threshold = 50;
+        const threshold = 70;
         const clusters = [];
         const visited = new Set();
 
@@ -168,6 +168,7 @@ io.on("connection", (socket) => {
         console.log("Room joined:", socket.id);
         io.to(roomId).emit("roomJoined", { players: room.players });
         io.to(roomId).emit("updatedPositions", room.players);
+        checkProximityAndTriggerVideoCall(roomId);
 
     });
 
