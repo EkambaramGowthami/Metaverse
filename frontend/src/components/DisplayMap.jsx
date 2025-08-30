@@ -55,17 +55,10 @@ export default function DisplayMap(){
               <span>{p.username || p.userId}</span>
             </div>
           ))}
+          <div className="bg-green-500 text-white w-full h-24">hi there</div>
            <div>
-        {/* {videoCall ? (
-      <div className="bg-green-500 text-white text-2xl rounded w-full h-24">
-        Video is here
-      </div>
-    ) : (
-      <div className="bg-red-500 text-white text-2xl rounded w-full h-24">
-        Video not there
-      </div>
-    )} */}
-      <div className="bg-green-500 text-white w-full h-24">hi there</div>
+       
+      
         </div>
         </div>
        
