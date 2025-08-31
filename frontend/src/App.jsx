@@ -15,7 +15,7 @@ export default function App() {
   const [players, setPlayers] = useState([]);
     return (
     <BrowserRouter basename="/">
-    <Routes>
+    <Routes path="/">
       <Route path="/space" element={<MyGallery players={players} setPlayers={setPlayers} />} />
       <Route path="/space/room/:roomId" element={<DisplayMap  players={players} setPlayers={setPlayers}/>} />
       <Route path="/signup" element={<Signup />} />

@@ -6,8 +6,6 @@ import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 export default function ZegoVideoConference() {
   const rootRef = useRef(null);
   const Backend_Url = import.meta.env.VITE_BACKEND_URL;
-  // const userId = localStorage.getItem("userId");
-  // const roomId=localStorage.getItem("roomId");
   const userId = `user_${Math.floor(Math.random() * 10000)}`;
   const roomId = `room_${Math.floor(Math.random() * 10000)}`;
   const username ="gowthami";
@@ -63,7 +61,11 @@ export default function ZegoVideoConference() {
 
   }, []);
 
-  return <div ref={rootRef} style={{ width: '100vw', height: '100vh' }} />;
+  return <div>
+  <div ref={rootRef} style={{ width: '100vw', height: '100vh' }} >
+  Hey babes
+  </div>
+  </div>;
 };
 
 
