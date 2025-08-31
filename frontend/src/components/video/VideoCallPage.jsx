@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
-export default function ZegoVideoConference() {
+export default function VideoCallPage() {
   const rootRef = useRef(null);
   const Backend_Url = import.meta.env.VITE_BACKEND_URL;
   const userId = `user_${Math.floor(Math.random() * 10000)}`;
