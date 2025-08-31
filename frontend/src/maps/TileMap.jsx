@@ -229,13 +229,13 @@ export default function TileMap({
         zIndex: 1
       }}
     />
-    {videoCall && (
+    {/* {videoCall && (
         <VideoCallPage
           roomId={callRoom || props.roomId}
           userId={props.currentUserId}
           onLeave={() => setVideoCall(false)}
         />
-      )}
+      )} */}
 
     
   </div>

@@ -1,37 +1,59 @@
-import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useEffect, useRef } from "react";
-import axios from "axios";
-export default function VideoCallPage({ userId,roomId,onLeave }){
-    const containerRef = useRef(null);
-    const BackendUrl = import.meta.env.VITE_BACKEND_URL;
-    useEffect(() => {
-        const init = async () => {
-          const { data } = await axios.get(
-            `https://metaverse-3joe.onrender.com/api/token?userId=${userId}}`
-          );
-          const token = data.token;
-          const zp = ZegoUIKitPrebuilt.create(token);
-          zp.joinRoom({
-            container: containerRef.current,
-            sharedLinks: [
-              {
-                name: "Copy Link",
-                url: `${window.location.origin}/room/${roomId}`,
-              },
-            ],
-            scenario: {
-              mode: ZegoUIKitPrebuilt.VideoConference,
-            },
-            turnOnCameraWhenJoining: true,
-            turnOnMicrophoneWhenJoining: true,
-            showScreenSharingButton: true,
-            onLeaveRoom: onLeave,
-          });
-        };
-    
-        init();
-      }, [roomId, userId, onLeave]);
-    return  <div ref={containerRef} style={{ width: "100%", height: "100vh", position: "absolute", top: 0, left: 0, zIndex: 1000 }}
-  />
+import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
+export default function VideoCallPage() {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const roomID =
+      new URLSearchParams(window.location.search).get("roomID") ||
+      String(Math.floor(Math.random() * 10000));
+    const userID = String(Math.floor(Math.random() * 10000));
+    const userName = "userName" + userID;
+
+    // ⚠️ For DEV only – don’t ship serverSecret in frontend!
+    const appID = 1472471415;
+    const serverSecret = "82938042ac4a8914744e6de0b58e602d";
+
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+      appID,
+      serverSecret,
+      roomID,
+      userID,
+      userName
+    );
+
+    const zp = ZegoUIKitPrebuilt.create(kitToken);
+    zp.joinRoom({
+      container: containerRef.current,
+      sharedLinks: [
+        {
+          name: "Personal link",
+          url:
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            window.location.pathname +
+            "?roomID=" +
+            roomID,
+        },
+      ],
+      scenario: {
+        mode: ZegoUIKitPrebuilt.VideoConference,
+      },
+      turnOnMicrophoneWhenJoining: true,
+      turnOnCameraWhenJoining: true,
+      showMyCameraToggleButton: true,
+      showMyMicrophoneToggleButton: true,
+      showAudioVideoSettingsButton: true,
+      showScreenSharingButton: true,
+      showTextChat: true,
+      showUserList: true,
+      maxUsers: 50,
+      layout: "Sidebar",
+      showLayoutButton: true,
+    });
+  }, []);
+
+  return <div ref={containerRef} style={{ width: "100vw", height: "100vh" }} />;
 }

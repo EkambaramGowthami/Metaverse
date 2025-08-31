@@ -5,6 +5,7 @@ import  Dashboard  from './components/Dashboard';
 import  MyGallery  from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
 import Test  from './components/Test';
+import VideoCallPage from './components/video/VideoCallPage';
 
 
 
@@ -18,6 +19,7 @@ export default function App() {
       <Route path="/space/room/:roomId" element={<DisplayMap  players={players} setPlayers={setPlayers}/>} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/test" element={<Test />} />
+      <Route path="/videocall" element={<VideoCallPage />} />
       
      
 
