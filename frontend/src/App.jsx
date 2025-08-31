@@ -4,8 +4,9 @@ import  DisplayMap  from './components/DisplayMap';
 import  MyGallery  from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
 import Test  from './components/Test';
-import  TestingCall  from './components/video/TestingCall';
-import ZegoVideoConference from './components/video/VideoCallPage';
+import Hi from './components/video/Hi';
+
+
 
 
 
@@ -18,7 +19,7 @@ export default function App() {
       <Route path="/space/room/:roomId" element={<DisplayMap  players={players} setPlayers={setPlayers}/>} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/test" element={<Test />} />
-      <Route path="/calltesting" element={<TestingCall />} />
+     <Route path="/hi" element={<Hi />} />
       <Route path="/videocall" element={<Test />} />
       <Route path="*" element={<h1>404 Not Found</h1>} />
       
