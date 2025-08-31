@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
-const MONGO_URI="mongodb+srv://username:ZMtJx4JSx*dMa.c@cluster0.cas0l.mongodb.net/metaverse";
+const MONGO_URI=process.env.MONGO_URI;
 console.log("mongoDB url", MONGO_URI);
 mongoose.connect(MONGO_URI)
   .then(() => console.log("MongoDB connected"))

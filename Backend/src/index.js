@@ -211,7 +211,7 @@ io.on("connection", (socket) => {
     });
 });
 
-app.get("/api/token", (req, res) => {
+app.post("/api/token", (req, res) => {
     try {
         const { userId, roomId } = req.body;
         const effectiveTimeInSeconds = 3600;
