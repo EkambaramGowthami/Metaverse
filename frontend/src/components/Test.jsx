@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import VideoCallPage from "./video/VideoCallPage";
 
 export default function Test (){
     const navigate = useNavigate();
@@ -7,6 +8,7 @@ export default function Test (){
             <p>hit there</p>
             <button className="px-12 py-4 bg-green-500 text-white">hi there</button>
             <button className="px-12 py-4 bg-green-500 text-white" onClick={() => navigate("/videocall")}>click here to go to the videocall page</button>
+            <div className="bg-green-500"><VideoCallPage /></div>
 
 
         </div>
