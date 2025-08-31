@@ -19,7 +19,7 @@ export default function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/test" element={<Test />} />
       <Route path="/calltesting" element={<TestingCall />} />
-      <Route path="/videocall" element={<ZegoVideoConference />} />
+      <Route path="/videocall" element={<Test />} />
       <Route path="*" element={<h1>404 Not Found</h1>} />
       
      
