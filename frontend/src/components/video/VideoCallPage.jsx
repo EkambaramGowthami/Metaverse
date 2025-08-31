@@ -10,10 +10,9 @@ export default function VideoCallPage() {
       String(Math.floor(Math.random() * 10000));
     const userID = String(Math.floor(Math.random() * 10000));
     const userName = "userName" + userID;
-    const appID = 1472471415;
-    const serverSecret = "82938042ac4a8914744e6de0b58e602d";
-
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+    const appID = import.meta.env.VITE_APPID;
+    const serverSecret = import.meta.env.VITE_SERVERSECRET;
+   const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,
       serverSecret,
       roomID,
