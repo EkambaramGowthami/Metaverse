@@ -5,8 +5,8 @@ import  Dashboard  from './components/Dashboard';
 import  MyGallery  from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
 import Test  from './components/Test';
-import VideoCallPage from './components/video/VideoCallPage';
-import TestingCall from './components/video/TestingCall';
+import { VideoCallPage } from './components/video/VideoCallPage';
+import { TestingCall } from './components/video/TestingCall';
 
 
 

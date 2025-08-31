@@ -2,6 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function TestingCall(){
     const navigate = useNavigate();
-    return <div onClick={() => navigate("/videocall")}>Go to Video Call</div>
+    return <div className="bg-red-500 text-3xl text-white">Go to Video Call</div>
 }
 
