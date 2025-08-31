@@ -15,7 +15,7 @@ export default function Signup() {
     const password = passwordRef.current.value;
     try {
       const res = await axios.post(
-        "https://metaverse-3joe.onrender.com/signup"
+        `${BackendUrl}/signup`
         ,
         { email, password }, 
         {

@@ -72,7 +72,7 @@ export default function MyGallery({ players,setPlayers }) {
     setSpaceMaps((prev) => {
       if ((prev).find((m) => m.id === map.id)) return prev;
       const updated = [...prev, map];
-      axios.post("https://metaverse-3joe.onrender.com/maps/update",{
+      axios.post(`${BackendUrl}/maps/update`,{
         userId:userId,
         maps:updated
       }).catch((e)=>console.log("failed to upload the data:",e));
@@ -87,7 +87,7 @@ const handleJoinRoom = () => {
   useEffect(() => {
     const fetchMaps = async () => {
       try {
-        const res = await axios.get(`https://metaverse-3joe.onrender.com/maps/${userId}`);
+        const res = await axios.get(`${BackendUrl}/${userId}`);
         setSpaceMaps(res.data.maps || []);
       } catch (err) {
         console.log("fetching the maps failed:", err);

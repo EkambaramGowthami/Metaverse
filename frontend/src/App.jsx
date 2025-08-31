@@ -15,7 +15,6 @@ export default function App() {
     return (
     <Router>
     <Routes>
-      {/* <Route path="/displaymap" element={<DisplayMap />} /> */}
       <Route path="/space" element={<MyGallery players={players} setPlayers={setPlayers} />} />
       <Route path="/space/room/:roomId" element={<DisplayMap  players={players} setPlayers={setPlayers}/>} />
       <Route path="/signup" element={<Signup />} />
