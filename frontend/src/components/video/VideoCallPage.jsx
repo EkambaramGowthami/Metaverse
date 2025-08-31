@@ -10,8 +10,6 @@ export default function VideoCallPage() {
       String(Math.floor(Math.random() * 10000));
     const userID = String(Math.floor(Math.random() * 10000));
     const userName = "userName" + userID;
-
-    // ⚠️ For DEV only – don’t ship serverSecret in frontend!
     const appID = 1472471415;
     const serverSecret = "82938042ac4a8914744e6de0b58e602d";
 
