@@ -7,6 +7,7 @@ import Signup from './components/Auth/Signup';
 import Test  from './components/Test';
 import  VideoCallPage  from './components/video/VideoCallPage';
 import  TestingCall  from './components/video/TestingCall';
+import ZegoVideoConference from './components/video/VideoCallPage';
 
 
 
@@ -20,7 +21,7 @@ export default function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/test" element={<Test />} />
       <Route path="/calltesting" element={<TestingCall />} />
-      <Route path="/videocall" element={<VideoCallPage />} />
+      <Route path="/videocall" element={<ZegoVideoConference />} />
       <Route path="*" element={<h1>404 Not Found</h1>} />
       
      

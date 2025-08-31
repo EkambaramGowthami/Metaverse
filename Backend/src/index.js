@@ -6,14 +6,17 @@ import { Server } from "socket.io";
 import dotenv from "dotenv";
 import { generateToken04 } from "./utils/token04.js";
 
+
+
+
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-const appId = process.env.APPID;
-const serverSecret = process.env.SERVER_SECRET;
+const appId = 1472471415;
+const serverSecret = "82938042ac4a8914744e6de0b58e602d";
 
 
 app.use(cors({ origin: ["metaverse-5dvvqyz8g-gowthamis-projects-b7f16ceb.vercel.app", "http://localhost:5173"], origin: true, credentials: true, methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], allowedHeaders: ["Content-Type", "Authorization"] })); const httpServer = http.createServer(app); 
@@ -211,22 +214,12 @@ io.on("connection", (socket) => {
     });
 });
 
-app.post("/api/token", (req, res) => {
-    try {
-        const { userId, roomId } = req.body;
-        const effectiveTimeInSeconds = 3600;
-        const payload = "";
-        const token = generateToken04(appId, userId, serverSecret, effectiveTimeInSeconds, roomId);
-        res.send({ token, appId });
+// app.post("/api/token", (req, res) => {
+//     const { userId, roomId } = req.body;
+//     
+//     res.json({ token: kitToken });
 
-    }
-    catch (err) {
-        console.log("error occured while sending the token", err);
-        res.status(500).send({ error: "Token generation failed" });
-    }
-
-
-});
+// });
 
 
 httpServer.listen(PORT, () => {

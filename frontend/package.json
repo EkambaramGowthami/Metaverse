@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-three/drei": "^10.6.1",
     "@react-three/fiber": "^9.3.0",
-    "@zegocloud/zego-uikit-prebuilt": "^2.15.1",
+    "@zegocloud/zego-uikit-prebuilt": "^2.15.2",
     "axios": "^1.11.0",
     "dotenv": "^17.2.1",
     "gitignore": "^0.7.0",
