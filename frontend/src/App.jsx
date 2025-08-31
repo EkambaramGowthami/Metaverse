@@ -19,7 +19,7 @@ export default function App() {
       <Route path="/space/room/:roomId" element={<DisplayMap  players={players} setPlayers={setPlayers}/>} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/videocall" element={<ZegoVideoConference />} />
-       </Routes>
+    </Routes>
   </BrowserRouter>
 
   );

@@ -17,8 +17,8 @@ export default function ZegoVideoConference() {
     };
 
     const init = async () => {
-      const appId = import.meta.env.VITE_APP_ID;
-      const serverSecret = import.meta.env.VITE_SERVER_SECRET ;
+      const appId = 1472471415;
+      const serverSecret =  "82938042ac4a8914744e6de0b58e602d";
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appId,
         serverSecret,
