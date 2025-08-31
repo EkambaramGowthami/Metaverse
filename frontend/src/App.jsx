@@ -4,13 +4,6 @@ import  DisplayMap  from './components/DisplayMap';
 import  MyGallery  from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
 import VideoCallPage from './components/video/VideoCallPage';
-
-
-
-
-
-
-
 export default function App() {
   const [players, setPlayers] = useState([]);
     return (
