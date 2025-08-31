@@ -211,22 +211,22 @@ io.on("connection", (socket) => {
     });
 });
 
-app.get("/api/token", (req, res) => {
-    try {
-        const { userId, roomId } = req.body;
-        const effectiveTimeInSeconds = 3600;
-        const payload = "";
-        const token = generateToken04(appId, userId, serverSecret, effectiveTimeInSeconds, roomId);
-        res.send({ token, appId });
+// app.get("/api/token", (req, res) => {
+//     try {
+//         const { userId, roomId } = req.body;
+//         const effectiveTimeInSeconds = 3600;
+//         const payload = "";
+//         const token = generateToken04(appId, userId, serverSecret, effectiveTimeInSeconds, roomId);
+//         res.send({ token, appId });
 
-    }
-    catch (err) {
-        console.log("error occured while sending the token", err);
-        res.status(500).send({ error: "Token generation failed" });
-    }
+//     }
+//     catch (err) {
+//         console.log("error occured while sending the token", err);
+//         res.status(500).send({ error: "Token generation failed" });
+//     }
 
 
-});
+// });
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
