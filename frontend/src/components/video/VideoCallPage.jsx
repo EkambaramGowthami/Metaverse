@@ -1,9 +1,9 @@
 
-import axios from 'axios';
-import React, { useEffect, useRef } from 'react';
-import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+// import axios from 'axios';
+// import React, { useEffect, useRef } from 'react';
+// import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
-export default function ZegoVideoConference() {
+// export default function ZegoVideoConference() {
   // const rootRef = useRef(null);
   // const Backend_Url = import.meta.env.VITE_BACKEND_URL;
   // const userId = `user_${Math.floor(Math.random() * 10000)}`;
@@ -65,8 +65,12 @@ export default function ZegoVideoConference() {
   // <div ref={rootRef} style={{ width: '100vw', height: '100vh' }} >
   // Hey babes
   // </div>
-  // </div>;
-  return <div className='bg-black text-white text-xl'>hello</div>
-};
+//   // </div>;
+//   return <div className='bg-black text-white text-xl'>hello</div>
+// };
+
+export default function ZegoVideoConference(){
+  return <div className="text-xl bg-green-500 text-white">hi there</div>
+}
 
 
