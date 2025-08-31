@@ -13,7 +13,7 @@ import  TestingCall  from './components/video/TestingCall';
 export default function App() {
   const [players, setPlayers] = useState([]);
     return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
     <Routes>
       <Route path="/space" element={<MyGallery players={players} setPlayers={setPlayers} />} />
       <Route path="/space/room/:roomId" element={<DisplayMap  players={players} setPlayers={setPlayers}/>} />
@@ -21,6 +21,7 @@ export default function App() {
       <Route path="/test" element={<Test />} />
       <Route path="/calltesting" element={<TestingCall />} />
       <Route path="/videocall" element={<VideoCallPage />} />
+      <Route path="*" element={<h1>404 Not Found</h1>} />
       
      
 
