@@ -227,6 +227,10 @@ app.get("/api/token", (req, res) => {
 
 
 });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+  
 
 httpServer.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

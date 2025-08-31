@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import  DisplayMap  from './components/DisplayMap';
 import  Dashboard  from './components/Dashboard';
 import  MyGallery  from './components/Space/MyGallery';
@@ -13,7 +13,7 @@ import  TestingCall  from './components/video/TestingCall';
 export default function App() {
   const [players, setPlayers] = useState([]);
     return (
-    <BrowserRouter>
+    <Router>
     <Routes>
       {/* <Route path="/displaymap" element={<DisplayMap />} /> */}
       <Route path="/space" element={<MyGallery players={players} setPlayers={setPlayers} />} />
@@ -26,7 +26,7 @@ export default function App() {
      
 
     </Routes>
-  </BrowserRouter>
+  </Router>
 
   );
   
