@@ -133,7 +133,7 @@ const handleJoinRoom = () => {
           </div>
         ))}
       </div>
-      {
+      {/* {
         createSpace && (
           <div className="fixed inset-0 bg-black bg-opacity-30 w-screen h-screen bottom-20 flex justify-center items-center z-50">
             <div className="md:h-[500px] md:w-[800px] bg-white rounded-xl shadow-lg top-24 p-4">
@@ -197,7 +197,7 @@ const handleJoinRoom = () => {
                 }
 
 
-              </div>
+              </div> */}
 
 
     </div>
