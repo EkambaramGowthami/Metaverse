@@ -18,10 +18,8 @@ export default function VideoCallPage() {
 
   useEffect(() => {
     const init = async () => {
-      const appId = 1472471415
+      const appId = Number(1472471415);
       const serverSecret = "82938042ac4a8914744e6de0b58e602d";
-      console.log("appId:",appId);
-      console.log("serverSecret:",serverSecret);
 
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appId,
@@ -33,37 +31,37 @@ export default function VideoCallPage() {
 
       const zp = ZegoUIKitPrebuilt.create(kitToken);
 
-      zp.joinRoom({
-        container: rootRef.current,
-        sharedLinks: [
-          {
-            name: "Personal link",
-            url: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomId=${roomId}`,
+      if (zp) {
+        zp.joinRoom({
+          container: rootRef.current,
+          sharedLinks: [
+            {
+              name: "Personal link",
+              url: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomId=${roomId}`,
+            },
+          ],
+          scenario: {
+            mode: ZegoUIKitPrebuilt.VideoConference,
           },
-        ],
-        scenario: {
-          mode: ZegoUIKitPrebuilt.VideoConference,
-        },
-        turnOnMicrophoneWhenJoining: true,
-        turnOnCameraWhenJoining: true,
-        showMyCameraToggleButton: true,
-        showMyMicrophoneToggleButton: true,
-        showAudioVideoSettingsButton: true,
-        showScreenSharingButton: true,
-        showTextChat: true,
-        showUserList: true,
-        maxUsers: 50,
-        layout: "Sidebar",
-        showLayoutButton: true,
-      });
+          turnOnMicrophoneWhenJoining: true,
+          turnOnCameraWhenJoining: true,
+          showMyCameraToggleButton: true,
+          showMyMicrophoneToggleButton: true,
+          showAudioVideoSettingsButton: true,
+          showScreenSharingButton: true,
+          showTextChat: true,
+          showUserList: true,
+          maxUsers: 50,
+          layout: "Sidebar",
+          showLayoutButton: true,
+        });
+      } else {
+        console.error("Failed to create Zego instance. Invalid kitToken.");
+      }
     };
 
     init();
   }, [roomId, userId, username]);
 
-  return (
-    <div>
-      <div ref={rootRef} style={{ width: "100vw", height: "100vh" }} />
-    </div>
-  );
+  return <div ref={rootRef} style={{ width: "100vw", height: "100vh" }} />;
 }
