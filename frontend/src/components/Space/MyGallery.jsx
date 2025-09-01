@@ -171,10 +171,11 @@ const handleJoinRoom = () => {
       <div className="mt-6 p-6 flex justify-between">
         <div className="px-4 py-2 text-sm bg-green-400 rounded-xl text-white">My Spaces</div>
         <div className="flex space-x-4 items-center">
-          <div className="relative w-64">
+          {/* <div className="relative w-64">
             <span className="absolute inset-y-0 left-2 flex items-center text-gray-500"><Search /></span>
             <input type="text" className="rounded border left-2 pl-8 pr-2 py-2 w-full text-sm p-1" placeholder="Search Spaces" />
-          </div>
+          </div> */}
+          <input type="text" className="rounded border left-2 pl-8 pr-2 py-2 w-full text-sm p-1" placeholder="Search Spaces" />
           <div className="bg-green-400 px-4 py-2 rounded text-white text-md" onClick={() => setCreateSpace(true)}> + Create Space
           </div>
           <div className="bg-green-400 px-4 py-2 rounded text-white text-md" onClick={handleJoinRoom}>Join Room</div>
