@@ -18,8 +18,10 @@ export default function VideoCallPage() {
 
   useEffect(() => {
     const init = async () => {
-      const appId = 1472471415;
-      const serverSecret = "82938042ac4a8914744e6de0b58e602d";
+      const appId = import.meta.env.VITE_APP_ID;
+      const serverSecret = import.meta.env.VITE_SERVER_SECRET;
+      console.log("appId:",appId);
+      console.log("serverSecret:",serverSecret);
 
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appId,
