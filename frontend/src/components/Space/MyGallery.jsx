@@ -5,7 +5,7 @@ import axios from "axios";
 import { socket } from "../utils/socket";
 import { useNavigate } from "react-router-dom";
 
-export default function MyGallery({ player,setPlayers }) {
+export default function MyGallery({ players,setPlayers }) {
   const [roomCreating,setRoomCreating] = useState(false);
   const [createSpace, setCreateSpace] = useState(false);
   const selectedMapRef = useRef(null);
@@ -118,115 +118,89 @@ const handleJoinRoom = () => {
   }, []);
   
   return (
-    <div className="relative w-full h-full overflow-x-hidden">
-      {/* Auto-scrollable maps row */}
+    <div className="relative">
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto space-x-4 p-4 scrollbar-hidden w-full"
+        className="flex overflow-x-auto space-x-4 p-4 scrollbar-hidden"
       >
         {infiniteMaps.map((image, index) => (
           <div key={index} className="flex-shrink-0">
             <img
               src={image.imageUrl}
               alt={`map-${index}`}
-              className="rounded-lg w-[250px] md:w-[350px] h-40 object-cover hover:scale-105 transition-transform duration-300"
+              className="rounded-lg md:w-[350px] h-40 object-cover hover:scale-105 transition-transform duration-300"
             />
           </div>
         ))}
       </div>
-  
-      {/* Modal for create space */}
-      {createSpace && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-          <div className="max-h-[90vh] w-[90vw] md:w-[800px] bg-white rounded-xl shadow-lg p-4 overflow-y-auto">
-            <div className="flex justify-end" onClick={() => setCreateSpace(false)}>
-              <Cancel />
-            </div>
-            <h1 className="text-center mt-2 text-xl font-semibold text-black">
-              Available Maps
-            </h1>
-  
-            <div className="flex flex-wrap justify-between items-center mt-2 gap-2">
-              <div className="bg-green-500 rounded-full px-3 py-1 text-white text-sm">
-                All
-              </div>
-              <div className="relative flex-1 max-w-xs">
-                <span className="absolute inset-y-0 left-2 flex items-center text-gray-500">
-                  <Search />
-                </span>
-                <input
-                  type="text"
-                  className="rounded border pl-8 pr-2 py-2 w-full text-sm"
-                  placeholder="Search Spaces"
-                />
-              </div>
-            </div>
-  
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-              {maps.map((image, index) => (
-                <div key={index} onClick={() => handleMapClick(image)}>
-                  <img
-                    src={image.imageUrl}
-                    alt={`map-${index}`}
-                    className="rounded-lg w-full h-36 object-cover"
-                  />
+      {
+        createSpace && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 w-screen h-screen bottom-20 flex justify-center items-center z-50">
+            <div className="md:h-[500px] md:w-[800px] bg-white rounded-xl shadow-lg top-24 p-4">
+              <div className="flex justify-end" onClick={() => setCreateSpace(false)}><Cancel /></div>
+              <h1 className="text-center mt-2 text-xl font-semibold text-black">Available Maps</h1>
+              <div className="flex justify-between items-center mt-2">
+                <div className="bg-green-500 rounded-full md:p-2 md:px-3 sm:p-1 sm:px-2">All</div>
+                <div className=" relative">
+                  <span className="absolute inset-y-0 left-2 flex items-center text-gray-500"><Search /></span>
+                  <input type="text" className="rounded border left-2 pl-8 pr-2 py-2 w-full text-sm p-1" placeholder="Search Spaces" />
                 </div>
-              ))}
+              </div>
+              <div className="mt-4 grid md:grid-cols-4 sm:grid-cols-2 gap-3">
+                {
+                  maps.map((image, index) => (
+                    <div key={index} onClick={()=>handleMapClick(image)}>
+                      <img
+                        src={image.imageUrl}
+                        alt={`map-${index}`}
+                        className="rounded-lg w-full h-36 object-cover"
+                      />
+
+                    </div>
+                  ))
+                }
+
+
+              </div>
+
             </div>
           </div>
-        </div>
-      )}
-  
-      {/* My Spaces + Controls */}
-      <div className="mt-6 px-6 flex flex-wrap gap-4 justify-between items-center">
-        <div className="px-4 py-2 text-sm bg-green-400 rounded-xl text-white">
-          My Spaces
-        </div>
-        <div className="flex flex-wrap gap-3 items-center">
+        )
+      }
+
+      <div className="mt-6 p-6 flex justify-between">
+        <div className="px-4 py-2 text-sm bg-green-400 rounded-xl text-white">My Spaces</div>
+        <div className="flex space-x-4 items-center">
           <div className="relative w-64">
-            <span className="absolute inset-y-0 left-2 flex items-center text-gray-500">
-              <Search />
-            </span>
-            <input
-              type="text"
-              className="rounded border pl-8 pr-2 py-2 w-full text-sm"
-              placeholder="Search Spaces"
-            />
+            <span className="absolute inset-y-0 left-2 flex items-center text-gray-500"><Search /></span>
+            <input type="text" className="rounded border left-2 pl-8 pr-2 py-2 w-full text-sm p-1" placeholder="Search Spaces" />
           </div>
-          <button
-            className="bg-green-400 px-4 py-2 rounded text-white text-md"
-            onClick={() => setCreateSpace(true)}
-          >
-            + Create Space
-          </button>
-          <button
-            className="bg-green-400 px-4 py-2 rounded text-white text-md"
-            onClick={handleJoinRoom}
-          >
-            Join Room
-          </button>
-          <input
-            placeholder="Enter RoomId"
-            className="px-4 py-2 border rounded text-black"
-            ref={roomIdRef}
-          />
+          <div className="bg-green-400 px-4 py-2 rounded text-white text-md" onClick={() => setCreateSpace(true)}> + Create Space
+          </div>
+          <div className="bg-green-400 px-4 py-2 rounded text-white text-md" onClick={handleJoinRoom}>Join Room</div>
+          <input placeholder="Enter RoomId" className="px-6 py-3 text-black" ref={roomIdRef} />
         </div>
+
       </div>
-  
-      {/* Space Maps */}
-      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-6 p-4">
-        {Array.isArray(spaceMaps) &&
-          spaceMaps.map((map, index) => (
-            <div key={index} onClick={() => handleRoomClick(map)}>
-              <img
-                src={map.imageUrl}
-                alt={`map-${index}`}
-                className="rounded-lg w-full h-36 object-cover"
-              />
-            </div>
-          ))}
-      </div>
+      <div className="mt-4 grid md:grid-cols-4 sm:grid-cols-2 gap-6 p-4">
+                {
+                 Array.isArray(spaceMaps) && spaceMaps.map((map, index) => (
+                    <div key={index} onClick={()=>handleRoomClick(map)}>
+                      <img
+                        src={map.imageUrl}
+                        alt={`map-${index}`}
+                        className="rounded-lg w-full h-36 object-cover"
+                      />
+
+                    </div>
+                  ))
+                }
+
+
+              </div>
+
+
     </div>
+
   );
-  
 };
