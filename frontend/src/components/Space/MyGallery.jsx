@@ -86,7 +86,7 @@ const handleJoinRoom = () => {
   useEffect(() => {
     const fetchMaps = async () => {
       try {
-        const res = await axios.get(`${BackendUrl}/${userId}`);
+        const res = await axios.get(`${BackendUrl}/maps/${userId}`);
         setSpaceMaps(res.data.maps || []);
       } catch (err) {
         console.log("fetching the maps failed:", err);
