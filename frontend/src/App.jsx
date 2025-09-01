@@ -10,7 +10,7 @@ export default function App() {
     return (
   <BrowserRouter>
     <Routes>
-      <Route path="/space" element={<MyGallery players={players} setPlayers={setPlayers} />} />
+      <Route path="/space" element={<MyGallery />} />
       <Route path="/space/room/:roomId" element={<DisplayMap  players={players} setPlayers={setPlayers}/>} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/test" element={<Test />} />
