@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import  DisplayMap  from './components/DisplayMap';
 import  MyGallery  from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
-import VideoCallPage from './components/video/VideoCallPage';
+import { VideoCallPage } from './components/video/VideoCallPage';
 export default function App() {
   const [players, setPlayers] = useState([]);
     return (

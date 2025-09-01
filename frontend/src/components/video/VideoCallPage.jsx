@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
-export default function VideoCallPage() {
+export const VideoCallPage = () => {
   const rootRef = useRef(null);
 
   const getUrlParams = (url) => {
