@@ -169,7 +169,7 @@ io.on("connection", (socket) => {
         await room.save();
         socket.join(roomId);
         console.log("Room joined:", socket.id);
-        io.to(roomId).emit("roomJoined", { players: room.players });
+        io.to(roomId).emit("roomJoined", { roomId,players: room.players });
         io.to(roomId).emit("updatedPositions", room.players);
         checkProximityAndTriggerVideoCall(roomId);
 

@@ -50,8 +50,9 @@ export default function MyGallery({ players,setPlayers }) {
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
     };
-    const handleRoomJoined = ({ players }) => {
+    const handleRoomJoined = ({ roomId,players }) => {
       setPlayers(players);
+      console.log(players);
       navigate(`/space/room/${roomId}`);
     };
 
