@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { io } from "socket.io-client";
-import VideoCallPage from '../components/video/VideoCallPage';
-const BackendUrl = import.meta.env.VITE_BACKEND_URL;
 import { socket } from '../components/utils/socket';
 
 export default function TileMap({
@@ -67,7 +64,7 @@ export default function TileMap({
 
   useEffect(() => {
     socket.on("updatedPositions", applyPlayers);
-    socket.on("roomJoined", ({ players }) => applyPlayers(players));
+    socket.on("roomJoined", ({ roomId,players }) => applyPlayers(players));
     const handleStartCall = ({ roomName, participants }) => {
       setCallRoom(roomName);
       setVideoCall(true);
@@ -134,8 +131,7 @@ export default function TileMap({
           p.userId === currentUserId ? { ...p, x: newX, y: newY } : p
         )
       );
-
-      socket.emit("move", { userId: currentUserId, roomId, x: newX, y: newY });
+      socket.emit("move", { roomId, userId: currentUserId,x: newX, y: newY });
     };
 
     window.addEventListener("keydown", handleKeyDown);
