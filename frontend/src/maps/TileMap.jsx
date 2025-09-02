@@ -2,10 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { io } from "socket.io-client";
 import VideoCallPage from '../components/video/VideoCallPage';
 const BackendUrl = import.meta.env.VITE_BACKEND_URL;
-const socket = io(`${BackendUrl}`, {
-  withCredentials: true,
-  transports: ["websocket"]
-});
+import { socket } from '../components/utils/socket';
 
 export default function TileMap({
   mapUrl,
