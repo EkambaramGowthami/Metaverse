@@ -53,6 +53,9 @@ export default function MyGallery({ players,setPlayers }) {
     const handleRoomJoined = ({ roomId,players }) => {
       setPlayers(players);
       console.log(players);
+      socket.on("updatedPositions", (players) => {
+        setPlayers(players);
+      });
       navigate(`/space/room/${roomId}`);
     };
 
