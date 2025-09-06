@@ -14,7 +14,7 @@ export default function VideoCallPage({ roomId,username,setVideoCall }) {
     const init = async () => {
       const appId = Number(1472471415);
       const serverSecret = "82938042ac4a8914744e6de0b58e602d";
-
+      const userId = localStorage.getItem("userId");
       const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
         appId,
         serverSecret,
