@@ -20,6 +20,7 @@ export default function TileMap({
   const pendingPlayersRef = useRef([]);
   const [videoCall,setVideoCall] = useState(false);
   const [callRoom,setCallRoom] = useState(true);
+  const [participants,setParticipants] = useState([]);
   const directionRow = {
     "down": 0,
     "left": 1,
@@ -75,6 +76,8 @@ export default function TileMap({
     socket.on("roomJoined", ({ roomId,players }) => applyPlayers(players));
     const handleStartCall = ({ roomName, participants }) => {
       setCallRoom(roomName);
+      setParticipants(participants);
+      console.log("participants:",participants);
       setVideoCall(true);
       alert("Started video call with: " + participants.join(", "));
     };
@@ -264,7 +267,7 @@ export default function TileMap({
       }}
     />
     {
-      videoCall && <div className='w-24 h-24 bg-green'><VideoCallPage /></div>
+      videoCall && <div className='w-24 h-24 bg-green'><VideoCallPage  roomId={roomName} username={participants.find(p => p.userId === currentUserId)?.username || currentUserId } setVideoCall={setVideoCall} /></div>
     }
      
 

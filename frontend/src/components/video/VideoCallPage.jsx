@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
-export default function VideoCallPage() {
+export default function VideoCallPage({ roomId,username,setVideoCall }) {
   const rootRef = useRef(null);
 
   const getUrlParams = (url) => {
@@ -9,10 +9,6 @@ export default function VideoCallPage() {
     const urlSearchParams = new URLSearchParams(urlStr);
     return Object.fromEntries(urlSearchParams.entries());
   };
-
-  const roomId = getUrlParams(window.location.href)["roomId"] || Math.floor(Math.random() * 10000) + "";
-  const userId = Math.floor(Math.random() * 10000) + "";
-  const username = "gowthami";
 
   useEffect(() => {
     const init = async () => {
@@ -52,6 +48,10 @@ export default function VideoCallPage() {
           maxUsers: 50,
           layout: "Sidebar",
           showLayoutButton: true,
+          onLeaveRoom : () =>{
+            alert("you left the call");
+            setVideoCall(false);
+          }
         });
       } else {
         console.error("Failed to create Zego instance. Invalid kitToken.");
@@ -59,7 +59,7 @@ export default function VideoCallPage() {
     };
 
     init();
-  }, [roomId, userId, username]);
+  }, [roomId,username]);
 
   return <div ref={rootRef} style={{ width: "800px",height: "600px",margin: "0 auto"}}/>;
 }
