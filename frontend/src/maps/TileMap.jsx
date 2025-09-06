@@ -263,7 +263,10 @@ export default function TileMap({
         zIndex: 1
       }}
     />
-     <div className='w-24 h-24 bg-green'><VideoCallPage /></div>
+    {
+      videoCall && <div className='w-24 h-24 bg-green'><VideoCallPage /></div>
+    }
+     
 
     
   </div>
