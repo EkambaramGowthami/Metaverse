@@ -267,7 +267,7 @@ export default function TileMap({
       }}
     />
     {
-      videoCall && <div className='w-24 h-24 bg-green'><VideoCallPage  roomId={roomName} username={participants.find(p => p.userId === currentUserId)?.username || currentUserId } setVideoCall={setVideoCall} /></div>
+      videoCall && <div className='w-24 h-24 bg-green'><VideoCallPage  roomId={callRoom} username={participants.find(p => p.userId === currentUserId)?.username || currentUserId } setVideoCall={setVideoCall} /></div>
     }
      
 
