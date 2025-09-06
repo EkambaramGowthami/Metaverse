@@ -139,11 +139,11 @@ io.on("connection", (socket) => {
         const roomId = Math.random().toString(36).substring(2, 6);
         const newRoom = await RoomModel.create({
             roomId,
-            players: [{ userId, username, socketId: socket.id, avatar, x: 50, y: 50 }]
+            players: [{ userId, username, socketId: socket.id, avatar,x: 50, y: 50 }]
         });
         socket.join(roomId);
         const inviteLink = `https://metaverse.../space/room?roomId=${roomId}`;
-        io.to(socket.id).emit("roomCreated", { roomId, inviteLink, players: newRoom.players });
+        io.to(socket.id).emit("roomCreated", { roomId, inviteLink, players: newRoom.players,avatar });
         io.to(roomId).emit("message", "hello guys");
         console.log("Room created:", roomId);
 
@@ -175,11 +175,11 @@ io.on("connection", (socket) => {
 
     });
 
-    socket.on("move", async ({ roomId, userId, x, y }) => {
+    socket.on("move", async ({ roomId, userId, x, y ,avatar}) => {
        
         const room = await RoomModel.findOneAndUpdate(
             { roomId, "players.userId": userId },
-            { $set: { "players.$.x": x, "players.$.y": y } },
+            { $set: { "players.$.x": x, "players.$.y": y ,avatar:avatar} },
             { new: true }
           );
         

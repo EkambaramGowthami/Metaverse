@@ -1,18 +1,23 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = "mongodb+srv://username:ZMtJx4JSx*dMa.c@cluster0.cas0l.mongodb.net/metaverse";
 console.log("mongoDB url", MONGO_URI);
 mongoose.connect(MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB error", err));
 
+const animatedAvatarSchema = new mongoose.Schema({
+    imageUrl:{type:String},
+    direction:{type:String},
+    frame:{type:Number}
+});
 
 const playerSchema = new mongoose.Schema({
     userId:mongoose.Types.ObjectId,
     username:String,
     socketId:String,
-    avatar: Object,
+    avatar: animatedAvatarSchema,
     x : {type:Number,default:0},
     y : {type:Number,default:0},
     isInCall : {type:Boolean,default:false} 
@@ -35,6 +40,8 @@ const userSchema = new mongoose.Schema({
     selectedSpaceMaps:[{id:Number,imageUrl:String}]
 });
 const avatarSchema = new mongoose.Schema({
+    direction:{type:String},
+    frame:{type:Number},
     id:{type:Number,unique:true,required:true},
     imageUrl:{type:String},
     description:{type:String}

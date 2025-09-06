@@ -90,8 +90,7 @@ export default function DisplayMap({ players, setPlayers }) {
  
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-screen overflow-auto">
-   
+    <div className="flex md:flex-row w-full h-screen overflow-auto">
       <div className="flex-1 overflow-auto">
         <TileMap
           mapUrl="/maps/CreatedOfficeMap.json"

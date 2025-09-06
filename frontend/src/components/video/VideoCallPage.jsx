@@ -10,11 +10,9 @@ export default function VideoCallPage() {
     return Object.fromEntries(urlSearchParams.entries());
   };
 
-  const roomId =
-    getUrlParams(window.location.href)["roomId"] ||
-    Math.floor(Math.random() * 10000) + "";
+  const roomId = getUrlParams(window.location.href)["roomId"] || Math.floor(Math.random() * 10000) + "";
   const userId = Math.floor(Math.random() * 10000) + "";
-  const username = "userName" + userId;
+  const username = "gowthami";
 
   useEffect(() => {
     const init = async () => {
@@ -63,5 +61,5 @@ export default function VideoCallPage() {
     init();
   }, [roomId, userId, username]);
 
-  return <div ref={rootRef} style={{ width: "100vw", height: "100vh" }} />;
+  return <div ref={rootRef} style={{ width: "800px",height: "600px",margin: "0 auto"}}/>;
 }

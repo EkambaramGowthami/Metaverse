@@ -1,3 +1,5 @@
+import VideoCallPage from "./VideoCallPage";
+
 export default function Test(){
-    return <div className="text-3xl text-black bg-white">Videocall is working</div>
+    return <div style={{backgroundColor:"red", width:"100vh",height:"100hv"}}><VideoCallPage /></div>
 }

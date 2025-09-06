@@ -24,11 +24,17 @@ export default function MyGallery({ players,setPlayers }) {
     { id: 4, imageUrl: "/spaceImages/trees.jpeg",mapUrl:"/maps/CreatedOfficeMap.json",tilesetImageUrl:"/maps/officeMap.jpeg" }
   ];
   const avatarsImages = [
-    {id:1,imageUrl:"/Characters.jpeg"},
-    {id:2,imageUrl:"/openart-d9930d6baef8414ebe3a5126681f019e_raw (1).jpg" },
-    {id:3,imageUrl:"/Characters (4).jpeg"},
-    {id:4,imageUrl:"/Characters (3).jpeg"}
+    {imageUrl:"/avatars/$ limp.png",direction:"down",frame:0},
+    {imageUrl:"/avatars/Casual_Modern_Style_Character-removebg-preview.png", direction:"down",frame:0 },
+    {imageUrl:"/avatars/Consistent_Style_Character_Variations-removebg-preview.png",direction:"down",frame:0},
+    {imageUrl:"/avatars/Elegant_Style_Character-removebg-preview.png",direction:"down",frame:0},
+    {imageUrl:"/avatars/Gothic_Style_Character-removebg-preview.png",direction:"down",frame:0},
+    // {imageUrl:"/avatars/openart-image_Azyb3ZNm_1757128658690_raw-removebg-preview.png",direction:"down",frame:0},
+    // {imageUrl:"/avatars/openart-image_xp3NH8EY_1757128656521_raw-removebg-preview.png",direction:"down",frame:0},
+    {imageUrl:"/avatars/Sporty_Style_Character-removebg-preview.png",direction:"down",frame:0},
+
   ];
+
   function getRandomAvatar(){
     const randomIndex = Math.floor(Math.random() * avatarsImages.length);
     return avatarsImages[randomIndex];
@@ -45,8 +51,9 @@ export default function MyGallery({ players,setPlayers }) {
   };
  
   useEffect(() => {
-    const handleRoomCreated = ({ roomId, inviteLink, players }) => {
+    const handleRoomCreated = ({ roomId, inviteLink, players,avatar }) => {
       setPlayers(Array.isArray(players) ? players : players.players);
+      console.log(avatar);
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
     };
