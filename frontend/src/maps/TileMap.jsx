@@ -282,15 +282,12 @@ export default function TileMap({
       }}
     />
     {
-      videoCall && <div className='absolute z-50 w-24 h-24 bg-green'  style={{
+      videoCall && <div className='absolute md:z-50 z-20 w-12 h-12 md:w-24 md:h-24 bg-green'  style={{
         top: currentPlayer.y * (canvasRef.current?.clientHeight / canvasRef.current?.height || 1),
         left: currentPlayer.x * (canvasRef.current?.clientWidth / canvasRef.current?.width || 1),
         transform: "translate(-50%, -50%)",
       }}><VideoCallPage  roomId={callRoom} username={participants.find(p => p.userId === currentUserId)?.username || currentUserId } setVideoCall={setVideoCall} /></div>
     }
-     
-
-    
-  </div>
+    </div>
   );
 }
