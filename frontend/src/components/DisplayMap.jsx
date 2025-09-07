@@ -28,9 +28,9 @@ export default function DisplayMap({ players, setPlayers }) {
 
 
   return (
-    <div className="grid grid-cols-[2fr_250px] gap-0 w-screen h-screen overflow-auto bg-black">
+    <div className="grid grid-cols-1 md:grid-cols-[2fr_250px] gap-0 w-screen h-screen overflow-auto bg-black">
       {/* <div className="w-full h-screen bg-black text-white md:block hidden">hi</div> */}
-      <div className="flex justify-center items-centeroverflow-auto w-full h-full border-r border-black">
+      <div className="flex justify-center items-center overflow-auto w-full h-full  border-r border-black">
         <TileMap
           mapUrl="/maps/CreatedOfficeMap.json"
           tilesetImageUrl="/maps/officeMap.jpeg"
