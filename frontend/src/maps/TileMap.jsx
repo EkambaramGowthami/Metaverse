@@ -21,6 +21,7 @@ export default function TileMap({
   const [videoCall,setVideoCall] = useState(false);
   const [callRoom,setCallRoom] = useState(true);
   const [participants,setParticipants] = useState([]);
+  const currentPlayer = players.find(p => p.userId === currentUserId);
   const directionRow = {
     "down": 0,
     "left": 1,
@@ -148,16 +149,23 @@ export default function TileMap({
     const handleKeyDown = (e) => {
       const currentPlayer = players.find(p => p.userId === currentUserId);
       if (!currentPlayer || !mapDataRef.current) return;
-
       let newX = currentPlayer.x;
       let newY = currentPlayer.y;
       const newavatar = currentPlayer.avatar;
-      if (e.key === 'ArrowUp') {newY -= tileHeight; newavatar.direction = "up";}
-      if (e.key === 'ArrowDown') {newY += tileHeight; newavatar.direction ="down";}
-      if (e.key === 'ArrowLeft') {newX -= tileWidth; newavatar.direction ="left";}
-      if (e.key === 'ArrowRight') {newX += tileWidth; newavatar.direction ="right";}
+      const directionsMap = {
+        ArrowUp:"up",
+        ArrowDown:"down",
+        ArrowLeft:"left",
+        ArrowRight:"right"
+      };
+      const direction = directionsMap[e.key];
+      if (direction === "up") newY -= tileHeight; 
+      if (direction === "down") newY += tileHeight;
+      if (direction === "left") newX -= tileWidth;
+      if (direction === "right") newX += tileWidth;
       if(!isWalkable(newX,newY)) return;
-      newavatar.frame = (1 + newavatar.frame)%3;
+      newavatar.direction=direction;
+      newavatar.frame = directionRow[direction];
       setPlayers(prev =>
         prev.map(p =>
           p.userId === currentUserId ? { ...p, x: newX, y: newY ,avatar:newavatar} : p
@@ -240,18 +248,25 @@ export default function TileMap({
         const frameHeight = avatarImg.height/4;
         const row = directionRow[p.avatar?.direction || "down"];
         const col = p.avatar?.frame;
+        const scale=1.5;
         ctx.drawImage(
           avatarImg,
           col * frameWidth, row * frameHeight, frameWidth, frameHeight,
-          p.x, p.y, tileWidth, tileHeight 
+          p.x, p.y, tileWidth*scale, tileHeight *scale
         );
+        if(p.userId === currentUserId){
+          ctx.font = "bold 20px Arial";
+          ctx.fillStyle = "red";
+          ctx.fillText(p.username || p.userId,p.x,p.y-5)
+
+        }
 
       }
     });
   };
 
   return (
-    <div className='relative w-screen g-screen flex space-x-12'>
+    <div className='relative w-full h-full flex space-x-12 fixed'>
     <canvas
       ref={canvasRef}
       style={{
@@ -259,15 +274,19 @@ export default function TileMap({
         backgroundColor: "#f0f0f0",
         imageRendering: "pixelated",
         cursor: "crosshair",
-        width: "70%",
-        height: "70%",
+        width: "100%",
+        height: "100%",
         display: "block",
         position: "relative",
         zIndex: 1
       }}
     />
     {
-      videoCall && <div className='w-24 h-24 bg-green'><VideoCallPage  roomId={callRoom} username={participants.find(p => p.userId === currentUserId)?.username || currentUserId } setVideoCall={setVideoCall} /></div>
+      videoCall && <div className='absolute z-50 w-24 h-24 bg-green'  style={{
+        top: currentPlayer.y * (canvasRef.current?.clientHeight / canvasRef.current?.height || 1),
+        left: currentPlayer.x * (canvasRef.current?.clientWidth / canvasRef.current?.width || 1),
+        transform: "translate(-50%, -50%)",
+      }}><VideoCallPage  roomId={callRoom} username={participants.find(p => p.userId === currentUserId)?.username || currentUserId } setVideoCall={setVideoCall} /></div>
     }
      
 
