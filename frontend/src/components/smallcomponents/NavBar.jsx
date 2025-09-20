@@ -1,0 +1,44 @@
+import { useState } from "react";
+import { Menu,X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+export default function () {
+    const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+    return (
+        <nav className="flex justify-center items-center z-10 " >
+            <div className="hidden md:flex relative flex tems-center  justify-between gap-24 px-6 py-2 bg-[#262626] text-white rounded-full">
+                    <div className="flex items-center">
+                        <a className="font-bold text-blue-800 text-lg">VOffice</a>
+                        
+                    </div>
+                <div className="flex space-x-6 items-center">
+                    <a href="">Home</a>
+                    <a href="">About</a>
+                    <a href="" >Demo</a>
+                    <button className="px-4 py-2 rounded-full border-2 border-neutral-300" onClick={()=>navigate("/signup")}>Signup</button>
+                    <button className="px-4 py-2 rounded-xl bg-blue-800 text-white transition-colors text-neutral-900 shadow-sm" onClick={() =>navigate("/login")}>Login</button>
+                </div>
+
+            </div>
+            <div className="md:hidden absolute top-0 left-0 flex items-center" onClick={() => setIsOpen(!isOpen)}>
+                {
+                    isOpen ? <X size="24" /> : <Menu size="24" />
+                }
+            </div>
+            {
+                isOpen === true && <div className="absolute z-10 top-6 left-0 w-40  h-screen md:hidden flex flex-col space-y-6 px-4 pb-2 bg-[#262626] text-white text-sm rounded-xl">
+                <a className="font-bold text-blue-800 text-lg">VOffice</a>
+                <a href="#" className="hover:text-blue-800 transition-colors hover:bg-gray-500 hover:bg-opacity-50 rounded-xl">Home</a>
+                <a href="#" className="hover:text-blue-800 transition-colors">About</a>
+                <a href="#" className="hover:text-blue-800 transition-colors">Demo</a>
+                <a href="#" className="hover:text-blue-800 transition-colors">Signup</a>
+                <button className="px-4 py-2 rounded-xl bg-blue-800 text-white font-semibold hover:bg-blue-800 transition-colors">
+                    Login
+                </button>
+
+            </div>
+            
+            }
+        </nav>
+    )
+}

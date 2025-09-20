@@ -48,11 +48,12 @@ app.post("/signin", async (req, res) => {
     try {
         const { email } = req.body;
         const user = await userModel.findOne({ email });
-
+       
         if (user) {
-            res.send({ message: "signin successful" });
+            const username = user.email.split("@")[0];
+            res.send({username:username,userId:user._id, message: "signin successful" });
         } else {
-            res.status(404).send({ message: "signin failed" });
+            res.status(404).send({  message: "signin failed" });
         }
     } catch (err) {
         console.error(err);

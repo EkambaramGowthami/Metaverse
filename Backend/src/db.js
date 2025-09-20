@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     email:{type:String},
     password:{type:String},
     username:{type:String},
-    selectedSpaceMaps:[{id:Number,imageUrl:String}]
+    selectedSpaceMaps:[{id:Number,imageUrl:String,mapUrl:String,tilesetImageUrl:String,name:String}],
 });
 const avatarSchema = new mongoose.Schema({
     direction:{type:String},

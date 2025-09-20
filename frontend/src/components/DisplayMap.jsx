@@ -15,6 +15,10 @@ export default function DisplayMap({ players, setPlayers }) {
   const username = localStorage.getItem("username");
   const defaultAvatar = { imageUrl: "/Characters.jpeg" };
   const avatar = JSON.parse(localStorage.getItem("selectedAvatar")) || defaultAvatar;
+  const mapUrl = localStorage.getItem("mapUrl");
+  console.log("Map url:",mapUrl);
+  const tilesetImageUrl = localStorage.getItem("tilesetImageUrl");
+  console.log("TileImageUrl:",tilesetImageUrl);
   const handleOnclickCopy = async () => {
     try {
       await navigator.clipboard.writeText(roomId);
@@ -32,8 +36,8 @@ export default function DisplayMap({ players, setPlayers }) {
       {/* <div className="w-full h-screen bg-black text-white md:block hidden">hi</div> */}
       <div className="flex justify-center items-center overflow-auto w-full h-full  border-r border-black">
         <TileMap
-          mapUrl="/maps/CreatedOfficeMap.json"
-          tilesetImageUrl="/maps/officeMap.jpeg"
+          mapUrl = {mapUrl}
+          tilesetImageUrl={tilesetImageUrl}
           tileWidth={64}
           tileHeight={64}
           players={players}
@@ -47,7 +51,7 @@ export default function DisplayMap({ players, setPlayers }) {
           <div className="right-0 flex justify-end bg-white items-center rounded-lg space-x-2 p-2">
             <div onClick={() => setShowPlayers(!showPlayers)}><Users /></div>
             <p className="text-green-500 text-sm">{players.length || "1"}</p>
-            <button className="bg-[#7B68EE] px-2 py-1 text-white rounded-lg text-sm" onClick={() => setInvite(!invite)}>Invite</button>
+            <button className="bg-blue-800 px-2 py-1 text-white rounded-lg text-sm" onClick={() => setInvite(!invite)}>Invite</button>
           </div>
         </div>
         <div className="p-4">

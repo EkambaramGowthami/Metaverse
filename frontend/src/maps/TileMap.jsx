@@ -248,15 +248,16 @@ export default function TileMap({
         const frameHeight = avatarImg.height/4;
         const row = directionRow[p.avatar?.direction || "down"];
         const col = p.avatar?.frame;
-        const scale=1.5;
+        const scale=2;
         ctx.drawImage(
           avatarImg,
           col * frameWidth, row * frameHeight, frameWidth, frameHeight,
           p.x, p.y, tileWidth*scale, tileHeight *scale
         );
         if(p.userId === currentUserId){
-          ctx.font = "bold 20px Arial";
-          ctx.fillStyle = "red";
+          ctx.font = "900 28px sans-serif";
+          ctx.fillStyle = "#191970";
+          ctx.lineWidth = 3;
           ctx.fillText(p.username || p.userId,p.x,p.y-5)
 
         }
@@ -282,7 +283,7 @@ export default function TileMap({
       }}
     />
     {
-      videoCall && <div className='absolute md:z-50 z-20 w-12 h-12 md:w-24 md:h-24 bg-green'  style={{
+      videoCall && <div className='absolute md:z-50 sm:z-20 sm:w-12 sm:h-12 md:w-24 md:h-24 bg-green'  style={{
         top: currentPlayer.y * (canvasRef.current?.clientHeight / canvasRef.current?.height || 1),
         left: currentPlayer.x * (canvasRef.current?.clientWidth / canvasRef.current?.width || 1),
         transform: "translate(-50%, -50%)",

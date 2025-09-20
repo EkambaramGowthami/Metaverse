@@ -5,6 +5,9 @@ import  MyGallery  from './components/Space/MyGallery';
 import Signup from './components/Auth/Signup';
 import Test from './components/video/Test';
 import VideoCallPage from './components/video/VideoCallPage';
+import Dashboard from './components/Dashboard';
+import { LogIn } from 'lucide-react';
+import Login from './components/Auth/Login';
 export default function App() {
   const [players, setPlayers] = useState([]);
     return (
@@ -15,6 +18,9 @@ export default function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/test" element={<Test />} />
       <Route path="/videocall" element={<VideoCallPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   </BrowserRouter>
 
