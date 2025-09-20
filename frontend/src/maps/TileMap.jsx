@@ -267,28 +267,55 @@ export default function TileMap({
   };
 
   return (
-    <div className='relative w-full h-full flex space-x-12 fixed'>
-    <canvas
-      ref={canvasRef}
-      style={{
-        border: "2px solid #ccc",
-        backgroundColor: "#f0f0f0",
-        imageRendering: "pixelated",
-        cursor: "crosshair",
-        width: "100%",
-        height: "100%",
-        display: "block",
-        position: "relative",
-        zIndex: 1
-      }}
-    />
-    {
-      videoCall && <div className='absolute md:z-50 sm:z-20 sm:w-12 sm:h-12 md:w-24 md:h-24 bg-green'  style={{
-        top: currentPlayer.y * (canvasRef.current?.clientHeight / canvasRef.current?.height || 1),
-        left: currentPlayer.x * (canvasRef.current?.clientWidth / canvasRef.current?.width || 1),
-        transform: "translate(-50%, -50%)",
-      }}><VideoCallPage  roomId={callRoom} username={participants.find(p => p.userId === currentUserId)?.username || currentUserId } setVideoCall={setVideoCall} /></div>
-    }
+    // <div className='relative w-full h-full flex space-x-12 fixed'>
+    // <canvas
+    //   ref={canvasRef}
+    //   style={{
+    //     border: "2px solid #ccc",
+    //     backgroundColor: "#f0f0f0",
+    //     imageRendering: "pixelated",
+    //     cursor: "crosshair",
+    //     width: "100%",
+    //     height: "100%",
+    //     display: "block",
+    //     position: "relative",
+    //     zIndex: 1
+    //   }}
+    // />
+    // {
+    //   videoCall && <div className='absolute md:z-50 sm:z-20 sm:w-12 sm:h-12 md:w-24 md:h-24 bg-green'  style={{
+    //     top: currentPlayer.y * (canvasRef.current?.clientHeight / canvasRef.current?.height || 1),
+    //     left: currentPlayer.x * (canvasRef.current?.clientWidth / canvasRef.current?.width || 1),
+    //     transform: "translate(-50%, -50%)",
+    //   }}><VideoCallPage  roomId={callRoom} username={participants.find(p => p.userId === currentUserId)?.username || currentUserId } setVideoCall={setVideoCall} /></div>
+    // }
+    // </div>
+    <div className="relative w-full h-full flex fixed">
+      <canvas
+        ref={canvasRef}
+        style={{
+          border: '2px solid #ccc',
+          backgroundColor: '#f0f0f0',
+          imageRendering: 'pixelated',
+          cursor: 'crosshair',
+          width: '100%',
+          height: '100%',
+          display: 'block',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      />
+      {videoCall && (
+        <div className="absolute top-4 right-4 z-50">  
+          <VideoCallPage
+            roomId={callRoom}  
+            username={
+              participants.find(p => p.userId === currentUserId)?.username || currentUserId
+            }
+            setVideoCall={setVideoCall}
+          />
+        </div>
+      )}
     </div>
   );
 }
