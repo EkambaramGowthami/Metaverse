@@ -61,5 +61,5 @@ export default function VideoCallPage({ roomId,username,setVideoCall }) {
     init();
   }, [roomId,username]);
 
-  return <div ref={rootRef} className="w-full h-full min-h-screen" />
+  return <div ref={rootRef} className="w-48 h-48 md:w-full md:h-full min-h-screen" />
 }
