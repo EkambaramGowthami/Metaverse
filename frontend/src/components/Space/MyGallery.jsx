@@ -8,8 +8,10 @@ import { useNavigate } from "react-router-dom";
 export default function MyGallery({ players, setPlayers }) {
   const [roomCreating, setRoomCreating] = useState(false);
   const [createSpace, setCreateSpace] = useState(false);
-  const mapUrl = useRef("/maps/CreatedOfficeMap.json");
-  const tilesetImageUrl = useRef("/maps/officeMap.jpeg");
+  const [mapUrl,setMapUrl] = useState("/maps/CreatedOfficeMap.json");
+  const [tilesetImageUrl,setTilesetImageUrl] = useState("/maps/officeMap.jpeg");
+  // const mapUrl = useRef("/maps/CreatedOfficeMap.json");
+  // const tilesetImageUrl = useRef("/maps/officeMap.jpeg");
   const selectedMapRef = useRef(null);
   const [roomId, setRoomId] = useState("");
   const roomIdRef = useRef(null);
@@ -44,11 +46,11 @@ export default function MyGallery({ players, setPlayers }) {
     setRoomCreating(true);
     const avatar = getRandomAvatar();
     selectedMapRef.current = image;
-    mapUrl.current = image.mapUrl;
-    tilesetImageUrl.current = image.tilesetImageUrl;
-    localStorage.setItem("mapUrl", mapUrl.current);
-    localStorage.setItem("tilesetImageUrl", tilesetImageUrl.current);
-    socket.emit("createRoom", { userId, avatar, username ,mapUrl:mapUrl.current,tilesetImageUrl:tilesetImageUrl.current });
+    setMapUrl(image.mapUrl);
+    setTilesetImageUrl(image.tilesetImageUrl);
+    localStorage.setItem("mapUrl", mapUrl);
+    localStorage.setItem("tilesetImageUrl", tilesetImageUrl);
+    socket.emit("createRoom", { userId, avatar, username ,mapUrl:mapUrl,tilesetImageUrl:tilesetImageUrl});
   };
 
   useEffect(() => {
@@ -59,8 +61,8 @@ export default function MyGallery({ players, setPlayers }) {
     };
     const handleRoomJoined = ({ roomId, players,mapUrl,tilesetImageUrl }) => {
       setPlayers(players);
-      mapUrl.current=mapUrl;
-      tilesetImageUrl.current=tilesetImageUrl;
+      setMapUrl(mapUrl);
+      setTilesetImageUrl(tilesetImageUrl);
       socket.on("updatedPositions", (players) => setPlayers(players));
       navigate(`/space/room/${roomId}`);
     };
