@@ -47,9 +47,10 @@ const avatarSchema = new mongoose.Schema({
     description:{type:String}
 });
 const messageSchema = new mongoose.Schema({
-    roomId:{type:String,required:true,index:true},
-    userId:{type:String,required:true},
-    message:{type:String,required:true,trim:true},
+    roomId:{type:String,index:true},
+    userId:{type:String},
+    username:{type:String},
+    message:{type:String},
     timestamp:{type:Date,default:Date.now()}
     
 })

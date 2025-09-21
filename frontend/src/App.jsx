@@ -8,6 +8,7 @@ import VideoCallPage from './components/video/VideoCallPage';
 import Dashboard from './components/Dashboard';
 import { LogIn } from 'lucide-react';
 import Login from './components/Auth/Login';
+import Demo from './components/Demo';
 export default function App() {
   const [players, setPlayers] = useState([]);
     return (
@@ -21,6 +22,7 @@ export default function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/demo" element={<Demo />} />
     </Routes>
   </BrowserRouter>
 

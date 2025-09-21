@@ -6,11 +6,12 @@ import VideocallAndChatting from "./smallcomponents/VideocallAndChatting";
 import Typewriter from "typewriter-effect";
 import AnimatedTooltip from "./ui/Animated-tooltip";
 import College from "./smallcomponents/Collage";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { BackgroundBeams } from "./ui/background-beams";
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const targetRef = useRef(null);
   const teamMembers = [
     {
       id: 1,
@@ -49,7 +50,7 @@ export default function Dashboard() {
       <div className="md:w-full h-[1000px] md:h-[800px] relative overflow-hidden">
       <BackgroundBeams />
         <div className="relative top-6 space-y-12 text-center">
-          <NavBar />
+          <NavBar targetRef={targetRef} />
         </div>
         <div className="relative top-20  space-y-12 flex flex-col md:flex-row justify-between p-12">
            <div className="relative text-white  z-20 text-4xl md:text-6xl font-bold animate-fadeInUp space-y-6"> 
@@ -84,7 +85,7 @@ export default function Dashboard() {
 
 
     </div>
-    <div className="min-h-screen px-2 md:px-16 mt-2 md:mt-24 space-y-24">
+    <div className="min-h-screen px-2 md:px-16 mt-2 md:mt-24 space-y-24" ref={targetRef} >
       <div className="text-4xl md:6xl text-blue-800 text-center font-bold">Why VOffice</div>
       <div className="space-y-2">
         <div className="flex justify-center items-center">

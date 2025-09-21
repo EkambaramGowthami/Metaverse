@@ -191,9 +191,26 @@ io.on("connection", (socket) => {
 
 
     });
+    socket.on("chat",async (data)=>{
+        const { roomId, userId, username, message } = data;
+        try{
+            const newMessage = await messageModel.create({ roomId,userId,username,message});
+            io.to(roomId).emit("newMessage",newMessage);
+        }
+        catch(e){
+            console.log("error occured:",e);
+        }
 
-
-
+    });
+    socket.on("getMessages", async (roomId) => {
+        try {
+          const messages = await messageModel.find({ roomId }).sort({ _id: 1 }); 
+          socket.emit("allMessages", messages);
+        } catch (e) {
+          console.log("error sending messages to frontend:", e);
+        }
+      });
+      
     socket.on("endVideoCall", async (roomId) => {
         const room = await RoomModel.findOne({ roomId });
         if (!room) return;

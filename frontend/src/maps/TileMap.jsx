@@ -245,7 +245,7 @@ export default function TileMap({
         );
         if(p.userId === currentUserId){
           ctx.font = "900 28px sans-serif";
-          ctx.fillStyle = "#191970";
+          ctx.fillStyle = "red";
           ctx.lineWidth = 3;
           ctx.fillText(p.username || p.userId,p.x,p.y-5)
 

@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Menu,X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-export default function () {
+export default function ({ targetRef }) {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+    const handleScroll = (e) => {
+        e.preventDefault();
+        if(targetRef.current){
+            targetRef?.current.scrollIntoView({ behavior:'smooth'});
+            setIsOpen(false);
+        }
+    }
     return (
         <nav className="flex justify-center items-center z-10 " >
             <div className="hidden md:flex relative flex tems-center  justify-between gap-24 px-6 py-2 bg-[#262626] text-white rounded-full">
@@ -13,8 +20,8 @@ export default function () {
                     </div>
                 <div className="flex space-x-6 items-center">
                     <a href="">Home</a>
-                    <a href="">About</a>
-                    <a href="" >Demo</a>
+                    <a href="" onClick={handleScroll}>About</a>
+                    <a href="" onClick={() => navigate("/demo")}>Demo</a>
                     <button className="px-4 py-2 rounded-full border-2 border-neutral-300" onClick={()=>navigate("/signup")}>Signup</button>
                     <button className="px-4 py-2 rounded-xl bg-blue-800 text-white transition-colors text-neutral-900 shadow-sm" onClick={() =>navigate("/login")}>Login</button>
                 </div>
