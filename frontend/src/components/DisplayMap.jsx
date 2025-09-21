@@ -9,6 +9,8 @@ import User from "../Icons/User";
 export default function DisplayMap({ players, setPlayers }) {
   const [invite, setInvite] = useState(false);
   const [showPlayers, setShowPlayers] = useState(false);
+  const [loader,setLoader] = useState(false);
+  const [mapReady,setMapReady] = useState(false);
   const { roomId } = useParams();
   const [copied, setCopied] = useState(false);
   const userId = localStorage.getItem("userId");
@@ -29,7 +31,7 @@ export default function DisplayMap({ players, setPlayers }) {
       console.log("Error occured while coping:", err);
     }
   }
-
+  
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[2fr_250px] gap-0 w-screen h-screen overflow-auto bg-black">
@@ -83,39 +85,6 @@ export default function DisplayMap({ players, setPlayers }) {
 
 
       </div>
-
-
-      {/* <div className="relative md:w-1/3 p-4">
-      
-        <button
-          className="flex text-xl items-start bg-green-500 rounded px-12 py-4"
-          onClick={() => setInvite(!invite)}
-        >
-          Invite
-        </button>
-
-    
-        {invite && (
-          <div className="mt-4 bg-yellow-500 text-white p-2 rounded">
-            {window.location.href}
-          </div>
-        )}
-
-
-        <div className="mt-8 bg-white p-4 rounded shadow">
-          <h3 className="font-bold mb-4 text-lg text-red-500">Players</h3>
-          {players.map((p) => (
-            <div key={p.socketId} className="flex items-center space-x-2 mb-2">
-              <img
-                src={p.avatar?.imageUrl}
-                alt="avatar"
-                className="w-6 h-6 rounded-full"
-              />
-              <span>{p.username || p.userId}</span>
-            </div>
-          ))}
-        </div>
-      </div> */}
 
 
 

@@ -22,6 +22,7 @@ export default function TileMap({
   const [callRoom,setCallRoom] = useState(true);
   const [participants,setParticipants] = useState([]);
   const currentPlayer = players.find(p => p.userId === currentUserId);
+  const [loading,setLoading] = useState(false);
   const directionRow = {
     "down": 0,
     "left": 1,
@@ -34,6 +35,7 @@ export default function TileMap({
   useEffect(() => {
     const loadMap = async () => {
       try {
+        setLoading(true);
         const res = await fetch(mapUrl);
         const mapData = await res.json();
 
@@ -58,10 +60,12 @@ export default function TileMap({
           tilesetImageRef.current = img;
           draw();
           applyPendingPlayers();
+          setLoading(false);
         };
         img.src = tilesetImageUrl;
       } catch (err) {
         console.error("Map load failed:", err);
+        setLoading(false);
       }
     };
 
@@ -227,21 +231,6 @@ export default function TileMap({
         };
         return;
       }
-
-      // const avatarImg = avatarCacheRef.current[avatarUrl];
-      // if (avatarImg.complete) {
-      //   ctx.drawImage(avatarImg, p.x, p.y, tileWidth, tileHeight);
-
-      //   if (p.userId === currentUserId) {
-      //     ctx.strokeStyle = "blue";
-      //     ctx.lineWidth = 2;
-      //     ctx.strokeRect(p.x, p.y, tileWidth, tileHeight);
-      //   }
-
-      //   ctx.fillStyle = "black";
-      //   ctx.font = "12px Arial";
-      //   ctx.fillText(p.username || p.userId, p.x, p.y - 5);
-      // }
       const avatarImg = avatarCacheRef.current[avatarUrl];
       if(avatarImg.complete){
         const frameWidth = avatarImg.width/3;
@@ -291,6 +280,12 @@ export default function TileMap({
     // }
     // </div>
     <div className="relative w-full h-full flex fixed">
+       {loading && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
+
       <canvas
         ref={canvasRef}
         style={{
