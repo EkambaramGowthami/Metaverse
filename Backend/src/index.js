@@ -136,11 +136,13 @@ io.on("connection", (socket) => {
         }
     }
 
-    socket.on("createRoom", async ({ userId, avatar, username }) => {
+    socket.on("createRoom", async ({ userId, avatar, username,mapUrl,tilesetImageUrl }) => {
         const roomId = Math.random().toString(36).substring(2, 6);
         const newRoom = await RoomModel.create({
             roomId,
-            players: [{ userId, username, socketId: socket.id, avatar,x: 50, y: 50 }]
+            players: [{ userId, username, socketId: socket.id, avatar,x: 50, y: 50 }],
+            mapUrl,
+            tilesetImageUrl
         });
         socket.join(roomId);
         const inviteLink = `https://metaverse.../space/room?roomId=${roomId}`;
@@ -153,6 +155,8 @@ io.on("connection", (socket) => {
         
         const room = await RoomModel.findOne({ roomId });
         if (!room) return socket.emit("error", "room not found");
+        const mapUrl = room.mapUrl;
+        const tilesetImageUrl = room.tilesetImageUrl;
         if (room.players.length >= 5) return socket.emit("error", "room is filled");
         const existingPlayer = room.players.find(p => (p.userId === userId || p.socketId === socket.id));
         if (existingPlayer) {
@@ -170,7 +174,7 @@ io.on("connection", (socket) => {
         await room.save();
         socket.join(roomId);
         console.log("Room joined:", socket.id);
-        io.to(roomId).emit("roomJoined", { roomId,players: room.players });
+        io.to(roomId).emit("roomJoined", { roomId,players: room.players,mapUrl,tilesetImageUrl });
         io.to(roomId).emit("updatedPositions", room.players);
         checkProximityAndTriggerVideoCall(roomId);
 

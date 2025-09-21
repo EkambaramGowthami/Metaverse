@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 export default function MyGallery({ players, setPlayers }) {
   const [roomCreating, setRoomCreating] = useState(false);
   const [createSpace, setCreateSpace] = useState(false);
-  const mapUrl = useRef(null);
-  const tilesetImageUrl = useRef(null);
+  const mapUrl = useRef("/maps/CreatedOfficeMap.json");
+  const tilesetImageUrl = useRef("/maps/officeMap.jpeg");
   const selectedMapRef = useRef(null);
   const [roomId, setRoomId] = useState("");
   const roomIdRef = useRef(null);
@@ -48,7 +48,7 @@ export default function MyGallery({ players, setPlayers }) {
     tilesetImageUrl.current = image.tilesetImageUrl;
     localStorage.setItem("mapUrl", mapUrl.current);
     localStorage.setItem("tilesetImageUrl", tilesetImageUrl.current);
-    socket.emit("createRoom", { userId, avatar, username });
+    socket.emit("createRoom", { userId, avatar, username ,mapUrl:mapUrl.current,tilesetImageUrl:tilesetImageUrl.current });
   };
 
   useEffect(() => {
@@ -57,8 +57,10 @@ export default function MyGallery({ players, setPlayers }) {
       localStorage.setItem("selectedMap", JSON.stringify(selectedMapRef.current));
       navigate(`/space/room/${roomId}`);
     };
-    const handleRoomJoined = ({ roomId, players }) => {
+    const handleRoomJoined = ({ roomId, players,mapUrl,tilesetImageUrl }) => {
       setPlayers(players);
+      mapUrl.current=mapUrl;
+      tilesetImageUrl.current=tilesetImageUrl;
       socket.on("updatedPositions", (players) => setPlayers(players));
       navigate(`/space/room/${roomId}`);
     };

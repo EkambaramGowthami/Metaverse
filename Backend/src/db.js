@@ -25,6 +25,8 @@ const playerSchema = new mongoose.Schema({
 
 const roomSchema = new mongoose.Schema({
     roomId:{type:String,unique:true},
+    mapUrl:{type:String},
+    tilesetImageUrl:{type:String},
     players:[playerSchema],
     createdAt:{type:Date,default:Date.now()}
 })

@@ -3,8 +3,8 @@ import { socket } from '../components/utils/socket';
 import VideoCallPage from '../components/video/VideoCallPage';
 
 export default function TileMap({
-  mapUrl,
-  tilesetImageUrl,
+  mapUrl:initialMapUrl,
+  tilesetImageUrl:initialTilesetImageUrl,
   tileWidth,
   tileHeight,
   players,
@@ -22,6 +22,8 @@ export default function TileMap({
   const [callRoom,setCallRoom] = useState(true);
   const [participants,setParticipants] = useState([]);
   const currentPlayer = players.find(p => p.userId === currentUserId);
+  const [mapUrl,setMapUrl] = useState(initialMapUrl);
+  const [tilesetImageUrl,setTilesetImageUrl] = useState(initialTilesetImageUrl);
   const [loading,setLoading] = useState(false);
   const directionRow = {
     "down": 0,
@@ -78,8 +80,14 @@ export default function TileMap({
 
   useEffect(() => {
     socket.on("updatedPositions", applyPlayers);
-    socket.on("roomJoined", ({ roomId,players }) => applyPlayers(players));
-    const handleStartCall = ({ roomName, participants }) => {
+    socket.on("roomJoined", ({ roomId,players,mapUrl,tilesetImageUrl }) =>
+    {
+      applyPlayers(players);
+      setMapUrl(mapUrl || initialMapUrl);
+      setTilesetImageUrl(tilesetImageUrl || initialTilesetImageUrl);
+
+  });
+ const handleStartCall = ({ roomName, participants }) => {
       setCallRoom(roomName);
       setParticipants(participants);
       console.log("participants:",participants);
