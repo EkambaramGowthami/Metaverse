@@ -48,9 +48,9 @@ export default function MyGallery({ players, setPlayers }) {
     selectedMapRef.current = image;
     setMapUrl(image.mapUrl);
     setTilesetImageUrl(image.tilesetImageUrl);
-    localStorage.setItem("mapUrl", mapUrl);
-    localStorage.setItem("tilesetImageUrl", tilesetImageUrl);
-    socket.emit("createRoom", { userId, avatar, username ,mapUrl:mapUrl,tilesetImageUrl:tilesetImageUrl});
+    localStorage.setItem("mapUrl", image.mapUrl);
+    localStorage.setItem("tilesetImageUrl", image.tilesetImageUrl);
+    socket.emit("createRoom", { userId, avatar, username ,mapUrl:image.mapUrl,tilesetImageUrl:image.tilesetImageUrl});
   };
 
   useEffect(() => {
@@ -63,6 +63,8 @@ export default function MyGallery({ players, setPlayers }) {
       setPlayers(players);
       setMapUrl(mapUrl);
       setTilesetImageUrl(tilesetImageUrl);
+      localStorage.setItem("mapUrl", mapUrl);
+      localStorage.setItem("tilesetImageUrl", tilesetImageUrl);
       socket.on("updatedPositions", (players) => setPlayers(players));
       navigate(`/space/room/${roomId}`);
     };
