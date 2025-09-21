@@ -301,7 +301,7 @@ export default function TileMap({
         }}
       />
       {videoCall && (
-        <div className="absolute top-4 right-4 z-50">  
+        <div className="absolute top-4 left-24 z-50">  
           <VideoCallPage
             roomId={callRoom}  
             username={
