@@ -34,15 +34,15 @@ export default function Signup() {
   };
 
   return (
-    <div className="bg-black bg-opacity-90 h-screen w-screen flex items-center justify-center">
-        <div className="relative bg-[#262626] w-96 rounded-xl p-6 space-y-4">
+    <div className="fixed bg-black bg-opacity-90 h-screen w-screen flex items-center justify-center">
+        <div className="relative bg-[#262626] w-80 md:w-96 rounded-xl p-2 md:p-6 space-y-4">
           <div className="text-3xl text-blue-800 font-semibold text-center ">Signup</div>
           <label className="text-white text-lg">Username:</label>
-          <input type="text" placeholder="Email or username" className="px-12 py-4 rounded-xl bg-black bg-opacity-80 text-white" ref={emailRef} />
+          <input type="text" placeholder="Email or username" className=" px-6 py-2 md:px-12 md:py-4 rounded-xl bg-black bg-opacity-80 text-white focus:outline-none" ref={emailRef} />
           <label className="text-white text-lg">Password:</label>
-          <input type="password" placeholder="Password" className="px-12 py-4 rounded-xl bg-black bg-opacity-80 text-white" ref={passwordRef} />
-          <button className="bg-blue-800 text-white text-lg rounded-xl hover:border hover:border-blue-900 shadow-xl w-full py-4" onClick={handleSignup}>Create account</button>
-          <div className="text-center"><span className="text-white text-lg">Already have an account ?   </span><span className="text-lg text-blue-800 font-bold">Login</span></div>
+          <input type="password" placeholder="Password" className="px-6 py-2 md:px-12 md:py-4 rounded-xl bg-black bg-opacity-80 text-white focus:outline-none" ref={passwordRef} />
+          <button className="bg-blue-800 text-white text-lg rounded-xl hover:border hover:border-blue-900 shadow-xl w-full py-1 md:py-4" onClick={handleSignup}>Create account</button>
+          <div className="text-center"><span className="text-white text-md md:text-lg">Already have an account ?   </span><span className="text-lg text-blue-800 font-bold">Login</span></div>
              
           </div>
 

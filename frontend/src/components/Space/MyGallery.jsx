@@ -107,17 +107,19 @@ export default function MyGallery({ players, setPlayers }) {
   }, [userId]);
 
   return (
-    <div className="bg-black h-screen w-screen relative text-white">
+    <div className="fixed bg-black h-screen w-screen relative text-white overflow-y-auto">
       {createSpace && (
-        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50 backdrop-blur-sm">
-          <div className="w-full max-w-3xl rounded-xl bg-[#262626] shadow-2xl p-6">
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50 backdrop-blur-sm px-4 sm:px-6">
+          <div className="w-full max-w-3xl rounded-xl bg-[#262626] shadow-2xl p-4 sm:p-6">
             <div className="flex justify-end cursor-pointer" onClick={() => setCreateSpace(false)}>
               <Cancel className="text-gray-300 hover:text-white transition" />
             </div>
-            <h1 className="text-center text-2xl font-bold mb-4">Choose a Map</h1>
-            <div className="flex justify-between items-center mb-4">
-              <span className="bg-blue-600 px-4 py-1 rounded-full text-sm font-medium">All Maps</span>
-              <div className="relative w-1/3">
+            <h1 className="text-center text-xl sm:text-2xl font-bold mb-4">Choose a Map</h1>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
+              <span className="bg-blue-600 px-4 py-1 rounded-full text-sm font-medium text-center sm:text-left">
+                All Maps
+              </span>
+              <div className="relative w-full sm:w-1/3">
                 <span className="absolute inset-y-0 left-3 flex items-center text-gray-500">
                   <Search />
                 </span>
@@ -128,7 +130,7 @@ export default function MyGallery({ players, setPlayers }) {
                 />
               </div>
             </div>
-            <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {maps.map((image, index) => (
                 <div
                   key={index}
@@ -145,13 +147,14 @@ export default function MyGallery({ players, setPlayers }) {
           </div>
         </div>
       )}
-      <div className="flex justify-between items-center px-6 py-4 shadow-md">
-        <div className="text-2xl font-bold tracking-wide">My Spaces</div>
-        <div className="flex space-x-4 items-center">
-          <div className="relative">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 px-4 sm:px-6 py-4 shadow-md">
+        <div className="text-xl sm:text-2xl font-bold tracking-wide text-center sm:text-left">My Spaces</div>
+  
+        <div className="flex flex-col sm:flex-row sm:space-x-4 items-center gap-3">
+          <div className="relative w-full sm:w-auto">
             <input
               type="text"
-              className="rounded-lg bg-white border border-blue-700 pl-10 pr-3 py-2 text-sm text-black focus:outline-none"
+              className="w-full sm:w-52 rounded-lg bg-white border border-blue-700 pl-10 pr-3 py-2 text-sm text-black focus:outline-none"
               placeholder="Search spaces..."
             />
             <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
@@ -160,24 +163,26 @@ export default function MyGallery({ players, setPlayers }) {
           </div>
           <button
             onClick={() => setCreateSpace(true)}
-            className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg hover:from-blue-500 hover:to-blue-700 shadow transition"
+            className="w-full sm:w-auto px-4 py-2 bg-blue-800 rounded-lg hover:border-2 hover:border-blue-500 shadow-sm"
           >
             + Create Space
           </button>
-          <button
-            onClick={handleJoinRoom}
-            className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-lg shadow transition"
-          >
-            Join Room
-          </button>
-          <input
-            ref={roomIdRef}
-            placeholder="Room ID"
-            className="px-3 py-2 rounded-lg text-black focus:outline-none"
-          />
+          <div className="flex gap-2 w-full sm:w-auto">
+            <button
+              onClick={handleJoinRoom}
+              className="flex-1 sm:flex-none px-4 py-2 bg-green-500 hover:border-2 hover:border-green-600 rounded-lg shadow-sm"
+            >
+              Join Room
+            </button>
+            <input
+              ref={roomIdRef}
+              placeholder="Room ID"
+              className="flex-1 sm:flex-none px-3 py-2 rounded-lg text-black focus:outline-none"
+            />
+          </div>
         </div>
       </div>
-      <div className="p-6 grid md:grid-cols-4 sm:grid-cols-2 gap-6">
+      <div className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {Array.isArray(spaceMaps) && spaceMaps.length > 0 ? (
           spaceMaps.map((map, index) => (
             <div
@@ -190,9 +195,11 @@ export default function MyGallery({ players, setPlayers }) {
             </div>
           ))
         ) : (
-          <div className="text-gray-300 col-span-full text-center">No spaces yet. Create or join one!</div>
+          <div className="text-gray-300 col-span-full text-center">
+            No spaces yet. Create or join one!
+          </div>
         )}
       </div>
     </div>
   );
-}
+}  

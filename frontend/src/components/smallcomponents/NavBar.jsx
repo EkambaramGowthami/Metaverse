@@ -27,7 +27,7 @@ export default function ({ targetRef }) {
                 </div>
 
             </div>
-            <div className="md:hidden absolute top-0 left-0 flex items-center" onClick={() => setIsOpen(!isOpen)}>
+            <div className="black md:hidden absolute top-0 left-0 flex items-center text-white " onClick={() => setIsOpen(!isOpen)}>
                 {
                     isOpen ? <X size="24" /> : <Menu size="24" />
                 }
@@ -35,10 +35,10 @@ export default function ({ targetRef }) {
             {
                 isOpen === true && <div className="absolute z-10 top-6 left-0 w-40  h-screen md:hidden flex flex-col space-y-6 px-4 pb-2 bg-[#262626] text-white text-sm rounded-xl">
                 <a className="font-bold text-blue-800 text-lg">VOffice</a>
-                <a href="#" className="hover:text-blue-800 transition-colors hover:bg-gray-500 hover:bg-opacity-50 rounded-xl">Home</a>
-                <a href="#" className="hover:text-blue-800 transition-colors">About</a>
-                <a href="#" className="hover:text-blue-800 transition-colors">Demo</a>
-                <a href="#" className="hover:text-blue-800 transition-colors">Signup</a>
+                <a href="#" className="hover:text-blue-800 hover:bg-gray-500 hover:bg-opacity-50 rounded-xl">Home</a>
+                <a href="#" className="hover:text-blue-800 ">About</a>
+                <a href="#" className="hover:text-blue-800 ">Demo</a>
+                <a href="#" className="hover:text-blue-800 ">Signup</a>
                 <button className="px-4 py-2 rounded-xl bg-blue-800 text-white font-semibold hover:bg-blue-800 transition-colors">
                     Login
                 </button>

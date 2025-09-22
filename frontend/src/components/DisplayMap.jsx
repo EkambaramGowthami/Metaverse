@@ -62,9 +62,8 @@ export default function DisplayMap({ players, setPlayers }) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[2fr_350px] gap-0 w-screen h-screen overflow-auto bg-black bg-opacity-80">
-      {/* <div className="w-full h-screen bg-black text-white md:block hidden">hi</div> */}
-      <div className="flex justify-center items-center overflow-auto w-full h-full  border-r border-black">
+    <div className="flex flex-col md:grid md:grid-cols-[2fr_350px] w-screen h-screen overflow-hidden bg-black">
+      <div className="flex justify-center items-center overflow-hidden w-full h-full border-b md:border-b-0 md:border-r border-black">
         <TileMap
           mapUrl={mapUrl}
           tilesetImageUrl={tilesetImageUrl}
@@ -76,110 +75,160 @@ export default function DisplayMap({ players, setPlayers }) {
           roomId={roomId}
         />
       </div>
-      <div>
-        <div className="flex justify-end p-2 space-x-2">
-
-          <div className="right-0 flex justify-end bg-white items-center rounded-lg space-x-2 p-2">
-            <button className="bg-emerald-600 px-2 py-1 text-white rounded-lg text-sm" onClick={() => setOpenChat(!openChat)}>{openChat === true ? "Close chat" : "Open chat"}</button>
-            <div onClick={() => setShowPlayers(!showPlayers)}><Users /></div>
-            <p className="text-green-500 text-sm">{players.length || "1"}</p>
-            <button className="bg-blue-800 px-2 py-1 text-white rounded-lg text-sm" onClick={() => setInvite(!invite)}>Invite</button>
+      <div className="flex flex-col h-full bg-white/5">
+        
+        <div className="flex justify-end p-2 flex-wrap gap-2">
+        <div className="flex justify-end bg-white rounded-xl p-3 gap-2">
+          <button
+            className="bg-emerald-600 px-3 py-1 text-white rounded-lg text-xs sm:text-sm"
+            onClick={() => setOpenChat(!openChat)}
+          >
+            {openChat ? "Close chat" : "Open chat"}
+          </button>
+          <div
+            onClick={() => setShowPlayers(!showPlayers)}
+            className="cursor-pointer flex items-center gap-1"
+          >
+            <Users />
+            <p className="text-green-500 text-xs sm:text-sm">{players.length || "1"}</p>
           </div>
+          <button
+            className="bg-blue-800 px-3 py-1 text-white rounded-lg text-xs sm:text-sm"
+            onClick={() => setInvite(!invite)}
+          >
+            Invite
+          </button>
         </div>
-        <div className="p-4">
 
-          {
-            invite ? (<div className="flex justify-center text-sm p-2 bg-white rounded-lg text-sm">
-              <div className="flex space-x-2 justify-center items-center">
-                <p className="text-black">RoomId :</p>
-                <div className="text-white flex  justify-between space-x-6 items-center bg-green-400 px-6 rounded-lg py-1"><span>{roomId}</span><span onClick={handleOnclickCopy}><Copy /></span></div>
+        </div>
+        
+        <div className="p-2 flex-1 overflow-y-auto">
+          {invite ? (
+            <div className="flex flex-col sm:flex-row justify-center text-sm p-2 bg-white rounded-lg items-center gap-2">
+              <p className="text-black">RoomId :</p>
+              <div className="text-white flex justify-between items-center bg-green-400 px-4 rounded-lg py-1 gap-2">
+                <span className="break-all">{roomId}</span>
+                <span onClick={handleOnclickCopy} className="cursor-pointer">
+                  <Copy />
+                </span>
               </div>
-
-            </div>) : (
-              showPlayers ? (
-                <div className="text-sm p-2 rounded-lg bg-white rounded shadow-lg ">
-                  <p className="text-center text-lg text-[#004687] font-semibold mb-2">Players</p>
-                  {players.map((p) => (
-                    <div key={p.socketId} className="flex items-center p-2 space-x-2 mb-2">
-                      <User />
-                      <span>{p.username || p.userId}</span>
-                    </div>
-                  ))}
+            </div>
+          ) : showPlayers ? (
+            <div className="text-sm p-2 rounded-lg bg-white shadow-lg">
+              <p className="text-center text-base md:text-lg text-[#004687] font-semibold mb-2">
+                Players
+              </p>
+              {players.map((p) => (
+                <div
+                  key={p.socketId}
+                  className="flex items-center p-2 gap-2 mb-2 hover:bg-gray-100 rounded"
+                >
+                  <User />
+                  <span className="truncate">{p.username || p.userId}</span>
                 </div>
-              ) :
-                <div></div>
-            )
-
-          }
-          {
-            openChat && (
-              <div className="bg-gradient-to-br from-gray-950 via-black to-gray-900 rounded-3xl h-screen w-full flex flex-col shadow-2xl border border-gray-800">
-                <div className="p-5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-t-3xl shadow-lg border-b border-teal-800">
-                  <h2 className="text-2xl font-bold text-center tracking-wider font-sans">💬 Chat Room</h2>
+              ))}
+            </div>
+          ) : null}
+        </div>
+        {openChat && (
+          <div className="flex flex-col bg-gradient-to-br from-gray-950 via-black to-gray-900 rounded-t-3xl h-full max-h-screen md:max-h-[90%] shadow-2xl border border-gray-800 p-4">
+            <div className="p-4 bg-blue-800 text-white rounded-t-3xl shadow-lg border-b ">
+              <h2 className="text-lg sm:text-2xl font-bold text-center tracking-wider font-sans">
+                💬 Chat Room
+              </h2>
+            </div>
+            <div className="flex-1 overflow-y-auto bg-[#262626] p-1 space-y-1 custom-scrollbar">
+              {messages.length === 0 ? (
+                <div className="text-gray-500 text-center mt-12 text-base sm:text-lg italic">
+                  No messages yet...
                 </div>
-                <div className="flex-1 overflow-y-auto p-6 space-y-5 custom-scrollbar">
-                  {messages.length === 0 ? (
-                    <div className="text-gray-500 text-center mt-12 text-lg italic">
-                      No messages yet...
-                    </div>
-                  ) : (
-                    messages.map((msg) => (
-                      <div
-                        key={msg._id}
-                        className="flex items-start gap-4 p-4 rounded-2xl transition-all duration-300 transform hover:scale-[1.01] hover:bg-gray-800 bg-gray-900 border border-gray-700 shadow-md animate-fade-in"
-                      >
-                        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center font-bold text-lg text-white shadow-inner">
-                          {msg.username?.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex justify-between items-baseline mb-1">
-                            <span className="text-emerald-400 font-semibold text-lg truncate">
-                              {msg.username}
-                            </span>
-                            <span className="text-gray-500 text-xs font-light ml-4 flex-shrink-0">
-                              {msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ""}
-                            </span>
-                          </div>
-                          <p className="text-gray-300 text-base leading-snug break-words">
-                            {msg.message}
-                          </p>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-                <div className="bg-gray-950 p-1 rounded-b-3xl border-t border-gray-800 flex items-center space-x-2">
-                  <input
-                    type="text"
-                    placeholder="Type your message..."
-                    className="flex-1 p-2 rounded-full bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-shadow duration-300 text-base"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    aria-label="Type a message"
-                  />
-                  <button
-                    onClick={() => handleKeyDown({ key: 'Enter' })}
-                    className="p-3 bg-emerald-600 rounded-full text-white hover:bg-emerald-500 transition-colors duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                    aria-label="Send message"
+              ) : (
+                messages.map((msg) =>
+                msg.userId === userId ? (
+                  <div
+                    key={msg._id}
+                    className="flex ml-20 justify-end items-start gap-1 p-1 rounded-xl transition hover:scale-[1.01] shadow-md bg-[#1F2022]"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transform rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            )
-          }
-
-        </div>
-
-
+                    <div className="flex-shrink-0 w-4 h-4 sm:w-6 sm:h-6 rounded-full flex items-center justify-center bg-blue-800 font-bold text-sm sm:text-lg text-white shadow-inner">
+                      {msg.username?.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-blue-800 font-semibold text-lg md:text-sm truncate">
+                          {msg.username}
+                        </span>
+                        <span className="text-gray-500 text-[10px] sm:text-xs ml-2 flex-shrink-0">
+                          {msg.timestamp
+                            ? new Date(msg.timestamp).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })
+                            : ""}
+                        </span>
+                      </div>
+                      <p className="text-white text-sm break-words">{msg.message}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    key={msg._id}
+                    className="flex justify-end items-start gap-1 p-1 rounded-xl transition hover:scale-[1.01] shadow-md"
+                  >
+                    <div className="flex-shrink-0 w-4 h-4 sm:w-6 sm:h-6 rounded-full flex items-center justify-center bg-blue-800 font-bold text-sm sm:text-lg text-white shadow-inner">
+                      {msg.username?.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-blue-800 font-semibold text-lg md:text-sm truncate">
+                          {msg.username}
+                        </span>
+                        <span className="text-gray-500 text-[10px] sm:text-xs ml-2 flex-shrink-0">
+                          {msg.timestamp
+                            ? new Date(msg.timestamp).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })
+                            : ""}
+                        </span>
+                      </div>
+                      <p className="text-white text-sm break-words">{msg.message}</p>
+                    </div>
+                  </div>
+                )
+              )
+              
+              )}
+            </div>
+            <div className="bg-gray-950 p-2 flex items-center gap-2 border-t border-gray-800">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                className="flex-1 p-2 rounded-full bg-gray-800 text-white placeholder-gray-500 focus:outline-none text-sm sm:text-base"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <button
+                onClick={sendMessage}
+                className="p-2 sm:p-3 rounded-full text-white bg-blue-800 shadow-lg"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 sm:h-6 sm:w-6 transform rotate-90"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-
-
-
     </div>
   );
+  
 }
 
