@@ -15,6 +15,7 @@ export default function ({ targetRef }) {
         <nav className="flex justify-center items-center z-10 " >
             <div className="hidden md:flex relative flex tems-center  justify-between gap-24 px-6 py-2 bg-[#262626] text-white rounded-full">
                     <div className="flex items-center">
+                        <div className="text-white"><img src="/spaceImages/Gemini_Generated_Image_y6obppy6obppy6ob.png" className="rounded-full w-12 h-12 mr-2" /></div>
                         <a className="font-bold text-blue-800 text-lg">VOffice</a>
                         
                     </div>
