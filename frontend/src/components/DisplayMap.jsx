@@ -80,7 +80,7 @@ export default function DisplayMap({ players, setPlayers }) {
         <div className="flex justify-end p-2 flex-wrap gap-2">
         <div className="flex justify-end bg-white rounded-xl p-3 gap-2">
           <button
-            className="bg-emerald-600 px-3 py-1 text-white rounded-lg text-xs sm:text-sm"
+            className="bg-green-400 px-3 py-1 text-white rounded-lg text-xs sm:text-sm"
             onClick={() => setOpenChat(!openChat)}
           >
             {openChat ? "Close chat" : "Open chat"}
