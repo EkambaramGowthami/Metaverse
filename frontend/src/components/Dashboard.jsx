@@ -86,8 +86,8 @@ export default function Dashboard() {
 
     </div>
     <div className="min-h-screen px-2 md:px-16 mt-2 md:mt-24 space-y-24" ref={targetRef} >
-      <div className="text-4xl md:6xl text-blue-800 text-center font-bold">Why VOffice</div>
-      <div className="space-y-2">
+      <div className="text-4xl md:6xl text-blue-800 text-center font-bold mt-8 md:mt-2">Why VOffice</div>
+      <div className="space-y-6 md:space-y-4">
         <div className="flex justify-center items-center">
           <div className="flex flex-col md:flex-row items-center md:space-x-12">
             <div className="group relative w-80 md:w-96  rounded-2xl shadow-2xl bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out space-y-4">
