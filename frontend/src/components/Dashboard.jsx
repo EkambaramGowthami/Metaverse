@@ -124,7 +124,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="w-full overflow-hidden">
       <div className="relative top-24 grid grid-cols-3 place-items-center gap-20 md:gap-60
                       scale-[0.7] sm:scale-[0.85] md:scale-100">
 
@@ -226,7 +225,6 @@ export default function Dashboard() {
           />
         </motion.div>
       </div>
-    </div>
     <div className="bg-black rounded-xl w-full mt-60 p-4 space-y-4 overflow-hidden text-center">
         <div className="flex justify-center space-x-16">
           <div className="text-blue-800 font-semibold text-2xl">VOffice</div>
