@@ -125,7 +125,6 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="w-full flex justify-center overflow-hidden">
-      {/* SCALE WRAPPER */}
       <div
         className="
           relative
@@ -134,9 +133,7 @@ export default function Dashboard() {
           scale-[clamp(0.45,0.8vw,1)]
         "
       >
-        {/* TOP ROW */}
-        <div className="relative mt-32 grid grid-cols-3 place-items-center gap-[260px]">
-          {/* LEFT */}
+        <div className="relative mt-32 grid grid-cols-3 place-items-center gap-[60px] md:gap-[260px]">
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
@@ -157,8 +154,6 @@ export default function Dashboard() {
               Hello, everyone 😊
             </div>
           </motion.div>
-
-          {/* CENTER */}
           <motion.div
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
@@ -172,11 +167,9 @@ export default function Dashboard() {
           >
             <img
               src="/spaceImages/raja.jpeg"
-              className="w-36 h-36 rounded-full object-cover"
+              className="mt-6 md:mt-0 w-36 h-36 rounded-full object-cover"
             />
           </motion.div>
-
-          {/* RIGHT */}
           <motion.div
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: [0, 1, 1, 0], x: [100, 0, 0, 100] }}
@@ -190,19 +183,14 @@ export default function Dashboard() {
           >
             <img
               src="/spaceImages/kiran.jpg"
-              className="w-36 h-36 rounded-full object-cover"
+              className="mt-6 md:mt-0 w-36 h-36 rounded-full object-cover"
             />
           </motion.div>
         </div>
-
-        {/* TITLE */}
         <div className="mt-32 text-center text-5xl font-bold text-purple-600">
           Connecting minds in the VOffice
         </div>
-
-        {/* BOTTOM ROW */}
         <div className="relative mt-32 grid grid-cols-2 place-items-center gap-[260px]">
-          {/* LEFT */}
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
@@ -219,8 +207,6 @@ export default function Dashboard() {
               className="w-36 h-36 rounded-full object-cover"
             />
           </motion.div>
-
-          {/* RIGHT */}
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
@@ -256,9 +242,7 @@ export default function Dashboard() {
           </div>
 
         </div>
-        {/* <div className="mt-2 pt-6 text-sm text-gray-500">
-          Built with ❤️ for the future of virtual worlds.
-        </div> */}
+
         
         <div className=" text-center mt-2 text-gray-500">All names and brands mentioned are owned by their respective companies and used here for reference only.  <br />VOffice is not affiliated with or responsible for any third-party products or services.
         </div>
