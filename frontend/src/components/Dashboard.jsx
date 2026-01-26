@@ -287,14 +287,14 @@ export default function Dashboard() {
       <div className="flex justify-center space-x-16">
         <div className="text-blue-800 font-semibold text-2xl">VOffice</div>
         <div className="flex space-x-4 text-white">
-          <img src="/AppIcons/discord.png" className="w-8 h-8" />
-          <img src="/AppIcons/reddit.png" className="w-8 h-8" />
-          <img src="/AppIcons/twitter (1).png" className="w-8 h-8" />
-          <img src="/AppIcons/youtube.png" className="w-8 h-8" />
+          <img src="/AppIcons/discord.png" className="w-6 h-6 md:w-8 md:h-8" />
+          <img src="/AppIcons/reddit.png" className="w-6 h-6 md:w-8 md:h-8" />
+          <img src="/AppIcons/twitter (1).png" className="w-6 h-6 md:w-8 md:h-8" />
+          <img src="/AppIcons/youtube.png" className="w-6 h-6 md:w-8 md:h-8" />
         </div>
       </div>
 
-      <div className="text-center mt-2 text-gray-500">
+      <div className="text-xs md:text-sm text-center mt-2 text-gray-500">
         All names and brands mentioned are owned by their respective companies and
         used here for reference only.
         <br />
@@ -302,7 +302,7 @@ export default function Dashboard() {
         or services.
       </div>
 
-      <div className="text-gray-500 text-sm">© 2025 VOffice. All rights reserved.</div>
+      <div className="text-gray-500 text-xs">© 2025 VOffice. All rights reserved.</div>
     </div>
   </div>
 </div>
