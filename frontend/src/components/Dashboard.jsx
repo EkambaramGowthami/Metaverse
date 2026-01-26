@@ -44,7 +44,7 @@ export default function Dashboard() {
       image: "/spaceImages/manoj.jpg",
     },
   ];
-  return <div className="bg-black bg-opacity-90 min-h-screen w-full p-6 overflow-x-hidden">
+  return <div className="bg-black bg-opacity-90 min-h-screen w-full p-2.5 md:p-6 overflow-x-hidden">
   <div className="bg-black rounded-2xl h-full overflow-hidden">
 
     <div className="md:w-full h-[1000px] md:h-[800px] relative overflow-hidden">
