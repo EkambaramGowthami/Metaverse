@@ -124,9 +124,10 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-     <div className="w-full overflow-hidden">
-      <div className="relative top-24 flex flex-row flex-wrap justify-center items-center gap-20 md:gap-60 scale-[0.7] sm:scale-[0.85] md:scale-100">
-        
+      <div className="w-full overflow-hidden">
+      <div className="relative top-24 grid grid-cols-3 place-items-center gap-20 md:gap-60
+                      scale-[0.7] sm:scale-[0.85] md:scale-100">
+
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
@@ -137,17 +138,16 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="flex flex-row items-center gap-3"
+          className="flex items-center gap-3"
         >
           <img
             src="/spaceImages/ratna.jpg"
             className="rounded-full w-24 h-24 md:w-36 md:h-36 object-cover"
           />
           <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-sm md:text-base whitespace-nowrap">
-            Hello, everyone <span className="text-lg ml-1">😊</span>
+            Hello, everyone 😊
           </div>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
@@ -165,7 +165,6 @@ export default function Dashboard() {
             className="rounded-full w-full h-full object-cover"
           />
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: [0, 1, 1, 0], x: [100, 0, 0, 100] }}
@@ -187,8 +186,8 @@ export default function Dashboard() {
       <div className="relative top-16 text-center text-xl sm:text-3xl md:text-5xl text-blue-800 font-bold">
         Connecting minds in the VOffice
       </div>
-      <div className="relative top-20 flex flex-row flex-wrap justify-center items-center gap-20 md:gap-60 scale-[0.7] sm:scale-[0.85] md:scale-100">
-        
+      <div className="relative top-20 grid grid-cols-2 place-items-center gap-20 md:gap-60
+                      scale-[0.7] sm:scale-[0.85] md:scale-100">
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
@@ -206,7 +205,6 @@ export default function Dashboard() {
             className="rounded-full w-full h-full object-cover"
           />
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
@@ -217,9 +215,9 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="flex flex-row items-center gap-3"
+          className="flex items-center gap-3"
         >
-          <div className="text-white bg-blue-500/30 rounded-lg px-3 py-2 text-sm md:text-base whitespace-nowrap">
+          <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-sm md:text-base whitespace-nowrap">
             Have you completed the task?
           </div>
           <img
@@ -228,7 +226,6 @@ export default function Dashboard() {
           />
         </motion.div>
       </div>
-
     </div>
     <div className="bg-black rounded-xl w-full mt-60 p-4 space-y-4 overflow-hidden text-center">
         <div className="flex justify-center space-x-16">
