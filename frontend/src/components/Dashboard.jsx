@@ -124,9 +124,17 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="relative top-24 grid grid-cols-3 place-items-center gap-20 md:gap-60
-                      scale-[0.7] sm:scale-[0.85] md:scale-100">
-
+      <div className="w-full overflow-hidden">
+      <div
+        className="
+          relative mx-auto
+          mt-16 sm:mt-20 md:mt-24
+          grid grid-cols-3 place-items-center
+          gap-12 sm:gap-20 md:gap-60
+          scale-[0.65] sm:scale-[0.8] md:scale-100
+          origin-top
+        "
+      >
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
@@ -141,12 +149,14 @@ export default function Dashboard() {
         >
           <img
             src="/spaceImages/ratna.jpg"
-            className="rounded-full w-24 h-24 md:w-36 md:h-36 object-cover"
+            className="rounded-full w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36 object-cover"
           />
-          <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-sm md:text-base whitespace-nowrap">
+          <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-xs sm:text-sm md:text-base whitespace-nowrap">
             Hello, everyone 😊
           </div>
         </motion.div>
+
+        {/* CENTER */}
         <motion.div
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
@@ -157,7 +167,7 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="w-24 h-24 md:w-36 md:h-36"
+          className="w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36"
         >
           <img
             src="/spaceImages/raja.jpeg"
@@ -174,7 +184,7 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="w-24 h-24 md:w-36 md:h-36"
+          className="w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36"
         >
           <img
             src="/spaceImages/kiran.jpg"
@@ -182,11 +192,25 @@ export default function Dashboard() {
           />
         </motion.div>
       </div>
-      <div className="relative top-16 text-center text-xl sm:text-3xl md:text-5xl text-blue-800 font-bold">
+      <div
+        className="
+          relative text-center font-bold text-blue-800
+          mt-12 sm:mt-16 md:mt-20
+          text-lg sm:text-3xl md:text-5xl
+        "
+      >
         Connecting minds in the VOffice
       </div>
-      <div className="relative top-20 grid grid-cols-2 place-items-center gap-20 md:gap-60
-                      scale-[0.7] sm:scale-[0.85] md:scale-100">
+      <div
+        className="
+          relative mx-auto
+          mt-12 sm:mt-16 md:mt-20
+          grid grid-cols-2 place-items-center
+          gap-12 sm:gap-20 md:gap-60
+          scale-[0.65] sm:scale-[0.8] md:scale-100
+          origin-top
+        "
+      >
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
@@ -197,7 +221,7 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="w-24 h-24 md:w-36 md:h-36"
+          className="w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36"
         >
           <img
             src="/spaceImages/junnu.jpg"
@@ -216,15 +240,16 @@ export default function Dashboard() {
           }}
           className="flex items-center gap-3"
         >
-          <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-sm md:text-base whitespace-nowrap">
+          <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-xs sm:text-sm md:text-base whitespace-nowrap">
             Have you completed the task?
           </div>
           <img
             src="/spaceImages/manoj.jpg"
-            className="rounded-full w-24 h-24 md:w-36 md:h-36 object-cover"
+            className="rounded-full w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36 object-cover"
           />
         </motion.div>
       </div>
+    </div>
     <div className="bg-black rounded-xl w-full mt-60 p-4 space-y-4 overflow-hidden text-center">
         <div className="flex justify-center space-x-16">
           <div className="text-blue-800 font-semibold text-2xl">VOffice</div>
