@@ -45,94 +45,137 @@ export default function Dashboard() {
     },
   ];
   return <div className="bg-black bg-opacity-90 min-h-screen w-full p-6 overflow-x-hidden">
-    <div className="bg-black rounded-2xl h-full overflow-hidden">
-      
-      <div className="md:w-full h-[1000px] md:h-[800px] relative overflow-hidden">
+  <div className="bg-black rounded-2xl h-full overflow-hidden">
+
+    <div className="md:w-full h-[1000px] md:h-[800px] relative overflow-hidden">
       <BackgroundBeams />
-        <div className="relative top-6 space-y-12 text-center">
-          <NavBar targetRef={targetRef} />
-        </div>
-        <div className="relative top-20  space-y-12 flex flex-col md:flex-row justify-between p-12">
-           <div className="relative text-white  z-20 text-4xl md:text-6xl font-bold animate-fadeInUp space-y-6"> 
-             <p>Step into the future.</p>
-            <span>
-              Experience the{" "}
-              <span className="inline-block w-[12ch] italic text-blue-800">
-                <Typewriter
-                  options={{
-                    strings: ["Metaverse", "VOffice"],
-                    autoStart: true,
-                    loop: true,
-                  }}
 
-                />
-              </span>
+      <div className="relative top-6 space-y-12 text-center">
+        <NavBar targetRef={targetRef} />
+      </div>
+
+      <div className="relative top-20 space-y-12 flex flex-col md:flex-row justify-between p-12">
+        <div className="relative text-white z-20 text-4xl md:text-6xl font-bold animate-fadeInUp space-y-6">
+          <p>Step into the future.</p>
+
+          <span>
+            Experience the{" "}
+            <span className="inline-block w-[12ch] italic text-blue-800">
+              <Typewriter
+                options={{
+                  strings: ["Metaverse", "VOffice"],
+                  autoStart: true,
+                  loop: true,
+                }}
+              />
             </span>
-            <div className="text-white font-normal italic text-lg">virtual.versatile.visionary.</div>
-            <button className="text-lg rounded-lg px-12 py-2 text-center shadow-sm bg-blue-800 hover:border-2 hover:border-blue-900" onClick={()=>navigate("/space")}>
-              Get Started
-            </button>
-            <div>
-              <div className="text-white text-lg font-lg mb-4">Trusted By</div>
-              <div className="flex"><AnimatedTooltip items={teamMembers} /></div>
-            </div>
+          </span>
 
+          <div className="text-white font-normal italic text-lg">
+            virtual.versatile.visionary.
           </div>
-          <div className="w-120 h-120 flex items-center "><College /></div>
-        
-      </div>
-      </div>
 
+          <button
+            className="text-lg rounded-lg px-12 py-2 text-center shadow-sm bg-blue-800 hover:border-2 hover:border-blue-900"
+            onClick={() => navigate("/space")}
+          >
+            Get Started
+          </button>
 
+          <div>
+            <div className="text-white text-lg font-lg mb-4">
+              Trusted By
+            </div>
+            <div className="flex">
+              <AnimatedTooltip items={teamMembers} />
+            </div>
+          </div>
+        </div>
+
+        <div className="w-120 h-120 flex items-center">
+          <College />
+        </div>
+      </div>
     </div>
-    <div className="min-h-screen px-2 md:px-16 mt-2 md:mt-24 space-y-24" ref={targetRef} >
-      <div className="text-4xl md:6xl text-blue-800 text-center font-bold mt-8 md:mt-2">Why VOffice</div>
-      <div className="space-y-6 md:space-y-4">
-        <div className="flex justify-center items-center">
-          <div className="flex flex-col md:flex-row items-center md:space-x-12">
-            <div className="group relative w-80 md:w-96  rounded-2xl shadow-2xl bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out space-y-4">
-              <div className="w-full text-white text-2xl font-lg p-2 text-center">Metaverse Maps & Interactive Characters(Avatars)</div>
-              <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-4 text-gray-300  text-md text-center">
-                <p>Explore stunning, interactive 3D office maps tailored to your workspace.</p>
-                <p>Experience immersive navigation that feels like walking in a real office.</p>
-              </div>
+
+  </div>
+
+  <div
+    className="min-h-screen px-2 md:px-16 mt-2 md:mt-24 space-y-24"
+    ref={targetRef}
+  >
+    <div className="text-4xl md:text-6xl text-blue-800 text-center font-bold mt-8 md:mt-2">
+      Why VOffice
+    </div>
+
+    <div className="space-y-6 md:space-y-4">
+      <div className="flex justify-center items-center">
+        <div className="flex flex-col md:flex-row items-center md:space-x-12">
+          <div className="group relative w-80 md:w-96 rounded-2xl shadow-2xl bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out space-y-4">
+            <div className="w-full text-white text-2xl font-lg p-2 text-center">
+              Metaverse Maps & Interactive Characters(Avatars)
             </div>
-            <div className="mt-6 md:mt-0 group relative w-80 md:w-96 rounded-2xl shadow-2xl bg-black/90 p-3 space-y-4 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out">
-              <div className="w-full text-white text-2xl font-lg p-2 text-center">Real Metaverse Usage for Employees</div>
-              <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
-                <p>Boost team collaboration with a virtual office that feels real.</p>
-                <p>Hold meetings, brainstorm, and network without physical barriers.</p>
-              </div>
+            <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-4 text-gray-300 text-md text-center">
+              <p>
+                Explore stunning, interactive 3D office maps tailored to your
+                workspace.
+              </p>
+              <p>
+                Experience immersive navigation that feels like walking in a real
+                office.
+              </p>
             </div>
           </div>
-        </div>
-        <div className="flex justify-center items-center">
-          <div className="flex flex-col md:flex-row jusitfy-center md:space-x-12">
-            <div className="group relative w-80 md:w-96  rounded-2xl shadow-2xl space-y-4 bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out">
-              <div className="w-full text-white text-2xl font-lg p-2 text-center"> Group video Calls & Chatting Features</div>
-              <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
-                <p>Seamlessly host HD video calls directly inside the metaverse.</p>
-                <p>Use instant chat for quick updates and real-time teamwork.</p>
-              </div>
+
+          <div className="mt-6 md:mt-0 group relative w-80 md:w-96 rounded-2xl shadow-2xl bg-black/90 p-3 space-y-4 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out">
+            <div className="w-full text-white text-2xl font-lg p-2 text-center">
+              Real Metaverse Usage for Employees
             </div>
-            <div className="mt-6 md:mt-0  group relative w-80 md:w-96 rounded-2xl shadow-2xl space-y-4 bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out overflow-hidden">
-              <div className="w-full text-white text-2xl font-lg p-2 text-center">Immersive Virtual Events & Collaboration Spaces</div>
-              <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
-                <p>Create fully interactive environments for hosting conferences, product launches, training sessions, or team-building activities..</p>
-              </div>
-              </div>
+            <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
+              <p>
+                Boost team collaboration with a virtual office that feels real.
+              </p>
+              <p>
+                Hold meetings, brainstorm, and network without physical barriers.
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center overflow-hidden">
-      <div
-        className="
-          relative
-          w-[1200px]
-          origin-top
-          scale-[clamp(0.45,0.8vw,1)]
-        "
-      >
+
+      <div className="flex justify-center items-center">
+        <div className="flex flex-col md:flex-row jusitfy-center md:space-x-12">
+          <div className="group relative w-80 md:w-96 rounded-2xl shadow-2xl space-y-4 bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out">
+            <div className="w-full text-white text-2xl font-lg p-2 text-center">
+              Group video Calls & Chatting Features
+            </div>
+            <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
+              <p>
+                Seamlessly host HD video calls directly inside the metaverse.
+              </p>
+              <p>
+                Use instant chat for quick updates and real-time teamwork.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 md:mt-0 group relative w-80 md:w-96 rounded-2xl shadow-2xl space-y-4 bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out overflow-hidden">
+            <div className="w-full text-white text-2xl font-lg p-2 text-center">
+              Immersive Virtual Events & Collaboration Spaces
+            </div>
+            <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
+              <p>
+                Create fully interactive environments for hosting conferences,
+                product launches, training sessions, or team-building activities.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="w-full flex justify-center overflow-hidden">
+      <div className="relative w-[1200px] origin-top scale-[clamp(0.45,0.8vw,1)]">
         <div className="relative mt-32 grid grid-cols-3 place-items-center gap-[60px] md:gap-[260px]">
           <motion.div
             initial={{ opacity: 0, x: -100 }}
@@ -154,6 +197,7 @@ export default function Dashboard() {
               Hello, everyone 😊
             </div>
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
@@ -170,6 +214,7 @@ export default function Dashboard() {
               className="mt-6 md:mt-0 w-36 h-36 rounded-full object-cover"
             />
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: [0, 1, 1, 0], x: [100, 0, 0, 100] }}
@@ -187,9 +232,11 @@ export default function Dashboard() {
             />
           </motion.div>
         </div>
+
         <div className="mt-32 text-center text-5xl font-bold text-purple-600">
           Connecting minds in the VOffice
         </div>
+
         <div className="relative mt-32 grid grid-cols-2 place-items-center gap-[260px]">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
@@ -207,6 +254,7 @@ export default function Dashboard() {
               className="w-36 h-36 rounded-full object-cover"
             />
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
@@ -230,31 +278,30 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+
     <div className="bg-black rounded-xl w-full mt-60 p-4 space-y-4 overflow-hidden text-center">
-        <div className="flex justify-center space-x-16">
-          <div className="text-blue-800 font-semibold text-2xl">VOffice</div>
-          <div className="flex space-x-4 text-white">
-            <img src="/AppIcons/discord.png" className="w-8 h-8" />
-            <img src="/AppIcons/reddit.png" className="w-8 h-8" />
-            <img src="/AppIcons/twitter (1).png" className="w-8 h-8" />
-            <img src="/AppIcons/youtube.png" className="w-8 h-8" />
-
-          </div>
-
+      <div className="flex justify-center space-x-16">
+        <div className="text-blue-800 font-semibold text-2xl">VOffice</div>
+        <div className="flex space-x-4 text-white">
+          <img src="/AppIcons/discord.png" className="w-8 h-8" />
+          <img src="/AppIcons/reddit.png" className="w-8 h-8" />
+          <img src="/AppIcons/twitter (1).png" className="w-8 h-8" />
+          <img src="/AppIcons/youtube.png" className="w-8 h-8" />
         </div>
-
-        
-        <div className=" text-center mt-2 text-gray-500">All names and brands mentioned are owned by their respective companies and used here for reference only.  <br />VOffice is not affiliated with or responsible for any third-party products or services.
-        </div>
-        <div className="text-gray-500 text-sm">© 2025 VOffice. All rights reserved.</div>
-        
-
-
       </div>
-    
 
+      <div className="text-center mt-2 text-gray-500">
+        All names and brands mentioned are owned by their respective companies and
+        used here for reference only.
+        <br />
+        VOffice is not affiliated with or responsible for any third-party products
+        or services.
+      </div>
 
+      <div className="text-gray-500 text-sm">© 2025 VOffice. All rights reserved.</div>
+    </div>
   </div>
+</div>
 
 
 }
