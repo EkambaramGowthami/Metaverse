@@ -97,7 +97,7 @@ export default function Dashboard() {
                 <p>Experience immersive navigation that feels like walking in a real office.</p>
               </div>
             </div>
-            <div className="group relative w-80 md:w-96 rounded-2xl shadow-2xl bg-black/90 p-3 space-y-4 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out">
+            <div className="mt-6 md:mt-0 group relative w-80 md:w-96 rounded-2xl shadow-2xl bg-black/90 p-3 space-y-4 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out">
               <div className="w-full text-white text-2xl font-lg p-2 text-center">Real Metaverse Usage for Employees</div>
               <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
                 <p>Boost team collaboration with a virtual office that feels real.</p>
@@ -115,7 +115,7 @@ export default function Dashboard() {
                 <p>Use instant chat for quick updates and real-time teamwork.</p>
               </div>
             </div>
-            <div className="group relative w-80 md:w-96 rounded-2xl shadow-2xl space-y-4 bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out overflow-hidden">
+            <div className="mt-6 md:mt-0  group relative w-80 md:w-96 rounded-2xl shadow-2xl space-y-4 bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out overflow-hidden">
               <div className="w-full text-white text-2xl font-lg p-2 text-center">Immersive Virtual Events & Collaboration Spaces</div>
               <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
                 <p>Create fully interactive environments for hosting conferences, product launches, training sessions, or team-building activities..</p>
