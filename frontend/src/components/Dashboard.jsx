@@ -124,17 +124,14 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-       <div className="w-full flex justify-center overflow-hidden">
+      <div className="w-full flex justify-center overflow-hidden">
       {/* SCALE WRAPPER */}
       <div
         className="
           relative
           w-[1200px]
-          scale-[0.45]
-          sm:scale-[0.6]
-          md:scale-[0.8]
-          lg:scale-100
           origin-top
+          scale-[clamp(0.45,0.8vw,1)]
         "
       >
         {/* TOP ROW */}
