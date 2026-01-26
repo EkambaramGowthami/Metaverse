@@ -28,25 +28,73 @@ export default function ({ targetRef }) {
                 </div>
 
             </div>
-            <div className="bg-black md:hidden absolute top-0 left-0 px-4 flex items-center text-white " onClick={() => setIsOpen(!isOpen)}>
-                {
-                    isOpen ? <X size="24" /> : <Menu size="24" />
-                }
-            </div>
-            {
-                isOpen === true && <div className="absolute z-10 top-6 left-0 w-full  h-screen md:hidden flex flex-col space-y-6 px-4 pb-2 bg-[#262626] text-white text-sm rounded-xl">
-                <a className="font-bold text-blue-800 text-lg">VOffice</a>
-                <a href="#" className="hover:text-blue-800 hover:bg-gray-500 hover:bg-opacity-50 rounded-xl">Home</a>
-                <a href="#" className="hover:text-blue-800 " onClick={handleScroll}>About</a>
-                <a href="#" className="hover:text-blue-800 " onClick={() => navigate("/demo")}>Demo</a>
-                <a href="#" className="hover:text-blue-800 " onClick={()=>navigate("/signup")}>Signup</a>
-                <button className="px-4 py-2 rounded-xl bg-blue-800 text-white font-semibold hover:bg-blue-800 transition-colors" onClick={() =>navigate("/login")}>
-                    Login
-                </button>
+             <div
+        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-black text-white"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </div>
 
-            </div>
-            
-            }
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden fixed inset-0 z-40 bg-[#262626] text-white flex flex-col px-6 pt-20 space-y-6 text-sm">
+          
+          <span className="font-bold text-lg text-blue-500">
+            VOffice
+          </span>
+
+          <a
+            href="#"
+            className="hover:text-blue-400"
+            onClick={() => setIsOpen(false)}
+          >
+            Home
+          </a>
+
+          <a
+            href="#"
+            className="hover:text-blue-400"
+            onClick={() => {
+              handleScroll();
+              setIsOpen(false);
+            }}
+          >
+            About
+          </a>
+
+          <a
+            href="#"
+            className="hover:text-blue-400"
+            onClick={() => {
+              navigate("/demo");
+              setIsOpen(false);
+            }}
+          >
+            Demo
+          </a>
+
+          <a
+            href="#"
+            className="hover:text-blue-400"
+            onClick={() => {
+              navigate("/signup");
+              setIsOpen(false);
+            }}
+          >
+            Signup
+          </a>
+
+          <button
+            className="mt-4 px-4 py-2 rounded-xl bg-blue-800 text-white font-semibold hover:bg-blue-700 transition-colors"
+            onClick={() => {
+              navigate("/login");
+              setIsOpen(false);
+            }}
+          >
+            Login
+          </button>
+        </div>
+      )}
         </nav>
     )
 }
