@@ -44,22 +44,31 @@ export default function Dashboard() {
       image: "/spaceImages/manoj.jpg",
     },
   ];
-  return <div className="bg-black bg-opacity-90 min-h-screen w-full overflow-x-hidden">
-  <div className="bg-black rounded-2xl min-h-screen p-4 sm:p-6">
-    <div className="relative min-h-screen overflow-hidden">
-      <BackgroundBeams />
-      <div className="relative z-20 flex justify-center pt-6">
+  return <div className="bg-black bg-opacity-95 min-h-screen w-full overflow-x-hidden text-white">
+
+  {/* ================= HERO ================= */}
+  <section className="relative min-h-screen">
+    <BackgroundBeams />
+
+    <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+
+      {/* NAV */}
+      <div className="pt-6 flex justify-center">
         <NavBar targetRef={targetRef} />
       </div>
-      <div className="relative z-20 flex flex-col-reverse lg:flex-row items-center justify-between gap-12 px-4 sm:px-8 lg:px-16 py-20">
-        <div className="text-white space-y-6 max-w-xl text-center lg:text-left">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
+
+      {/* HERO GRID */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-24">
+
+        {/* TEXT */}
+        <div className="space-y-6 text-center lg:text-left">
+          <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-tight">
             Step into the future.
           </h1>
 
-          <div className="text-2xl sm:text-3xl md:text-4xl font-bold">
+          <div className="text-2xl sm:text-3xl xl:text-4xl font-bold">
             Experience the{" "}
-            <span className="inline-block italic text-blue-800">
+            <span className="italic text-blue-600">
               <Typewriter
                 options={{
                   strings: ["Metaverse", "VOffice"],
@@ -70,74 +79,82 @@ export default function Dashboard() {
             </span>
           </div>
 
-          <p className="italic text-base sm:text-lg">
+          <p className="italic text-gray-300 text-base sm:text-lg">
             virtual. versatile. visionary.
           </p>
 
           <button
-            className="inline-block rounded-lg px-8 sm:px-12 py-2 text-lg bg-blue-800 hover:border-2 hover:border-blue-900 transition"
             onClick={() => navigate("/space")}
+            className="inline-block bg-blue-600 hover:bg-blue-700 transition rounded-lg px-10 py-3 text-lg font-medium shadow-lg"
           >
             Get Started
           </button>
-          <div>
-            <div className="text-lg mb-4">Trusted By</div>
+
+          {/* TRUST */}
+          <div className="pt-6">
+            <p className="text-gray-300 mb-3">Trusted By</p>
             <AnimatedTooltip items={teamMembers} />
           </div>
         </div>
 
         {/* MODEL */}
-        <div className="w-full max-w-md lg:max-w-lg flex justify-center">
-          <College />
+        <div className="flex justify-center lg:justify-end">
+          <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg">
+            <College />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div
+  </section>
+
+  {/* ================= WHY VOFFICE ================= */}
+  <section
     ref={targetRef}
-    className="min-h-screen px-4 sm:px-8 md:px-16 py-20 space-y-20"
+    className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-28 space-y-16"
   >
-    <h2 className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-blue-800">
+    <h2 className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">
       Why VOffice
     </h2>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 place-items-center">
+
+    {/* CARDS */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
       {[
         {
-          title: "Metaverse Maps & Interactive Characters",
+          title: "Metaverse Maps & Avatars",
           desc: [
-            "Explore stunning, interactive 3D office maps.",
-            "Navigate like a real office.",
+            "Interactive 3D office maps",
+            "Real-world navigation feel",
           ],
         },
         {
-          title: "Real Metaverse Usage for Employees",
+          title: "Employee Collaboration",
           desc: [
-            "Boost collaboration in a virtual office.",
-            "Meet, brainstorm, and network freely.",
+            "Meet and brainstorm virtually",
+            "No physical boundaries",
           ],
         },
         {
-          title: "Group Video Calls & Chatting",
+          title: "Video Calls & Chat",
           desc: [
-            "Host HD video calls inside the metaverse.",
-            "Instant chat for real-time teamwork.",
+            "Built-in HD meetings",
+            "Instant team messaging",
           ],
         },
         {
-          title: "Immersive Virtual Events",
+          title: "Virtual Events",
           desc: [
-            "Host conferences, launches, and training sessions.",
+            "Conferences, launches & training",
           ],
         },
       ].map((card, i) => (
         <div
           key={i}
-          className="group w-full max-w-sm rounded-2xl bg-black/90 p-4 shadow-2xl transition hover:scale-105 hover:shadow-blue-800/50"
+          className="rounded-2xl bg-[#0e0e11] p-6 shadow-xl hover:shadow-blue-600/40 transition hover:-translate-y-1"
         >
-          <div className="text-white text-xl sm:text-2xl text-center mb-3">
+          <h3 className="text-xl font-semibold text-center mb-4">
             {card.title}
-          </div>
-          <div className="bg-[#262626] rounded-xl p-4 text-gray-300 text-sm sm:text-base text-center space-y-1">
+          </h3>
+          <div className="text-gray-300 text-center space-y-1">
             {card.desc.map((d, idx) => (
               <p key={idx}>{d}</p>
             ))}
@@ -145,59 +162,69 @@ export default function Dashboard() {
         </div>
       ))}
     </div>
-    <div className="flex flex-wrap justify-center items-center gap-16 pt-24">
+  </section>
+
+  {/* ================= SOCIAL / AVATARS ================= */}
+  <section className="py-24 bg-gradient-to-b from-black to-[#0a0a0d]">
+    <div className="max-w-6xl mx-auto flex flex-col items-center gap-14">
+
+      {/* TOP CHAT */}
       <motion.div
-        initial={{ opacity: 0, x: -100 }}
-        animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
+        initial={{ opacity: 0, x: -80 }}
+        animate={{ opacity: [0, 1, 1, 0], x: [-80, 0, 0, -80] }}
         transition={{ duration: 6, repeat: Infinity }}
-        className="flex items-center gap-3"
+        className="flex items-center gap-4"
       >
-        <img src="/spaceImages/ratna.jpg" className="w-20 h-20 rounded-full" />
-        <div className="bg-blue-500/30 px-3 py-2 rounded-lg text-white">
+        <img src="/spaceImages/ratna.jpg" className="w-16 h-16 rounded-full" />
+        <div className="bg-blue-600/30 px-4 py-2 rounded-lg">
           Hello, everyone 😊
         </div>
       </motion.div>
-      <img src="/spaceImages/raja.jpeg" className="w-20 h-20 rounded-full" />
-      <img src="/spaceImages/kiran.jpg" className="w-20 h-20 rounded-full" />
-    </div>
 
-    <h3 className="text-center text-2xl sm:text-4xl font-bold text-blue-800 pt-12">
-      Connecting minds in the VOffice
-    </h3>
-    <div className="flex flex-wrap justify-center gap-12 pt-12">
-      <img src="/spaceImages/junnu.jpg" className="w-20 h-20 rounded-full" />
+      {/* CENTER AVATARS */}
+      <div className="flex gap-10">
+        <img src="/spaceImages/raja.jpeg" className="w-16 h-16 rounded-full" />
+        <img src="/spaceImages/kiran.jpg" className="w-16 h-16 rounded-full" />
+      </div>
 
-      <div className="flex items-center gap-3">
-        <div className="bg-blue-500/30 px-3 py-2 rounded-lg text-white">
+      <h3 className="text-2xl sm:text-4xl font-bold text-blue-600 text-center">
+        Connecting minds in the VOffice
+      </h3>
+
+      {/* BOTTOM CHAT */}
+      <div className="flex items-center gap-4">
+        <img src="/spaceImages/junnu.jpg" className="w-16 h-16 rounded-full" />
+        <div className="bg-blue-600/30 px-4 py-2 rounded-lg">
           Have you completed the task?
         </div>
-        <img src="/spaceImages/manoj.jpg" className="w-20 h-20 rounded-full" />
+        <img src="/spaceImages/manoj.jpg" className="w-16 h-16 rounded-full" />
       </div>
     </div>
-  </div>
-  <footer className="bg-black rounded-xl w-full mt-32 p-6 text-center space-y-4">
-    <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
-      <div className="text-blue-800 text-2xl font-semibold">VOffice</div>
-      <div className="flex gap-4">
-        {["discord", "reddit", "twitter (1)", "youtube"].map((icon) => (
-          <img
-            key={icon}
-            src={`/AppIcons/${icon}.png`}
-            className="w-7 h-7"
-          />
-        ))}
+  </section>
+
+  {/* ================= FOOTER ================= */}
+  <footer className="bg-black py-10 border-t border-white/10">
+    <div className="max-w-6xl mx-auto text-center space-y-4 px-4">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+        <span className="text-blue-600 text-2xl font-semibold">VOffice</span>
+        <div className="flex gap-4">
+          {["discord", "reddit", "twitter (1)", "youtube"].map((icon) => (
+            <img key={icon} src={`/AppIcons/${icon}.png`} className="w-6 h-6" />
+          ))}
+        </div>
       </div>
+
+      <p className="text-gray-500 text-sm max-w-3xl mx-auto">
+        All names and brands mentioned are owned by their respective companies.
+        VOffice is not affiliated with third-party services.
+      </p>
+
+      <p className="text-gray-600 text-sm">
+        © 2025 VOffice. All rights reserved.
+      </p>
     </div>
-
-    <p className="text-gray-500 text-sm max-w-2xl mx-auto">
-      All names and brands mentioned are owned by their respective companies.
-      VOffice is not affiliated with third-party services.
-    </p>
-
-    <p className="text-gray-500 text-sm">
-      © 2025 VOffice. All rights reserved.
-    </p>
   </footer>
 </div>
+
 
 }
