@@ -28,73 +28,90 @@ export default function ({ targetRef }) {
                 </div>
 
             </div>
-             <div
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-black text-white"
-        onClick={() => setIsOpen(!isOpen)}
+<div
+  className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-xl bg-black/80 backdrop-blur-md text-white shadow-lg"
+  onClick={() => setIsOpen(!isOpen)}
+>
+  {isOpen ? <X size={24} /> : <Menu size={24} />}
+</div>
+
+{/* Overlay */}
+{isOpen && (
+  <div
+    className="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+    onClick={() => setIsOpen(false)}
+  />
+)}
+
+<div
+  className={`md:hidden fixed top-0 left-0 z-50 h-screen w-[85%] max-w-xs
+    bg-[#1f1f1f] text-white
+    transform transition-transform duration-300 ease-out
+    ${isOpen ? "translate-x-0" : "-translate-x-full"}
+  `}
+>
+  <div className="flex flex-col h-full px-6 pt-16 pb-8 space-y-6">
+    <span className="text-2xl font-bold text-blue-500 tracking-wide">
+      VOffice
+    </span>
+
+    <div className="h-px bg-white/10" />
+    <nav className="flex flex-col space-y-4 text-base">
+      <a
+        href="#"
+        className="px-3 py-2 rounded-lg hover:bg-white/10 transition"
+        onClick={() => setIsOpen(false)}
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
-      </div>
+        Home
+      </a>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-[#262626] text-white flex flex-col px-6 pt-20 space-y-6 text-sm">
-          
-          <span className="font-bold text-lg text-blue-500">
-            VOffice
-          </span>
+      <a
+        href="#"
+        className="px-3 py-2 rounded-lg hover:bg-white/10 transition"
+        onClick={() => {
+          handleScroll();
+          setIsOpen(false);
+        }}
+      >
+        About
+      </a>
 
-          <a
-            href="#"
-            className="hover:text-blue-400"
-            onClick={() => setIsOpen(false)}
-          >
-            Home
-          </a>
+      <a
+        href="#"
+        className="px-3 py-2 rounded-lg hover:bg-white/10 transition"
+        onClick={() => {
+          navigate("/demo");
+          setIsOpen(false);
+        }}
+      >
+        Demo
+      </a>
 
-          <a
-            href="#"
-            className="hover:text-blue-400"
-            onClick={() => {
-              handleScroll();
-              setIsOpen(false);
-            }}
-          >
-            About
-          </a>
+      <a
+        href="#"
+        className="px-3 py-2 rounded-lg hover:bg-white/10 transition"
+        onClick={() => {
+          navigate("/signup");
+          setIsOpen(false);
+        }}
+      >
+        Signup
+      </a>
+    </nav>
+    <div className="mt-auto">
+      <button
+        className="w-full py-3 rounded-xl bg-blue-700 hover:bg-blue-600 font-semibold transition shadow-md"
+        onClick={() => {
+          navigate("/login");
+          setIsOpen(false);
+        }}
+      >
+        Login
+      </button>
+    </div>
+  </div>
+</div>
 
-          <a
-            href="#"
-            className="hover:text-blue-400"
-            onClick={() => {
-              navigate("/demo");
-              setIsOpen(false);
-            }}
-          >
-            Demo
-          </a>
-
-          <a
-            href="#"
-            className="hover:text-blue-400"
-            onClick={() => {
-              navigate("/signup");
-              setIsOpen(false);
-            }}
-          >
-            Signup
-          </a>
-
-          <button
-            className="mt-4 px-4 py-2 rounded-xl bg-blue-800 text-white font-semibold hover:bg-blue-700 transition-colors"
-            onClick={() => {
-              navigate("/login");
-              setIsOpen(false);
-            }}
-          >
-            Login
-          </button>
-        </div>
-      )}
         </nav>
     )
 }
