@@ -23,16 +23,37 @@ export default function Login(){
         }
     }
     return (
-        <div className="fixed bg-black bg-opacity-90 h-screen w-screen flex items-center justify-center">
-        <div className="relative bg-[#262626] w-80 md:w-96 rounded-xl p-2 md:p-6 space-y-4">
-          <div className="text-3xl text-blue-800 font-semibold text-center ">Login</div>
-          <label className="text-white text-lg">Username:</label>
-          <input type="text" placeholder="Email or username" className="px-6 py-2 md:px-12 md:py-4 rounded-xl bg-black bg-opacity-80 text-white focus:outline-none" ref={emailRef} />
-          <label className="text-white text-lg">Password:</label>
-          <input type="password" placeholder="Password" className="px-6 py-2 md:px-12 md:py-4 rounded-xl bg-black bg-opacity-80 text-white focus:outline-none" ref={passwordRef} />
-          <button className="bg-blue-800 text-white text-lg rounded-xl hover:border hover:border-blue-900 shadow-xl w-full py-4" onClick={handleLogin}>Login</button>
-        </div>
+       <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4">
+  <div className="relative w-full max-w-md bg-[#262626] rounded-xl p-4 md:p-6 space-y-4">
+    <div className="text-3xl text-blue-800 font-semibold text-center">
+      Login
     </div>
+
+    <label className="text-white text-lg">Username:</label>
+    <input
+      type="text"
+      placeholder="Email or username"
+      className="w-full px-4 py-3 rounded-xl bg-black bg-opacity-80 text-white focus:outline-none"
+      ref={emailRef}
+    />
+
+    <label className="text-white text-lg">Password:</label>
+    <input
+      type="password"
+      placeholder="Password"
+      className="w-full px-4 py-3 rounded-xl bg-black bg-opacity-80 text-white focus:outline-none"
+      ref={passwordRef}
+    />
+
+    <button
+      className="w-full bg-blue-800 text-white text-lg rounded-xl hover:border hover:border-blue-900 shadow-xl py-3"
+      onClick={handleLogin}
+    >
+      Login
+    </button>
+  </div>
+</div>
+
 
     );
 }
