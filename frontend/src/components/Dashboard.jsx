@@ -124,130 +124,127 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="w-full overflow-hidden">
+       <div className="w-full flex justify-center overflow-hidden">
+      {/* SCALE WRAPPER */}
       <div
         className="
-          relative mx-auto
-          mt-16 sm:mt-20 md:mt-24
-          grid grid-cols-3 place-items-center
-          gap-12 sm:gap-20 md:gap-60
-          scale-[0.65] sm:scale-[0.8] md:scale-100
+          relative
+          w-[1200px]
+          scale-[0.45]
+          sm:scale-[0.6]
+          md:scale-[0.8]
+          lg:scale-100
           origin-top
         "
       >
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
-          transition={{
-            duration: 6,
-            times: [0, 0.3, 0.7, 1],
-            ease: "easeInOut",
-            repeat: Infinity,
-            repeatDelay: 1,
-          }}
-          className="flex items-center gap-3"
-        >
-          <img
-            src="/spaceImages/ratna.jpg"
-            className="rounded-full w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36 object-cover"
-          />
-          <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-xs sm:text-sm md:text-base whitespace-nowrap">
-            Hello, everyone 😊
-          </div>
-        </motion.div>
+        {/* TOP ROW */}
+        <div className="relative mt-32 grid grid-cols-3 place-items-center gap-[260px]">
+          {/* LEFT */}
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
+            transition={{
+              duration: 6,
+              times: [0, 0.3, 0.7, 1],
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+            className="flex items-center gap-4"
+          >
+            <img
+              src="/spaceImages/ratna.jpg"
+              className="w-36 h-36 rounded-full object-cover"
+            />
+            <div className="text-white bg-blue-500/30 px-4 py-2 rounded-lg text-base whitespace-nowrap">
+              Hello, everyone 😊
+            </div>
+          </motion.div>
 
-        {/* CENTER */}
-        <motion.div
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
-          transition={{
-            duration: 6,
-            times: [0, 0.3, 0.7, 1],
-            ease: "easeInOut",
-            repeat: Infinity,
-            repeatDelay: 1,
-          }}
-          className="w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36"
-        >
-          <img
-            src="/spaceImages/raja.jpeg"
-            className="rounded-full w-full h-full object-cover"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: [0, 1, 1, 0], x: [100, 0, 0, 100] }}
-          transition={{
-            duration: 6,
-            times: [0, 0.3, 0.7, 1],
-            ease: "easeInOut",
-            repeat: Infinity,
-            repeatDelay: 1,
-          }}
-          className="w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36"
-        >
-          <img
-            src="/spaceImages/kiran.jpg"
-            className="rounded-full w-full h-full object-cover"
-          />
-        </motion.div>
-      </div>
-      <div
-        className="
-          relative text-center font-bold text-blue-800
-          mt-12 sm:mt-16 md:mt-20
-          text-lg sm:text-3xl md:text-5xl
-        "
-      >
-        Connecting minds in the VOffice
-      </div>
-      <div
-        className="
-          relative mx-auto
-          mt-12 sm:mt-16 md:mt-20
-          grid grid-cols-2 place-items-center
-          gap-12 sm:gap-20 md:gap-60
-          scale-[0.65] sm:scale-[0.8] md:scale-100
-          origin-top
-        "
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
-          transition={{
-            duration: 6,
-            times: [0, 0.3, 0.7, 1],
-            ease: "easeInOut",
-            repeat: Infinity,
-            repeatDelay: 1,
-          }}
-          className="w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36"
-        >
-          <img
-            src="/spaceImages/junnu.jpg"
-            className="rounded-full w-full h-full object-cover"
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
-          transition={{
-            duration: 6,
-            times: [0, 0.3, 0.7, 1],
-            ease: "easeInOut",
-            repeat: Infinity,
-            repeatDelay: 1,
-          }}
-          className="flex items-center gap-3"
-        >
-          <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-xs sm:text-sm md:text-base whitespace-nowrap">
-            Have you completed the task?
-          </div>
-          <img
-            src="/spaceImages/manoj.jpg"
-            className="rounded-full w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36 object-cover"
-          />
-        </motion.div>
+          {/* CENTER */}
+          <motion.div
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
+            transition={{
+              duration: 6,
+              times: [0, 0.3, 0.7, 1],
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+          >
+            <img
+              src="/spaceImages/raja.jpeg"
+              className="w-36 h-36 rounded-full object-cover"
+            />
+          </motion.div>
+
+          {/* RIGHT */}
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: [0, 1, 1, 0], x: [100, 0, 0, 100] }}
+            transition={{
+              duration: 6,
+              times: [0, 0.3, 0.7, 1],
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+          >
+            <img
+              src="/spaceImages/kiran.jpg"
+              className="w-36 h-36 rounded-full object-cover"
+            />
+          </motion.div>
+        </div>
+
+        {/* TITLE */}
+        <div className="mt-32 text-center text-5xl font-bold text-purple-600">
+          Connecting minds in the VOffice
+        </div>
+
+        {/* BOTTOM ROW */}
+        <div className="relative mt-32 grid grid-cols-2 place-items-center gap-[260px]">
+          {/* LEFT */}
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
+            transition={{
+              duration: 6,
+              times: [0, 0.3, 0.7, 1],
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+          >
+            <img
+              src="/spaceImages/junnu.jpg"
+              className="w-36 h-36 rounded-full object-cover"
+            />
+          </motion.div>
+
+          {/* RIGHT */}
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
+            transition={{
+              duration: 6,
+              times: [0, 0.3, 0.7, 1],
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+            className="flex items-center gap-4"
+          >
+            <div className="text-white bg-blue-500/30 px-4 py-2 rounded-lg text-base whitespace-nowrap">
+              Have you completed the task?
+            </div>
+            <img
+              src="/spaceImages/manoj.jpg"
+              className="w-36 h-36 rounded-full object-cover"
+            />
+          </motion.div>
+        </div>
       </div>
     </div>
     <div className="bg-black rounded-xl w-full mt-60 p-4 space-y-4 overflow-hidden text-center">
