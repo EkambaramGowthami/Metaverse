@@ -176,11 +176,7 @@ export default function Dashboard() {
 
    <div className="w-full flex justify-center overflow-hidden">
   <div className="relative w-full max-w-[1200px] origin-top px-4 sm:px-6">
-    
-    {/* TOP ROW */}
     <div className="relative mt-16 sm:mt-24 grid grid-cols-1 sm:grid-cols-3 place-items-center gap-6 sm:gap-12 md:gap-24">
-      
-      {/* LEFT */}
       <motion.div
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
@@ -195,14 +191,12 @@ export default function Dashboard() {
       >
         <img
           src="/spaceImages/ratna.jpg"
-          className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-16 h-12 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
         <div className="text-white bg-blue-500/30 px-4 py-2 rounded-lg text-sm sm:text-base md:text-lg whitespace-nowrap shadow-sm">
           Hello, everyone 😊
         </div>
       </motion.div>
-
-      {/* CENTER */}
       <motion.div
         initial={{ opacity: 0, y: -100 }}
         animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
@@ -217,7 +211,7 @@ export default function Dashboard() {
       >
         <img
           src="/spaceImages/raja.jpeg"
-          className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-16 h-12  sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
       </motion.div>
 
@@ -236,17 +230,13 @@ export default function Dashboard() {
       >
         <img
           src="/spaceImages/kiran.jpg"
-          className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-16 h-12 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
       </motion.div>
     </div>
-
-    {/* TITLE */}
     <div className="mt-16 sm:mt-20 text-center text-3xl sm:text-4xl md:text-5xl font-bold text-purple-500">
       Connecting minds in the VOffice
     </div>
-
-    {/* BOTTOM ROW */}
     <div className="relative mt-16 sm:mt-20 grid grid-cols-1 sm:grid-cols-2 place-items-center gap-10 sm:gap-20">
       
       <motion.div
@@ -263,7 +253,7 @@ export default function Dashboard() {
       >
         <img
           src="/spaceImages/junnu.jpg"
-          className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-16 h-12 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
       </motion.div>
 
@@ -284,7 +274,7 @@ export default function Dashboard() {
         </div>
         <img
           src="/spaceImages/manoj.jpg"
-          className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-16 h-12 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
       </motion.div>
 
