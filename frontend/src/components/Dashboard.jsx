@@ -124,7 +124,9 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="relative top-24 flex flex-col md:flex-row flex-wrap justify-center items-center md:space-x-60">
+     <div className="w-full overflow-hidden">
+      <div className="relative top-24 flex flex-row flex-wrap justify-center items-center gap-20 md:gap-60 scale-[0.7] sm:scale-[0.85] md:scale-100">
+        
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
@@ -135,16 +137,17 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="flex flex-col sm:flex-row items-center gap-3"
+          className="flex flex-row items-center gap-3"
         >
           <img
             src="/spaceImages/ratna.jpg"
-            className="rounded-full w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 object-cover"
+            className="rounded-full w-24 h-24 md:w-36 md:h-36 object-cover"
           />
-          <div className="text-white bg-blue-500 bg-opacity-30 px-3 py-2 rounded-lg text-sm sm:text-base">
+          <div className="text-white bg-blue-500/30 px-3 py-2 rounded-lg text-sm md:text-base whitespace-nowrap">
             Hello, everyone <span className="text-lg ml-1">😊</span>
           </div>
         </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
@@ -155,7 +158,7 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
+          className="w-24 h-24 md:w-36 md:h-36"
         >
           <img
             src="/spaceImages/raja.jpeg"
@@ -173,7 +176,7 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
+          className="w-24 h-24 md:w-36 md:h-36"
         >
           <img
             src="/spaceImages/kiran.jpg"
@@ -181,10 +184,11 @@ export default function Dashboard() {
           />
         </motion.div>
       </div>
-      <div className="relative top-12 bottom-4 text-center text-2xl sm:text-4xl md:text-5xl text-blue-800 font-bold  space-y-2">
+      <div className="relative top-16 text-center text-xl sm:text-3xl md:text-5xl text-blue-800 font-bold">
         Connecting minds in the VOffice
       </div>
-      <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-8">
+      <div className="relative top-20 flex flex-row flex-wrap justify-center items-center gap-20 md:gap-60 scale-[0.7] sm:scale-[0.85] md:scale-100">
+        
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
@@ -195,7 +199,7 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
+          className="w-24 h-24 md:w-36 md:h-36"
         >
           <img
             src="/spaceImages/junnu.jpg"
@@ -213,17 +217,18 @@ export default function Dashboard() {
             repeat: Infinity,
             repeatDelay: 1,
           }}
-          className="flex flex-col sm:flex-row items-center gap-3"
+          className="flex flex-row items-center gap-3"
         >
-          <div className="text-white bg-blue-500 bg-opacity-30 rounded-lg px-3 py-2 text-sm sm:text-base">
+          <div className="text-white bg-blue-500/30 rounded-lg px-3 py-2 text-sm md:text-base whitespace-nowrap">
             Have you completed the task?
           </div>
           <img
             src="/spaceImages/manoj.jpg"
-            className="rounded-full w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 object-cover"
+            className="rounded-full w-24 h-24 md:w-36 md:h-36 object-cover"
           />
         </motion.div>
       </div>
+
     </div>
     <div className="bg-black rounded-xl w-full mt-60 p-4 space-y-4 overflow-hidden text-center">
         <div className="flex justify-center space-x-16">
