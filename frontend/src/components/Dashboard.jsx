@@ -191,7 +191,7 @@ export default function Dashboard() {
       >
         <img
           src="/spaceImages/ratna.jpg"
-          className="w-16 h-12 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
         <div className="text-white bg-blue-500/30 px-4 py-2 rounded-lg text-sm sm:text-base md:text-lg whitespace-nowrap shadow-sm">
           Hello, everyone 😊
@@ -211,11 +211,9 @@ export default function Dashboard() {
       >
         <img
           src="/spaceImages/raja.jpeg"
-          className="w-16 h-12  sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-24 h-24  sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
       </motion.div>
-
-      {/* RIGHT */}
       <motion.div
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: [0, 1, 1, 0], x: [100, 0, 0, 100] }}
@@ -230,7 +228,7 @@ export default function Dashboard() {
       >
         <img
           src="/spaceImages/kiran.jpg"
-          className="w-16 h-12 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-24 h-24  sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
       </motion.div>
     </div>
@@ -253,7 +251,7 @@ export default function Dashboard() {
       >
         <img
           src="/spaceImages/junnu.jpg"
-          className="w-16 h-12 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-24 h-24  sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
       </motion.div>
 
@@ -274,7 +272,7 @@ export default function Dashboard() {
         </div>
         <img
           src="/spaceImages/manoj.jpg"
-          className="w-16 h-12 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
+          className="w-24 h-24  sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg"
         />
       </motion.div>
 
