@@ -44,187 +44,214 @@ export default function Dashboard() {
       image: "/spaceImages/manoj.jpg",
     },
   ];
-  return <div className="bg-black bg-opacity-95 min-h-screen w-full overflow-x-hidden text-white">
+  return <div className="bg-black bg-opacity-90 min-h-screen w-full p-6 overflow-x-hidden">
+    <div className="bg-black rounded-2xl h-full overflow-hidden">
+      
+      <div className="md:w-full h-[1000px] md:h-[800px] relative overflow-hidden">
+      <BackgroundBeams />
+        <div className="relative top-6 space-y-12 text-center">
+          <NavBar targetRef={targetRef} />
+        </div>
+        <div className="relative top-20  space-y-12 flex flex-col md:flex-row justify-between p-12">
+           <div className="relative text-white  z-20 text-4xl md:text-6xl font-bold animate-fadeInUp space-y-6"> 
+             <p>Step into the future.</p>
+            <span>
+              Experience the{" "}
+              <span className="inline-block w-[12ch] italic text-blue-800">
+                <Typewriter
+                  options={{
+                    strings: ["Metaverse", "VOffice"],
+                    autoStart: true,
+                    loop: true,
+                  }}
 
-  {/* ================= HERO ================= */}
-  <section className="relative min-h-screen">
-    <BackgroundBeams />
-
-    <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
-
-      {/* NAV */}
-      <div className="pt-6 flex justify-center">
-        <NavBar targetRef={targetRef} />
-      </div>
-
-      {/* HERO GRID */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-24">
-
-        {/* TEXT */}
-        <div className="space-y-6 text-center lg:text-left">
-          <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold leading-tight">
-            Step into the future.
-          </h1>
-
-          <div className="text-2xl sm:text-3xl xl:text-4xl font-bold">
-            Experience the{" "}
-            <span className="italic text-blue-600">
-              <Typewriter
-                options={{
-                  strings: ["Metaverse", "VOffice"],
-                  autoStart: true,
-                  loop: true,
-                }}
-              />
+                />
+              </span>
             </span>
+            <div className="text-white font-normal italic text-lg">virtual.versatile.visionary.</div>
+            <button className="text-lg rounded-lg px-12 py-2 text-center shadow-sm bg-blue-800 hover:border-2 hover:border-blue-900" onClick={()=>navigate("/space")}>
+              Get Started
+            </button>
+            <div>
+              <div className="text-white text-lg font-lg mb-4">Trusted By</div>
+              <div className="flex"><AnimatedTooltip items={teamMembers} /></div>
+            </div>
+
           </div>
+          <div className="w-120 h-120 flex items-center "><College /></div>
+        
+      </div>
+      </div>
 
-          <p className="italic text-gray-300 text-base sm:text-lg">
-            virtual. versatile. visionary.
-          </p>
 
-          <button
-            onClick={() => navigate("/space")}
-            className="inline-block bg-blue-600 hover:bg-blue-700 transition rounded-lg px-10 py-3 text-lg font-medium shadow-lg"
-          >
-            Get Started
-          </button>
-
-          {/* TRUST */}
-          <div className="pt-6">
-            <p className="text-gray-300 mb-3">Trusted By</p>
-            <AnimatedTooltip items={teamMembers} />
+    </div>
+    <div className="min-h-screen px-2 md:px-16 mt-2 md:mt-24 space-y-24" ref={targetRef} >
+      <div className="text-4xl md:6xl text-blue-800 text-center font-bold">Why VOffice</div>
+      <div className="space-y-2">
+        <div className="flex justify-center items-center">
+          <div className="flex flex-col md:flex-row items-center md:space-x-12">
+            <div className="group relative w-80 md:w-96  rounded-2xl shadow-2xl bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out space-y-4">
+              <div className="w-full text-white text-2xl font-lg p-2 text-center">Metaverse Maps & Interactive Characters(Avatars)</div>
+              <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-4 text-gray-300  text-md text-center">
+                <p>Explore stunning, interactive 3D office maps tailored to your workspace.</p>
+                <p>Experience immersive navigation that feels like walking in a real office.</p>
+              </div>
+            </div>
+            <div className="group relative w-80 md:w-96 rounded-2xl shadow-2xl bg-black/90 p-3 space-y-4 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out">
+              <div className="w-full text-white text-2xl font-lg p-2 text-center">Real Metaverse Usage for Employees</div>
+              <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
+                <p>Boost team collaboration with a virtual office that feels real.</p>
+                <p>Hold meetings, brainstorm, and network without physical barriers.</p>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* MODEL */}
-        <div className="flex justify-center lg:justify-end">
-          <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg">
-            <College />
+        <div className="flex justify-center items-center">
+          <div className="flex flex-col md:flex-row jusitfy-center md:space-x-12">
+            <div className="group relative w-80 md:w-96  rounded-2xl shadow-2xl space-y-4 bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out">
+              <div className="w-full text-white text-2xl font-lg p-2 text-center"> Group video Calls & Chatting Features</div>
+              <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
+                <p>Seamlessly host HD video calls directly inside the metaverse.</p>
+                <p>Use instant chat for quick updates and real-time teamwork.</p>
+              </div>
+            </div>
+            <div className="group relative w-80 md:w-96 rounded-2xl shadow-2xl space-y-4 bg-black/90 p-3 hover:scale-105 hover:shadow-blue-800/50 transition-transform duration-300 ease-out overflow-hidden">
+              <div className="w-full text-white text-2xl font-lg p-2 text-center">Immersive Virtual Events & Collaboration Spaces</div>
+              <div className="bg-[#262626] rounded-xl [clip-path:polygon(0%_0%,100%_0%,100%_calc(100%-50px),calc(100%-50px)_100%,0%_100%)] p-6 text-gray-300 text-md text-center">
+                <p>Create fully interactive environments for hosting conferences, product launches, training sessions, or team-building activities..</p>
+              </div>
+              </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  {/* ================= WHY VOFFICE ================= */}
-  <section
-    ref={targetRef}
-    className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-28 space-y-16"
-  >
-    <h2 className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">
-      Why VOffice
-    </h2>
-
-    {/* CARDS */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-      {[
-        {
-          title: "Metaverse Maps & Avatars",
-          desc: [
-            "Interactive 3D office maps",
-            "Real-world navigation feel",
-          ],
-        },
-        {
-          title: "Employee Collaboration",
-          desc: [
-            "Meet and brainstorm virtually",
-            "No physical boundaries",
-          ],
-        },
-        {
-          title: "Video Calls & Chat",
-          desc: [
-            "Built-in HD meetings",
-            "Instant team messaging",
-          ],
-        },
-        {
-          title: "Virtual Events",
-          desc: [
-            "Conferences, launches & training",
-          ],
-        },
-      ].map((card, i) => (
-        <div
-          key={i}
-          className="rounded-2xl bg-[#0e0e11] p-6 shadow-xl hover:shadow-blue-600/40 transition hover:-translate-y-1"
+      <div className="relative top-24 flex flex-col md:flex-row flex-wrap justify-center items-center md:space-x-60">
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: [0, 1, 1, 0], x: [-100, 0, 0, -100] }}
+          transition={{
+            duration: 6,
+            times: [0, 0.3, 0.7, 1],
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 1,
+          }}
+          className="flex flex-col sm:flex-row items-center gap-3"
         >
-          <h3 className="text-xl font-semibold text-center mb-4">
-            {card.title}
-          </h3>
-          <div className="text-gray-300 text-center space-y-1">
-            {card.desc.map((d, idx) => (
-              <p key={idx}>{d}</p>
-            ))}
+          <img
+            src="/spaceImages/ratna.jpg"
+            className="rounded-full w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 object-cover"
+          />
+          <div className="text-white bg-blue-500 bg-opacity-30 px-3 py-2 rounded-lg text-sm sm:text-base">
+            Hello, everyone <span className="text-lg ml-1">😊</span>
           </div>
-        </div>
-      ))}
-    </div>
-  </section>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: [0, 1, 1, 0], y: [-100, 0, 0, -100] }}
+          transition={{
+            duration: 6,
+            times: [0, 0.3, 0.7, 1],
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 1,
+          }}
+          className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
+        >
+          <img
+            src="/spaceImages/raja.jpeg"
+            className="rounded-full w-full h-full object-cover"
+          />
+        </motion.div>
 
-  {/* ================= SOCIAL / AVATARS ================= */}
-  <section className="py-24 bg-gradient-to-b from-black to-[#0a0a0d]">
-    <div className="max-w-6xl mx-auto flex flex-col items-center gap-14">
-
-      {/* TOP CHAT */}
-      <motion.div
-        initial={{ opacity: 0, x: -80 }}
-        animate={{ opacity: [0, 1, 1, 0], x: [-80, 0, 0, -80] }}
-        transition={{ duration: 6, repeat: Infinity }}
-        className="flex items-center gap-4"
-      >
-        <img src="/spaceImages/ratna.jpg" className="w-16 h-16 rounded-full" />
-        <div className="bg-blue-600/30 px-4 py-2 rounded-lg">
-          Hello, everyone 😊
-        </div>
-      </motion.div>
-
-      {/* CENTER AVATARS */}
-      <div className="flex gap-10">
-        <img src="/spaceImages/raja.jpeg" className="w-16 h-16 rounded-full" />
-        <img src="/spaceImages/kiran.jpg" className="w-16 h-16 rounded-full" />
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: [0, 1, 1, 0], x: [100, 0, 0, 100] }}
+          transition={{
+            duration: 6,
+            times: [0, 0.3, 0.7, 1],
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 1,
+          }}
+          className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
+        >
+          <img
+            src="/spaceImages/kiran.jpg"
+            className="rounded-full w-full h-full object-cover"
+          />
+        </motion.div>
       </div>
-
-      <h3 className="text-2xl sm:text-4xl font-bold text-blue-600 text-center">
+      <div className="relative top-12 bottom-4 text-center text-2xl sm:text-4xl md:text-5xl text-blue-800 font-bold  space-y-2">
         Connecting minds in the VOffice
-      </h3>
+      </div>
+      <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-8">
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
+          transition={{
+            duration: 6,
+            times: [0, 0.3, 0.7, 1],
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 1,
+          }}
+          className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
+        >
+          <img
+            src="/spaceImages/junnu.jpg"
+            className="rounded-full w-full h-full object-cover"
+          />
+        </motion.div>
 
-      {/* BOTTOM CHAT */}
-      <div className="flex items-center gap-4">
-        <img src="/spaceImages/junnu.jpg" className="w-16 h-16 rounded-full" />
-        <div className="bg-blue-600/30 px-4 py-2 rounded-lg">
-          Have you completed the task?
-        </div>
-        <img src="/spaceImages/manoj.jpg" className="w-16 h-16 rounded-full" />
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: [0, 1, 1, 0], y: [100, 0, 0, 100] }}
+          transition={{
+            duration: 6,
+            times: [0, 0.3, 0.7, 1],
+            ease: "easeInOut",
+            repeat: Infinity,
+            repeatDelay: 1,
+          }}
+          className="flex flex-col sm:flex-row items-center gap-3"
+        >
+          <div className="text-white bg-blue-500 bg-opacity-30 rounded-lg px-3 py-2 text-sm sm:text-base">
+            Have you completed the task?
+          </div>
+          <img
+            src="/spaceImages/manoj.jpg"
+            className="rounded-full w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 object-cover"
+          />
+        </motion.div>
       </div>
     </div>
-  </section>
+    <div className="bg-black rounded-xl w-full mt-60 p-4 space-y-4 overflow-hidden text-center">
+        <div className="flex justify-center space-x-16">
+          <div className="text-blue-800 font-semibold text-2xl">VOffice</div>
+          <div className="flex space-x-4 text-white">
+            <img src="/AppIcons/discord.png" className="w-8 h-8" />
+            <img src="/AppIcons/reddit.png" className="w-8 h-8" />
+            <img src="/AppIcons/twitter (1).png" className="w-8 h-8" />
+            <img src="/AppIcons/youtube.png" className="w-8 h-8" />
 
-  {/* ================= FOOTER ================= */}
-  <footer className="bg-black py-10 border-t border-white/10">
-    <div className="max-w-6xl mx-auto text-center space-y-4 px-4">
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-        <span className="text-blue-600 text-2xl font-semibold">VOffice</span>
-        <div className="flex gap-4">
-          {["discord", "reddit", "twitter (1)", "youtube"].map((icon) => (
-            <img key={icon} src={`/AppIcons/${icon}.png`} className="w-6 h-6" />
-          ))}
+          </div>
+
         </div>
+        {/* <div className="mt-2 pt-6 text-sm text-gray-500">
+          Built with ❤️ for the future of virtual worlds.
+        </div> */}
+        
+        <div className=" text-center mt-2 text-gray-500">All names and brands mentioned are owned by their respective companies and used here for reference only.  <br />VOffice is not affiliated with or responsible for any third-party products or services.
+        </div>
+        <div className="text-gray-500 text-sm">© 2025 VOffice. All rights reserved.</div>
+        
+
+
       </div>
+    
 
-      <p className="text-gray-500 text-sm max-w-3xl mx-auto">
-        All names and brands mentioned are owned by their respective companies.
-        VOffice is not affiliated with third-party services.
-      </p>
 
-      <p className="text-gray-600 text-sm">
-        © 2025 VOffice. All rights reserved.
-      </p>
-    </div>
-  </footer>
-</div>
+  </div>
 
 
 }
